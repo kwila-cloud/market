@@ -8,7 +8,7 @@ A trust-based, invite-only marketplace built with Astro, React, and Supabase. Us
 ### 1. Declarative Configuration
 All infrastructure defined as code:
 - **Supabase**: Database schema via SQL migrations, RLS policies in migrations, storage/auth config in `supabase/config.toml`
-- **Cloudflare**: Workers config in `wrangler.toml`, Pages settings declarative, environment variables in `.dev.vars`
+- **Cloudflare**: Workers config in `wrangler.toml`, environment variables in `.dev.vars`
 - **Benefits**: Version controlled, reproducible, reviewable, no manual dashboard configuration
 
 ### 2. Local Development Parity
@@ -43,7 +43,7 @@ Every feature requires test coverage, verified on every PR:
 - **API**: Supabase REST + PostgREST with RLS
 
 ### Deployment
-- **Hosting**: Cloudflare Pages
+- **Hosting**: Cloudflare Workers
 - **SSR**: Cloudflare Workers
 - **CDN**: Cloudflare CDN
 
@@ -165,47 +165,47 @@ Every feature requires test coverage, verified on every PR:
 
 ### Invite & Onboarding
 1. User clicks invite link (`/signup?code=A7K9M2X4`)
-2. Server validates code (not used, not revoked)
-3. Shows inviter name + auth method choice (email or phone OTP)
-4. User enters email/phone, receives OTP (Supabase/Twilio)
-5. Verifies OTP, creates account
-6. Creates user record with invited_by
-7. Creates contact_info (is_primary=true, default visibility)
-8. Creates connection (user_a=inviter, user_b=invitee, status='accepted')
-9. Marks invite as used
-10. Mandatory 4-step wizard: account type, contact visibility, about/avatar, tutorial
-11. Redirects to dashboard
+1. Server validates code (not used, not revoked)
+1. Shows inviter name + auth method choice (email or phone OTP)
+1. User enters email/phone, receives OTP (Supabase/Twilio)
+1. Verifies OTP, creates account
+1. Creates user record with invited_by
+1. Creates contact_info (is_primary=true, default visibility)
+1. Creates connection (user_a=inviter, user_b=invitee, status='accepted')
+1. Marks invite as used
+1. Mandatory 4-step wizard: account type, contact visibility, about/avatar, tutorial
+1. Redirects to dashboard
 
 ### Item Creation
 1. User creates item (buy or sell)
-2. Form: type, category, title, description, price_string, images (required for sell), visibility
-3. Item created with status='active'
-4. Visible per visibility rules + connection status
+1. Form: type, category, title, description, price_string, images (required for sell), visibility
+1. Item created with status='active'
+1. Visible per visibility rules + connection status
 
 ### Messaging
 1. User sees item, clicks "Start conversation"
-2. System checks for existing thread (one per user per item)
-3. If exists: opens thread; if not: creates thread
-4. Thread identified by item (maintains anonymity if applicable)
-5. Users exchange text + images
-6. Buy item creator remains "Anonymous" to non-connections even in threads
-7. Thread stays active indefinitely
+1. System checks for existing thread (one per user per item)
+1. If exists: opens thread; if not: creates thread
+1. Thread identified by item (maintains anonymity if applicable)
+1. Users exchange text + images
+1. Buy item creator remains "Anonymous" to non-connections even in threads
+1. Thread stays active indefinitely
 
 ### Connection Requests
 1. User views profile, clicks "Connect"
-2. Creates connection record (user_a=requester, user_b=recipient, status='pending')
-3. Recipient sees pending request (manual check, no notifications in MVP)
-4. Recipient accepts/declines (updates status)
-5. If accepted: unlocks private contact info, private items, prioritization, direct messaging
+1. Creates connection record (user_a=requester, user_b=recipient, status='pending')
+1. Recipient sees pending request (manual check, no notifications in MVP)
+1. Recipient accepts/declines (updates status)
+1. If accepted: unlocks private contact info, private items, prioritization, direct messaging
 
 ### Invite Generation
 1. User clicks "Invite someone"
-2. System checks last invite timestamp
-3. If < 24 hours: shows limit message
-4. If eligible: generates 8-char alphanumeric code
-5. Creates invite record
-6. Returns link: `/signup?code=CODE`
-7. User can revoke anytime (sets revoked_at)
+1. System checks last invite timestamp
+1. If < 24 hours: shows limit message
+1. If eligible: generates 8-char alphanumeric code
+1. Creates invite record
+1. Returns link: `/signup?code=CODE`
+1. User can revoke anytime (sets revoked_at)
 
 ## Site Structure
 
@@ -373,25 +373,6 @@ docker-compose down
 - Astro dev server with Workers
 - Test runner container
 
-### Project Structure
-```
-project-root/
-├── docker-compose.yml
-├── wrangler.toml
-├── supabase/
-│   ├── config.toml
-│   ├── migrations/
-│   │   ├── 001_initial_schema.sql
-│   │   ├── 002_rls_policies.sql
-│   │   └── 003_indexes.sql
-│   └── seed.sql
-├── src/
-├── tests/
-│   ├── unit/
-│   └── e2e/
-└── .github/workflows/ci.yml
-```
-
 ### Environment Variables
 ```
 # .env (in docker-compose)
@@ -403,24 +384,23 @@ TWILIO_AUTH_TOKEN=<test-token>
 TWILIO_PHONE_NUMBER=<test-number>
 ```
 
-### CI Pipeline (GitHub Actions)
+## CI Pipelines (GitHub Actions)
+
+### Merge Request Checks
 1. Checkout code
-2. Start Docker services
-3. Run migrations
-4. Run unit tests
-5. Run integration tests
-6. Report coverage
-7. Block merge if tests fail
+1. Start Docker services
+1. Run migrations
+1. Run unit tests
+1. Run integration tests
+1. Report coverage
+1. Block merge if tests fail
 
-## Deployment Pipeline
+### Push to Main
 
-1. Push to main branch
-2. GitHub Actions triggers
-3. Run tests & build
-4. Deploy to Cloudflare Pages
-5. Run Supabase migrations
-6. Smoke tests
-7. Production live
+1. Run tests & build
+1. Deploy to Cloudflare Workers
+1. Run Supabase migrations
+1. Production live
 
 ## MVP Scope
 
@@ -438,35 +418,27 @@ TWILIO_PHONE_NUMBER=<test-number>
 - Image uploads (5 per item/message)
 - Search and filters
 - PWA (installable, online-only)
-- Content reporting
-
-### Deferred
-- Notifications (in-app, push, email/SMS)
-- Thread archiving
-- Advanced search/analytics
-- Vendor collaborators
-- Data export tools
-- Admin dashboard UI
 
 ## Future Enhancements
 
-### Near-term (Phase 2)
+### Near-term (v1.0)
 - Notifications system (in-app, push, email/SMS, per-type preferences)
+- Content reporting/moderation 
 - Thread archiving (user-level, doesn't affect other participant)
 - Multi-user threads (3+ participants)
 - Separate storage buckets (items/messages/profiles)
 - Advanced search (saved searches, price filters, location radius)
-- Vendor collaborators (multi-user management, roles)
-- Data export (GDPR compliance)
+- Data export
 
-### Medium-term
+### Medium-term (After onboarding several dozen regular users)
+- Multi-user vendors
 - Reputation/trust scores
 - Business analytics dashboard
 - Enhanced portfolio (curated showcases, project descriptions)
 - Mobile app (React Native)
 - Offline mode (cached browsing)
 
-### Long-term
+### Long-term (Only when necessary)
 - Payment integration (optional escrow)
 - Shipping/logistics
 - Community features (forums, events)
