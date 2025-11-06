@@ -93,15 +93,43 @@ Every feature requires test coverage, verified on every PR:
 - id (uuid, pk)
 - user_id (uuid, fk -> users.id)
 - type (enum: buy|sell)
-- category (enum: new|resale|service)
+- category_id (uuid, fk -> categories.id)
 - title (text)
 - description (text)
 - price_string (text) -- budget for buy, asking price for sell
-- images (text[]) -- required for sell, optional for buy
 - visibility (enum: hidden|private|public)
 - status (enum: active|archived|deleted)
 - created_at (timestamp)
 - updated_at (timestamp)
+
+### categories
+- id (uuid, pk)
+- name (text) -- new, resale, service
+- description (text)
+- created_at (timestamp)
+
+### item_images
+- id (uuid, pk)
+- item_id (uuid, fk -> items.id)
+- url (text)
+- alt_text (text)
+- order_index (integer)
+- created_at (timestamp)
+
+### user_settings
+- id (uuid, pk)
+- user_id (uuid, fk -> users.id)
+- setting_key (text) -- notification_prefs, privacy_settings, etc.
+- setting_value (jsonb)
+- created_at (timestamp)
+- updated_at (timestamp)
+
+### message_images
+- id (uuid, pk)
+- message_id (uuid, fk -> messages.id)
+- url (text)
+- order_index (integer)
+- created_at (timestamp)
 
 ### threads
 - id (uuid, pk)
@@ -130,11 +158,14 @@ Every feature requires test coverage, verified on every PR:
 - created_at (timestamp)
 
 ### Indexes
-- items: (status, visibility, created_at), (user_id), (type, category)
+- items: (status, visibility, created_at), (user_id), (type, category_id)
 - threads: (item_id, creator_id, responder_id) unique, (item_id), (creator_id), (responder_id)
 - messages: (thread_id, created_at), (sender_id)
 - connections: (user_a, user_b) unique, (user_b, status)
 - invites: (invite_code), (inviter_id)
+- item_images: (item_id, order_index), (item_id)
+- user_settings: (user_id, setting_key) unique, (user_id)
+- message_images: (message_id, order_index), (message_id)
 
 ## Row Level Security (RLS)
 
@@ -144,9 +175,20 @@ Every feature requires test coverage, verified on every PR:
 - Public: All authenticated users
 - Buy items: Creator shown as "Anonymous" to non-connections
 
+### Categories
+- Public: All authenticated users (read-only)
+
+### Item Images
+- Follows parent item visibility rules
+- Images inherit visibility from their item
+
 ### Threads & Messages
 - Read/write: Participants only (creator_id or responder_id)
 - Thread creator identity follows item visibility rules
+
+### Message Images
+- Follows parent thread/message visibility rules
+- Images inherit visibility from their message
 
 ### Contact Info
 - Hidden: System only
@@ -156,6 +198,9 @@ Every feature requires test coverage, verified on every PR:
 ### Connections
 - Read: Both parties (user_a or user_b)
 - Write: user_a creates with status='pending', user_b updates status
+
+### User Settings
+- Read/Write: Owner only (user_id)
 
 ### Users
 - Public profiles: All authenticated users
@@ -178,8 +223,9 @@ Every feature requires test coverage, verified on every PR:
 
 ### Item Creation
 1. User creates item (buy or sell)
-1. Form: type, category, title, description, price_string, images (required for sell), visibility
+1. Form: type, category (from categories table), title, description, price_string, images (required for sell), visibility
 1. Item created with status='active'
+1. Images stored in item_images table with order_index
 1. Visible per visibility rules + connection status
 
 ### Messaging
@@ -218,7 +264,7 @@ Every feature requires test coverage, verified on every PR:
 
 ### Items Page
 - Unified search across all items
-- Filters: type, category, price range, connections
+- Filters: type, category (from categories table), price range, connections
 - Sort: newest, relevance
 - Connection-prioritized feed (connections' items first)
 - Buy items from non-connections show "Anonymous"
