@@ -63,37 +63,43 @@ Every feature requires test coverage, verified on every PR:
 
 ## Database Schema
 
-### users
+### user
 - id (uuid, pk)
 - display_name (text)
 - about (text)
 - avatar_url (text)
 - vendor_id (text, unique, nullable) -- alphanumeric + underscore/dash
 - created_at (timestamp)
-- invited_by (uuid, fk -> users.id)
+- invited_by (uuid, fk -> user.id)
 
 ### contact_info
 - id (uuid, pk)
-- user_id (uuid, fk -> users.id)
+- user_id (uuid, fk -> user.id)
 - contact_type (enum: email|phone)
 - value (text)
 - visibility (enum: hidden|private|public)
 - is_primary (boolean) -- auth contact
 - created_at (timestamp)
 
-### connections
+### user_settings
 - id (uuid, pk)
-- user_a (uuid, fk -> users.id) -- requester
-- user_b (uuid, fk -> users.id) -- recipient
-- status (enum: pending|accepted|declined)
+- user_id (uuid, fk -> user.id)
+- setting_key (text) -- notification_prefs, privacy_settings, etc.
+- setting_value (jsonb)
 - created_at (timestamp)
-- unique(user_a, user_b)
+- updated_at (timestamp)
 
-### items
+### category
 - id (uuid, pk)
-- user_id (uuid, fk -> users.id)
+- name (text) -- new, resale, service
+- description (text)
+- created_at (timestamp)
+
+### item
+- id (uuid, pk)
+- user_id (uuid, fk -> user.id)
 - type (enum: buy|sell)
-- category_id (uuid, fk -> categories.id)
+- category_id (uuid, fk -> category.id)
 - title (text)
 - description (text)
 - price_string (text) -- budget for buy, asking price for sell
@@ -102,109 +108,113 @@ Every feature requires test coverage, verified on every PR:
 - created_at (timestamp)
 - updated_at (timestamp)
 
-### categories
+### item_image
 - id (uuid, pk)
-- name (text) -- new, resale, service
-- description (text)
-- created_at (timestamp)
-
-### item_images
-- id (uuid, pk)
-- item_id (uuid, fk -> items.id)
+- item_id (uuid, fk -> item.id)
 - url (text)
 - alt_text (text)
 - order_index (integer)
 - created_at (timestamp)
 
-### user_settings
+### connection
 - id (uuid, pk)
-- user_id (uuid, fk -> users.id)
-- setting_key (text) -- notification_prefs, privacy_settings, etc.
-- setting_value (jsonb)
+- user_a (uuid, fk -> user.id) -- requester
+- user_b (uuid, fk -> user.id) -- recipient
+- status (enum: pending|accepted|declined)
 - created_at (timestamp)
-- updated_at (timestamp)
+- unique(user_a, user_b)
 
-### message_images
+### thread
 - id (uuid, pk)
-- message_id (uuid, fk -> messages.id)
+- item_id (uuid, fk -> item.id)
+- creator_id (uuid, fk -> user.id) -- thread initiator
+- responder_id (uuid, fk -> user.id) -- other participant
+- created_at (timestamp)
+- unique(item_id, creator_id, responder_id)
+
+### message
+- id (uuid, pk)
+- thread_id (uuid, fk -> thread.id)
+- sender_id (uuid, fk -> user.id)
+- content (text)
+- read (boolean)
+- created_at (timestamp)
+
+### message_image
+- id (uuid, pk)
+- message_id (uuid, fk -> message.id)
 - url (text)
 - order_index (integer)
 - created_at (timestamp)
 
-### threads
+### invite
 - id (uuid, pk)
-- item_id (uuid, fk -> items.id)
-- creator_id (uuid, fk -> users.id) -- thread initiator
-- responder_id (uuid, fk -> users.id) -- other participant
-- created_at (timestamp)
-- unique(item_id, creator_id, responder_id)
-
-### messages
-- id (uuid, pk)
-- thread_id (uuid, fk -> threads.id)
-- sender_id (uuid, fk -> users.id)
-- content (text)
-- images (text[]) -- 0-5 images
-- read (boolean)
-- created_at (timestamp)
-
-### invites
-- id (uuid, pk)
-- inviter_id (uuid, fk -> users.id)
+- inviter_id (uuid, fk -> user.id)
 - invite_code (text, unique) -- 8 alphanumeric characters
-- used_by (uuid, fk -> users.id, nullable)
+- used_by (uuid, fk -> user.id, nullable)
 - used_at (timestamp, nullable)
 - revoked_at (timestamp, nullable)
 - created_at (timestamp)
 
 ### Indexes
-- items: (status, visibility, created_at), (user_id), (type, category_id)
-- threads: (item_id, creator_id, responder_id) unique, (item_id), (creator_id), (responder_id)
-- messages: (thread_id, created_at), (sender_id)
-- connections: (user_a, user_b) unique, (user_b, status)
-- invites: (invite_code), (inviter_id)
-- item_images: (item_id, order_index), (item_id)
+- user: (vendor_id) unique, (invited_by)
+- contact_info: (user_id), (contact_type), (is_primary)
 - user_settings: (user_id, setting_key) unique, (user_id)
-- message_images: (message_id, order_index), (message_id)
+- category: (name) unique
+- item: (status, visibility, created_at), (user_id), (type, category_id)
+- item_image: (item_id, order_index), (item_id)
+- connection: (user_a, user_b) unique, (user_b, status)
+- thread: (item_id, creator_id, responder_id) unique, (item_id), (creator_id), (responder_id)
+- message: (thread_id, created_at), (sender_id)
+- message_image: (message_id, order_index), (message_id)
+- invite: (invite_code), (inviter_id)
 
 ## Row Level Security (RLS)
 
-### Items
+### user
+- Public profiles: All authenticated users
+- Vendor profiles: Accessible via public routes
+
+### contact_info
+- Hidden: System only
+- Private: Direct connections only (status='accepted')
+- Public: All authenticated users
+
+### user_settings
+- Read/Write: Owner only (user_id)
+
+### category
+- Public: All authenticated users (read-only)
+
+### item
 - Hidden: Creator only
 - Private: Creator + direct connections (status='accepted')
 - Public: All authenticated users
 - Buy items: Creator shown as "Anonymous" to non-connections
 
-### Categories
-- Public: All authenticated users (read-only)
-
-### Item Images
+### item_image
 - Follows parent item visibility rules
 - Images inherit visibility from their item
 
-### Threads & Messages
-- Read/write: Participants only (creator_id or responder_id)
-- Thread creator identity follows item visibility rules
-
-### Message Images
-- Follows parent thread/message visibility rules
-- Images inherit visibility from their message
-
-### Contact Info
-- Hidden: System only
-- Private: Direct connections only (status='accepted')
-- Public: All authenticated users
-
-### Connections
+### connection
 - Read: Both parties (user_a or user_b)
 - Write: user_a creates with status='pending', user_b updates status
 
-### User Settings
-- Read/Write: Owner only (user_id)
+### thread
+- Read/write: Participants only (creator_id or responder_id)
+- Thread creator identity follows item visibility rules
 
-### Users
-- Public profiles: All authenticated users
-- Vendor profiles: Accessible via public routes
+### message
+- Read/write: Participants only (sender_id or recipient in thread)
+- Message images inherit thread visibility
+
+### message_image
+- Follows parent message visibility rules
+- Images inherit visibility from their message
+
+### invite
+- Read/Write: Inviter only (inviter_id)
+- Read: Used by user (used_by) for validation
 
 ## Key Flows
 
@@ -223,9 +233,9 @@ Every feature requires test coverage, verified on every PR:
 
 ### Item Creation
 1. User creates item (buy or sell)
-1. Form: type, category (from categories table), title, description, price_string, images (required for sell), visibility
+1. Form: type, category, title, description, price_string, images (required for sell), visibility
 1. Item created with status='active'
-1. Images stored in item_images table with order_index
+1. Images stored in item_image table with order_index
 1. Visible per visibility rules + connection status
 
 ### Messaging
@@ -264,7 +274,7 @@ Every feature requires test coverage, verified on every PR:
 
 ### Items Page
 - Unified search across all items
-- Filters: type, category (from categories table), price range, connections
+- Filters: type, category, price range, connections
 - Sort: newest, relevance
 - Connection-prioritized feed (connections' items first)
 - Buy items from non-connections show "Anonymous"
