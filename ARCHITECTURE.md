@@ -7,7 +7,7 @@ A trust-based, invite-only marketplace built with Astro, React, and Supabase. Us
 
 ### 1. Declarative Configuration
 All infrastructure defined as code:
-- **Supabase**: Database schema via SQL migrations, RLS policies in migrations, storage/auth config in `supabase/config.toml`
+- **Supabase**: Database schema via SQL migrations, RLS policies in migrations
 - **Cloudflare**: Workers config in `wrangler.toml`, environment variables in `.dev.vars`
 - **Benefits**: Version controlled, reproducible, reviewable, no manual dashboard configuration
 
@@ -15,13 +15,13 @@ All infrastructure defined as code:
 Full stack runs locally via Docker Compose with single command setup:
 - Supabase stack (database, auth, storage, API)
 - Astro dev server
-- Twilio mock/test credentials
+- Twilio test credentials
 - No cloud dependencies for development
 
 ### 3. Automated Testing
 Every feature requires test coverage, verified on every PR:
 - **Unit tests** (Vitest): Utilities, validation, business logic
-- **Integration tests** (Playwright): Auth, item CRUD, messaging, connections, visibility rules
+- **Integration tests** (Playwright): Auth, item CRUD, messaging, connections
 - **CI/CD**: All tests pass before merge, coverage reports
 - **Priority flows**: Signup, item operations with RLS, threads, connection requests
 
@@ -102,7 +102,7 @@ Every feature requires test coverage, verified on every PR:
 - category_id (uuid, fk -> category.id)
 - title (text)
 - description (text)
-- price_string (text) -- budget for buy, asking price for sell
+- price_string (text) -- price or budget
 - visibility (enum: hidden|private|public)
 - status (enum: active|archived|deleted)
 - created_at (timestamp)
@@ -219,7 +219,7 @@ Every feature requires test coverage, verified on every PR:
 ## Key Flows
 
 ### Invite & Onboarding
-1. User clicks invite link (`/signup?code=A7K9M2X4`)
+1. User clicks invite link with code
 1. Server validates code (not used, not revoked)
 1. Shows inviter name + auth method choice (email or phone OTP)
 1. User enters email/phone, receives OTP (Supabase/Twilio)
@@ -258,7 +258,7 @@ Every feature requires test coverage, verified on every PR:
 1. User clicks "Invite someone"
 1. System checks last invite timestamp
 1. If < 24 hours: shows limit message
-1. If eligible: generates 8-char alphanumeric code
+1. If eligible: generates 8-character code
 1. Creates invite record
 1. Returns link: `/signup?code=CODE`
 1. User can revoke anytime (sets revoked_at)
@@ -300,23 +300,23 @@ project-root/
 │   │   ├── 001_initial_schema.sql
 │   │   ├── 002_rls_policies.sql
 │   │   └── 003_indexes.sql
-│   └── seed.sql               # Development test data
+│   └── seed.sql               # Test data
 ├── src/
 │   ├── pages/                 # Astro routes
-│   │   ├── index.astro       # (static) Landing page
-│   │   ├── about.astro       # (static) About page
-│   │   ├── dashboard.astro   # (SSR, auth) User dashboard
+│   │   ├── index.astro       # Landing page
+│   │   ├── about.astro       # About page
+│   │   ├── dashboard.astro   # User dashboard
 │   │   ├── items/
-│   │   │   ├── index.astro   # (SSR) Filterable item list
-│   │   │   ├── [id].astro    # (SSR) Item details
-│   │   │   └── new.astro     # (SSR, auth) Create item
-│   │   ├── vendors.astro     # (SSR) Vendor directory
-│   │   ├── profile/[id].astro # (SSR) User profiles
+│   │   │   ├── index.astro   # Item listings
+│   │   │   ├── [id].astro    # Item details
+│   │   │   └── new.astro     # Create item
+│   │   ├── vendors.astro     # Vendor directory
+│   │   ├── profile/[id].astro # User profiles
 │   │   ├── messages/
-│   │   │   └── index.astro   # (SSR, auth) Message threads
-│   │   ├── signup.astro      # (SSR) Invite signup
-│   │   ├── [vendor_id].astro # (SSR) Vendor profile
-│   │   └── v/[vendor_id].astro # (SSR) Alt vendor route
+│   │   │   └── index.astro   # Message threads
+│   │   ├── signup.astro      # Invite signup
+│   │   ├── [vendor_id].astro # Vendor profile
+│   │   └── v/[vendor_id].astro # Alt vendor route
 │   ├── components/
 │   │   ├── react/            # Interactive components
 │   │   │   ├── ItemForm.tsx
@@ -328,14 +328,14 @@ project-root/
 │   │       └── ItemCard.astro
 │   ├── layouts/
 │   │   ├── BaseLayout.astro  # Common wrapper
-│   │   └── AuthLayout.astro  # Auth-required wrapper
+│   │   └── AuthLayout.astro  # Auth wrapper
 │   └── lib/
 │       ├── supabase.ts      # Database client
 │       ├── auth.ts          # Auth utilities
-│       └── utils/           # Shared helpers
+│       └── utils/           # Helpers
 ├── tests/
-│   ├── unit/               # Vitest unit tests
-│   └── e2e/               # Playwright E2E tests
+│   ├── unit/               # Unit tests
+│   └── e2e/               # Integration tests
 └── .github/
     └── workflows/
         └── ci.yml         # CI/CD pipeline
@@ -360,8 +360,6 @@ project-root/
 - Image uploads auto-compressed (jpg/png, 5MB max)
 - Rate limiting on messages
 - Spam flagging on items (manual admin review)
-
-## Performance
 
 ### Static Generation
 - Landing page fully static
@@ -398,7 +396,7 @@ project-root/
 ## Development Workflow
 
 ### Local Development (Docker Compose)
-Everything runs in containers, no local npm required:
+Everything runs in containers, no local setup required:
 
 ```bash
 # First time setup
@@ -413,10 +411,10 @@ docker-compose up -d
 # Run migrations
 docker-compose exec supabase supabase migration up
 
-# Optional: Seed data
+# Optional: Seed test data
 docker-compose exec supabase psql -f /docker-entrypoint-initdb.d/seed.sql
 
-# Run tests in container
+# Run tests
 docker-compose exec app npm run test
 docker-compose exec app npm run test:e2e
 
