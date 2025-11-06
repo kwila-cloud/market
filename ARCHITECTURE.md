@@ -373,25 +373,6 @@ docker-compose down
 - Astro dev server with Workers
 - Test runner container
 
-### Project Structure
-```
-project-root/
-├── docker-compose.yml
-├── wrangler.toml
-├── supabase/
-│   ├── config.toml
-│   ├── migrations/
-│   │   ├── 001_initial_schema.sql
-│   │   ├── 002_rls_policies.sql
-│   │   └── 003_indexes.sql
-│   └── seed.sql
-├── src/
-├── tests/
-│   ├── unit/
-│   └── e2e/
-└── .github/workflows/ci.yml
-```
-
 ### Environment Variables
 ```
 # .env (in docker-compose)
@@ -403,7 +384,9 @@ TWILIO_AUTH_TOKEN=<test-token>
 TWILIO_PHONE_NUMBER=<test-number>
 ```
 
-### CI Pipeline (GitHub Actions)
+## CI Pipelines (GitHub Actions)
+
+### Merge Request Checks
 1. Checkout code
 2. Start Docker services
 3. Run migrations
@@ -412,14 +395,11 @@ TWILIO_PHONE_NUMBER=<test-number>
 6. Report coverage
 7. Block merge if tests fail
 
-## Deployment Pipeline
+### Push to Main
 
-1. Push to main branch
-2. GitHub Actions triggers
 3. Run tests & build
-4. Deploy to Cloudflare Pages
+4. Deploy to Cloudflare Workers
 5. Run Supabase migrations
-6. Smoke tests
 7. Production live
 
 ## MVP Scope
@@ -438,35 +418,27 @@ TWILIO_PHONE_NUMBER=<test-number>
 - Image uploads (5 per item/message)
 - Search and filters
 - PWA (installable, online-only)
-- Content reporting
-
-### Deferred
-- Notifications (in-app, push, email/SMS)
-- Thread archiving
-- Advanced search/analytics
-- Vendor collaborators
-- Data export tools
-- Admin dashboard UI
 
 ## Future Enhancements
 
-### Near-term (Phase 2)
+### Near-term (v1.0)
 - Notifications system (in-app, push, email/SMS, per-type preferences)
+- Content reporting/moderation 
 - Thread archiving (user-level, doesn't affect other participant)
 - Multi-user threads (3+ participants)
 - Separate storage buckets (items/messages/profiles)
 - Advanced search (saved searches, price filters, location radius)
-- Vendor collaborators (multi-user management, roles)
-- Data export (GDPR compliance)
+- Data export
 
-### Medium-term
+### Medium-term (After onboarding several dozen regular users)
+- Multi-user vendors
 - Reputation/trust scores
 - Business analytics dashboard
 - Enhanced portfolio (curated showcases, project descriptions)
 - Mobile app (React Native)
 - Offline mode (cached browsing)
 
-### Long-term
+### Long-term (Only when necessary)
 - Payment integration (optional escrow)
 - Shipping/logistics
 - Community features (forums, events)
