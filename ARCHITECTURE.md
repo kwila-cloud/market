@@ -8,7 +8,7 @@ A trust-based, invite-only marketplace built with Astro, React, and Supabase. Us
 ### 1. Declarative Configuration
 All infrastructure defined as code:
 - **Supabase**: Database schema via SQL migrations, RLS policies in migrations, storage/auth config in `supabase/config.toml`
-- **Cloudflare**: Workers config in `wrangler.toml`, Pages settings declarative, environment variables in `.dev.vars`
+- **Cloudflare**: Workers config in `wrangler.toml`, environment variables in `.dev.vars`
 - **Benefits**: Version controlled, reproducible, reviewable, no manual dashboard configuration
 
 ### 2. Local Development Parity
@@ -43,7 +43,7 @@ Every feature requires test coverage, verified on every PR:
 - **API**: Supabase REST + PostgREST with RLS
 
 ### Deployment
-- **Hosting**: Cloudflare Pages
+- **Hosting**: Cloudflare Workers
 - **SSR**: Cloudflare Workers
 - **CDN**: Cloudflare CDN
 
