@@ -78,13 +78,12 @@ Every feature requires test coverage, verified on every PR:
 - contact_type (enum: email|phone)
 - value (text)
 - visibility (enum: hidden|private|public)
-- is_primary (boolean) -- auth contact
 - created_at (timestamp)
 
 ### user_settings
 - id (uuid, pk)
 - user_id (uuid, fk -> user.id)
-- setting_key (text) -- notification_prefs, privacy_settings, etc.
+- setting_key (text)
 - setting_value (jsonb)
 - created_at (timestamp)
 - updated_at (timestamp)
@@ -115,6 +114,12 @@ Every feature requires test coverage, verified on every PR:
 - alt_text (text)
 - order_index (integer)
 - created_at (timestamp)
+
+### watch
+- id (uuid, pk)
+- name (text)
+- query_params (text)
+- notify (uuid, fk -> contact_info.id, nullable)
 
 ### connection
 - id (uuid, pk)
@@ -156,29 +161,16 @@ Every feature requires test coverage, verified on every PR:
 - revoked_at (timestamp, nullable)
 - created_at (timestamp)
 
-### Indexes
-- user: (vendor_id) unique, (invited_by)
-- contact_info: (user_id), (contact_type), (is_primary)
-- user_settings: (user_id, setting_key) unique, (user_id)
-- category: (name) unique
-- item: (status, visibility, created_at), (user_id), (type, category_id)
-- item_image: (item_id, order_index), (item_id)
-- connection: (user_a, user_b) unique, (user_b, status)
-- thread: (item_id, creator_id, responder_id) unique, (item_id), (creator_id), (responder_id)
-- message: (thread_id, created_at), (sender_id)
-- message_image: (message_id, order_index), (message_id)
-- invite: (invite_code), (inviter_id)
-
 ## Row Level Security (RLS)
 
 ### user
 - Public profiles: All authenticated users
-- Vendor profiles: Accessible via public routes
+- Vendor profiles: Accessible via public routes (does not require authentication)
 
 ### contact_info
 - Hidden: System only
 - Private: Direct connections only (status='accepted')
-- Public: All authenticated users
+- Public: Anyone can view, even if not authenticated
 
 ### user_settings
 - Read/Write: Owner only (user_id)
@@ -225,7 +217,7 @@ Every feature requires test coverage, verified on every PR:
 1. User enters email/phone, receives OTP (Supabase/Twilio)
 1. Verifies OTP, creates account
 1. Creates user record with invited_by
-1. Creates contact_info (is_primary=true, default visibility)
+1. Creates contact_info (visibility=hidden)
 1. Creates connection (user_a=inviter, user_b=invitee, status='accepted')
 1. Marks invite as used
 1. Mandatory 4-step wizard: account type, contact visibility, about/avatar, tutorial
@@ -372,13 +364,8 @@ project-root/
 
 ### Image Handling
 - Auto-compression on upload (balanced quality/size)
-- 5+ images per item/message
+- 5 images per item/message
 - Single storage bucket (simpler for MVP)
-
-### Message Polling
-- 5-10 second intervals
-- Active threads only
-- Debounced search inputs
 
 ## Error Handling
 
@@ -472,6 +459,7 @@ TWILIO_PHONE_NUMBER=<test-number>
 - Image uploads (5 per item/message)
 - Search and filters
 - PWA (installable, online-only)
+- Watch list (user can persist a set of search term and filters, also choose to receive weekly notification about new items)
 
 ## Future Enhancements
 
