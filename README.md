@@ -1,6 +1,11 @@
 # A Market
 
-An invite-only marketplace designed to foster authentic interactions and high-quality transactions within trusted communities. Built for local artisans, small businesses, and individuals who value relationships over profit margins.
+_We facilitate high quality transactions between high quality people._
+
+An online marketplace designed to foster authentic interactions and high-quality transactions within trusted communities. Built for local artisans, small businesses, and individuals who value relationships over profit margins.
+
+> [!NOTE]
+> "A Market" is a working name. The final name will be determined based on beta tester feedback.
 
 ## Vision
 
@@ -60,4 +65,3 @@ A Market exists to serve people and communities, not investors or growth metrics
 
 ---
 
-**Note**: "A Market" is a working name. The final name will be determined based on beta tester feedback.
