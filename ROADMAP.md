@@ -36,7 +36,7 @@
    - [ ] Create invite code validation page
    - [ ] Implement email/phone OTP verification
    - [ ] Create user record with invited_by relationship
-   - [ ] Add contact_info creation with primary contact
+   - [ ] Add contact_info creation
 
 - [ ] **Create onboarding wizard**
    - [ ] Build 4-step wizard component
