@@ -276,9 +276,17 @@ Routes: `/{vendor_id}` or `/v/{vendor_id}`
 
 Content:
 - Vendor about, avatar, contact info (per visibility)
-- Main focus: all active sell items (all categories)
-- Include option to view archived items (by default, filter will be set to show active items only)
+- Main focus: all active and public sell items (all categories)
+- Include option to view public archived items (by default, filter will be set to show active items only)
 - No buy items shown
+
+### User Profiles
+Routes: `/profile/{user_id}`
+
+Content:
+- About, avatar, contact info (per visibility)
+- Display all active and public sell AND buy items (all categories)
+- Include option to view archived items (by default, filter will be set to show active items only)
 
 ## Project Structure
 
