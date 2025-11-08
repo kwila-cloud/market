@@ -32,11 +32,6 @@ Contact information (email and phone) has three visibility levels:
 
 When someone responds to your request, you see their offer first—not their contact details. You choose whether to open a direct messaging channel or decline with no further contact.
 
-### Business Support
-Accounts can operate as individuals or businesses. Business accounts can have multiple collaborators, making it easy for small teams to manage their online presence without the overhead of building their own website.
-
-Dedicated business profile pages help highlight local vendors and artisans in the community.
-
 ## How It Works
 
 1. **Join through invitation**: Receive an invite link from someone already in the network

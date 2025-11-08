@@ -7,7 +7,7 @@ A trust-based, invite-only marketplace built with Astro, React, and Supabase. Us
 
 ### 1. Declarative Configuration
 All infrastructure defined as code:
-- **Supabase**: Database schema via SQL migrations, RLS policies in migrations, storage/auth config in `supabase/config.toml`
+- **Supabase**: Database schema via SQL migrations, RLS policies in migrations
 - **Cloudflare**: Workers config in `wrangler.toml`, environment variables in `.dev.vars`
 - **Benefits**: Version controlled, reproducible, reviewable, no manual dashboard configuration
 
@@ -15,13 +15,13 @@ All infrastructure defined as code:
 Full stack runs locally via Docker Compose with single command setup:
 - Supabase stack (database, auth, storage, API)
 - Astro dev server
-- Twilio mock/test credentials
+- Twilio test credentials
 - No cloud dependencies for development
 
 ### 3. Automated Testing
 Every feature requires test coverage, verified on every PR:
 - **Unit tests** (Vitest): Utilities, validation, business logic
-- **Integration tests** (Playwright): Auth, item CRUD, messaging, connections, visibility rules
+- **Integration tests** (Playwright): Auth, item CRUD, messaging, connections
 - **CI/CD**: All tests pass before merge, coverage reports
 - **Priority flows**: Signup, item operations with RLS, threads, connection requests
 
@@ -63,114 +63,161 @@ Every feature requires test coverage, verified on every PR:
 
 ## Database Schema
 
-### users
+### user
 - id (uuid, pk)
 - display_name (text)
 - about (text)
 - avatar_url (text)
 - vendor_id (text, unique, nullable) -- alphanumeric + underscore/dash
 - created_at (timestamp)
-- invited_by (uuid, fk -> users.id)
+- invited_by (uuid, fk -> user.id)
 
 ### contact_info
 - id (uuid, pk)
-- user_id (uuid, fk -> users.id)
+- user_id (uuid, fk -> user.id)
 - contact_type (enum: email|phone)
 - value (text)
 - visibility (enum: hidden|private|public)
-- is_primary (boolean) -- auth contact
 - created_at (timestamp)
 
-### connections
+### user_settings
 - id (uuid, pk)
-- user_a (uuid, fk -> users.id) -- requester
-- user_b (uuid, fk -> users.id) -- recipient
-- status (enum: pending|accepted|declined)
+- user_id (uuid, fk -> user.id)
+- setting_key (text)
+- setting_value (jsonb)
 - created_at (timestamp)
-- unique(user_a, user_b)
+- updated_at (timestamp)
 
-### items
+### category
 - id (uuid, pk)
-- user_id (uuid, fk -> users.id)
+- name (text) -- new, resale, service
+- description (text)
+- created_at (timestamp)
+
+### item
+- id (uuid, pk)
+- user_id (uuid, fk -> user.id)
 - type (enum: buy|sell)
-- category (enum: new|resale|service)
+- category_id (uuid, fk -> category.id)
 - title (text)
 - description (text)
-- price_string (text) -- budget for buy, asking price for sell
-- images (text[]) -- required for sell, optional for buy
+- price_string (text) -- price or budget
 - visibility (enum: hidden|private|public)
 - status (enum: active|archived|deleted)
 - created_at (timestamp)
 - updated_at (timestamp)
 
-### threads
+### item_image
 - id (uuid, pk)
-- item_id (uuid, fk -> items.id)
-- creator_id (uuid, fk -> users.id) -- thread initiator
-- responder_id (uuid, fk -> users.id) -- other participant
+- item_id (uuid, fk -> item.id)
+- url (text)
+- alt_text (text)
+- order_index (integer)
+- created_at (timestamp)
+
+### watch
+- id (uuid, pk)
+- name (text)
+- query_params (text)
+- notify (uuid, fk -> contact_info.id, nullable)
+
+### connection
+- id (uuid, pk)
+- user_a (uuid, fk -> user.id) -- requester
+- user_b (uuid, fk -> user.id) -- recipient
+- status (enum: pending|accepted|declined)
+- created_at (timestamp)
+- unique(user_a, user_b)
+
+### thread
+- id (uuid, pk)
+- item_id (uuid, fk -> item.id)
+- creator_id (uuid, fk -> user.id) -- thread initiator
+- responder_id (uuid, fk -> user.id) -- other participant
 - created_at (timestamp)
 - unique(item_id, creator_id, responder_id)
 
-### messages
+### message
 - id (uuid, pk)
-- thread_id (uuid, fk -> threads.id)
-- sender_id (uuid, fk -> users.id)
+- thread_id (uuid, fk -> thread.id)
+- sender_id (uuid, fk -> user.id)
 - content (text)
-- images (text[]) -- 0-5 images
 - read (boolean)
 - created_at (timestamp)
 
-### invites
+### message_image
 - id (uuid, pk)
-- inviter_id (uuid, fk -> users.id)
+- message_id (uuid, fk -> message.id)
+- url (text)
+- order_index (integer)
+- created_at (timestamp)
+
+### invite
+- id (uuid, pk)
+- inviter_id (uuid, fk -> user.id)
 - invite_code (text, unique) -- 8 alphanumeric characters
-- used_by (uuid, fk -> users.id, nullable)
+- used_by (uuid, fk -> user.id, nullable)
 - used_at (timestamp, nullable)
 - revoked_at (timestamp, nullable)
 - created_at (timestamp)
 
-### Indexes
-- items: (status, visibility, created_at), (user_id), (type, category)
-- threads: (item_id, creator_id, responder_id) unique, (item_id), (creator_id), (responder_id)
-- messages: (thread_id, created_at), (sender_id)
-- connections: (user_a, user_b) unique, (user_b, status)
-- invites: (invite_code), (inviter_id)
-
 ## Row Level Security (RLS)
 
-### Items
+### user
+- Public profiles: All authenticated users
+- Vendor profiles: Accessible via public routes (does not require authentication)
+
+### contact_info
+- Hidden: System only
+- Private: Direct connections only (status='accepted')
+- Public: Anyone can view, even if not authenticated
+
+### user_settings
+- Read/Write: Owner only (user_id)
+
+### category
+- Public: All authenticated users (read-only)
+
+### item
 - Hidden: Creator only
 - Private: Creator + direct connections (status='accepted')
 - Public: All authenticated users
 - Buy items: Creator shown as "Anonymous" to non-connections
 
-### Threads & Messages
-- Read/write: Participants only (creator_id or responder_id)
-- Thread creator identity follows item visibility rules
+### item_image
+- Follows parent item visibility rules
+- Images inherit visibility from their item
 
-### Contact Info
-- Hidden: System only
-- Private: Direct connections only (status='accepted')
-- Public: All authenticated users
-
-### Connections
+### connection
 - Read: Both parties (user_a or user_b)
 - Write: user_a creates with status='pending', user_b updates status
 
-### Users
-- Public profiles: All authenticated users
-- Vendor profiles: Accessible via public routes
+### thread
+- Read/write: Participants only (creator_id or responder_id)
+- Thread creator identity follows item visibility rules
+
+### message
+- Read/write: Participants only (sender_id or recipient in thread)
+- Message images inherit thread visibility
+
+### message_image
+- Follows parent message visibility rules
+- Images inherit visibility from their message
+
+### invite
+- Read/Write: Inviter only (inviter_id)
+- Read: Used by user (used_by) for validation
 
 ## Key Flows
 
 ### Invite & Onboarding
-1. User clicks invite link (`/signup?code=A7K9M2X4`)
+1. User clicks invite link with code
 1. Server validates code (not used, not revoked)
 1. Shows inviter name + auth method choice (email or phone OTP)
 1. User enters email/phone, receives OTP (Supabase/Twilio)
 1. Verifies OTP, creates account
 1. Creates user record with invited_by
-1. Creates contact_info (is_primary=true, default visibility)
+1. Creates contact_info (visibility=hidden)
 1. Creates connection (user_a=inviter, user_b=invitee, status='accepted')
 1. Marks invite as used
 1. Mandatory 4-step wizard: account type, contact visibility, about/avatar, tutorial
@@ -180,6 +227,7 @@ Every feature requires test coverage, verified on every PR:
 1. User creates item (buy or sell)
 1. Form: type, category, title, description, price_string, images (required for sell), visibility
 1. Item created with status='active'
+1. Images stored in item_image table with order_index
 1. Visible per visibility rules + connection status
 
 ### Messaging
@@ -202,7 +250,7 @@ Every feature requires test coverage, verified on every PR:
 1. User clicks "Invite someone"
 1. System checks last invite timestamp
 1. If < 24 hours: shows limit message
-1. If eligible: generates 8-char alphanumeric code
+1. If eligible: generates 8-character code
 1. Creates invite record
 1. Returns link: `/signup?code=CODE`
 1. User can revoke anytime (sets revoked_at)
@@ -210,11 +258,11 @@ Every feature requires test coverage, verified on every PR:
 ## Site Structure
 
 ### Main Navigation
-- **Vendors**: Featured vendors + recent sell items
+- **Vendors**: `/vendors` - a list of profiles that have `vendor_id` set
 - **New Items**: `/items?type=sell&category=new`
 - **Resale Items**: `/items?type=sell&category=resale`
 - **Services**: `/items?type=sell&category=service`
-- **Requests**: `/items?type=buy` (optional category filter)
+- **Requests**: `/items?type=buy`
 
 ### Items Page
 - Unified search across all items
@@ -228,9 +276,17 @@ Routes: `/{vendor_id}` or `/v/{vendor_id}`
 
 Content:
 - Vendor about, avatar, contact info (per visibility)
-- All active sell items
-- Portfolio grid (fulfilled items with public visibility)
+- Main focus: all active and public sell items (all categories)
+- Include option to view public archived items (by default, filter will be set to show active items only)
 - No buy items shown
+
+### User Profiles
+Routes: `/profile/{user_id}`
+
+Content:
+- About, avatar, contact info (per visibility)
+- Display all active and public sell AND buy items (all categories)
+- Include option to view archived items (by default, filter will be set to show active items only)
 
 ## Project Structure
 
@@ -244,23 +300,23 @@ project-root/
 │   │   ├── 001_initial_schema.sql
 │   │   ├── 002_rls_policies.sql
 │   │   └── 003_indexes.sql
-│   └── seed.sql               # Development test data
+│   └── seed.sql               # Test data
 ├── src/
 │   ├── pages/                 # Astro routes
-│   │   ├── index.astro       # (static) Landing page
-│   │   ├── about.astro       # (static) About page
-│   │   ├── dashboard.astro   # (SSR, auth) User dashboard
+│   │   ├── index.astro       # Landing page
+│   │   ├── about.astro       # About page
+│   │   ├── dashboard.astro   # User dashboard
 │   │   ├── items/
-│   │   │   ├── index.astro   # (SSR) Filterable item list
-│   │   │   ├── [id].astro    # (SSR) Item details
-│   │   │   └── new.astro     # (SSR, auth) Create item
-│   │   ├── vendors.astro     # (SSR) Vendor directory
-│   │   ├── profile/[id].astro # (SSR) User profiles
+│   │   │   ├── index.astro   # Item listings
+│   │   │   ├── [id].astro    # Item details
+│   │   │   └── new.astro     # Create item
+│   │   ├── vendors.astro     # Vendor directory
+│   │   ├── profile/[id].astro # User profiles
 │   │   ├── messages/
-│   │   │   └── index.astro   # (SSR, auth) Message threads
-│   │   ├── signup.astro      # (SSR) Invite signup
-│   │   ├── [vendor_id].astro # (SSR) Vendor profile
-│   │   └── v/[vendor_id].astro # (SSR) Alt vendor route
+│   │   │   └── index.astro   # Message threads
+│   │   ├── signup.astro      # Invite signup
+│   │   ├── [vendor_id].astro # Vendor profile
+│   │   └── v/[vendor_id].astro # Alt vendor route
 │   ├── components/
 │   │   ├── react/            # Interactive components
 │   │   │   ├── ItemForm.tsx
@@ -272,14 +328,14 @@ project-root/
 │   │       └── ItemCard.astro
 │   ├── layouts/
 │   │   ├── BaseLayout.astro  # Common wrapper
-│   │   └── AuthLayout.astro  # Auth-required wrapper
+│   │   └── AuthLayout.astro  # Auth wrapper
 │   └── lib/
 │       ├── supabase.ts      # Database client
 │       ├── auth.ts          # Auth utilities
-│       └── utils/           # Shared helpers
+│       └── utils/           # Helpers
 ├── tests/
-│   ├── unit/               # Vitest unit tests
-│   └── e2e/               # Playwright E2E tests
+│   ├── unit/               # Unit tests
+│   └── e2e/               # Integration tests
 └── .github/
     └── workflows/
         └── ci.yml         # CI/CD pipeline
@@ -305,8 +361,6 @@ project-root/
 - Rate limiting on messages
 - Spam flagging on items (manual admin review)
 
-## Performance
-
 ### Static Generation
 - Landing page fully static
 - Public content cached at CDN edge
@@ -318,13 +372,8 @@ project-root/
 
 ### Image Handling
 - Auto-compression on upload (balanced quality/size)
-- 5+ images per item/message
+- 5 images per item/message
 - Single storage bucket (simpler for MVP)
-
-### Message Polling
-- 5-10 second intervals
-- Active threads only
-- Debounced search inputs
 
 ## Error Handling
 
@@ -342,7 +391,7 @@ project-root/
 ## Development Workflow
 
 ### Local Development (Docker Compose)
-Everything runs in containers, no local npm required:
+Everything runs in containers, no local setup required:
 
 ```bash
 # First time setup
@@ -357,10 +406,10 @@ docker-compose up -d
 # Run migrations
 docker-compose exec supabase supabase migration up
 
-# Optional: Seed data
+# Optional: Seed test data
 docker-compose exec supabase psql -f /docker-entrypoint-initdb.d/seed.sql
 
-# Run tests in container
+# Run tests
 docker-compose exec app npm run test
 docker-compose exec app npm run test:e2e
 
@@ -418,6 +467,7 @@ TWILIO_PHONE_NUMBER=<test-number>
 - Image uploads (5 per item/message)
 - Search and filters
 - PWA (installable, online-only)
+- Watch list (user can persist a set of search term and filters, also choose to receive weekly notification about new items)
 
 ## Future Enhancements
 
