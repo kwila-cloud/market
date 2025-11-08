@@ -258,11 +258,11 @@ Every feature requires test coverage, verified on every PR:
 ## Site Structure
 
 ### Main Navigation
-- **Vendors**: Featured vendors + recent sell items
+- **Vendors**: `/vendors` - a list of profiles that have `vendor_id` set
 - **New Items**: `/items?type=sell&category=new`
 - **Resale Items**: `/items?type=sell&category=resale`
 - **Services**: `/items?type=sell&category=service`
-- **Requests**: `/items?type=buy` (optional category filter)
+- **Requests**: `/items?type=buy`
 
 ### Items Page
 - Unified search across all items
@@ -276,8 +276,8 @@ Routes: `/{vendor_id}` or `/v/{vendor_id}`
 
 Content:
 - Vendor about, avatar, contact info (per visibility)
-- All active sell items
-- Portfolio grid (fulfilled items with public visibility)
+- Main focus: all active sell items (all categories)
+- Include option to view archived items (by default, filter will be set to show active items only)
 - No buy items shown
 
 ## Project Structure
