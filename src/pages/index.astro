@@ -2,7 +2,7 @@
 const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
 ---
 
-<html lang="en">
+<html lang="en" class="dark">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -10,29 +10,61 @@ const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
 		<meta name="generator" content={Astro.generator} />
 		<title>{platformName}</title>
 	</head>
-	<body>
-		<main class="max-w-4xl mx-auto p-8 font-sans">
-			<header class="text-center mb-12">
-				<h1 class="text-5xl font-bold text-gray-800 mb-2">{platformName}</h1>
-				<p class="text-xl text-gray-600 italic">We facilitate high quality transactions between high quality people.</p>
-			</header>
-			
-			<section class="mb-12">
-				<input 
-					type="text" 
-					placeholder="What are you looking for?" 
-					class="w-full px-6 py-4 text-lg text-center border-2 border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-200"
-				/>
-			</section>
-			
-			<section class="bg-gray-50 p-8 rounded-lg border border-gray-200">
-				<h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Our Core Values</h2>
-				<ul class="list-none p-0 m-0">
-					<li class="py-3 text-gray-700 text-center text-lg border-b border-gray-200 last:border-b-0">Humans are eternal, the things we buy and sell are not.</li>
-					<li class="py-3 text-gray-700 text-center text-lg border-b border-gray-200 last:border-b-0">Relationships have lasting value, profit margins do not.</li>
-					<li class="py-3 text-gray-700 text-center text-lg last:border-b-0">Quality is worth far more than quantity.</li>
-				</ul>
-			</section>
+	<body class="min-h-screen bg-gray-900 text-white">
+		<main class="min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
+			<div class="max-w-3xl w-full text-center">
+				<!-- Hero Section -->
+				<div class="mb-16">
+					<h1 class="text-6xl sm:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+						{platformName}
+					</h1>
+					<p class="text-xl sm:text-2xl text-gray-300 mb-8 leading-relaxed">
+						We facilitate high quality transactions between high quality people.
+					</p>
+				</div>
+				
+				<!-- Search Section -->
+				<div class="mb-16">
+					<div class="relative max-w-2xl mx-auto">
+						<input 
+							type="text" 
+							placeholder="What are you looking for?" 
+							class="w-full px-8 py-6 text-lg text-center bg-gray-800 border border-gray-600 rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500/50 focus:border-blue-400 transition-all duration-300 shadow-2xl backdrop-blur-sm"
+						/>
+						<div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 blur-xl -z-10"></div>
+					</div>
+				</div>
+				
+				<!-- Values Section -->
+				<div class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-3xl border border-gray-700 shadow-2xl">
+					<h2 class="text-3xl font-semibold mb-8 text-transparent bg-gradient-to-r from-gray-100 to-gray-300 bg-clip-text">
+						Our Core Values
+					</h2>
+					<div class="space-y-6">
+						<div class="flex items-center justify-center">
+							<div class="w-2 h-2 bg-blue-400 rounded-full mr-4"></div>
+							<p class="text-lg text-gray-200 text-center leading-relaxed">
+								Humans are eternal, the things we buy and sell are not.
+							</p>
+						</div>
+						<div class="flex items-center justify-center">
+							<div class="w-2 h-2 bg-purple-400 rounded-full mr-4"></div>
+							<p class="text-lg text-gray-200 text-center leading-relaxed">
+								Relationships have lasting value, profit margins do not.
+							</p>
+						</div>
+						<div class="flex items-center justify-center">
+							<div class="w-2 h-2 bg-blue-400 rounded-full mr-4"></div>
+							<p class="text-lg text-gray-200 text-center leading-relaxed">
+								Quality is worth far more than quantity.
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Bottom spacing -->
+				<div class="mt-16"></div>
+			</div>
 		</main>
 	</body>
 </html>
