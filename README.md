@@ -4,17 +4,21 @@ _We facilitate high quality transactions between high quality people._
 
 An online marketplace designed to foster authentic interactions and high-quality transactions within trusted communities. Built for local artisans, small businesses, and individuals who value relationships over profit margins.
 
+This market exists to serve people and communities, not investors or growth metrics. We're building a platform for small-scale, high-trust commerce that keeps the focus on authentic human relationships.
+
 > [!NOTE]
 > "A Market" is a working name. The final name will be determined based on beta tester feedback.
 
-## Vision
+## Core Values
 
-A Market reimagines online commerce by prioritizing trust, authenticity, and community connections. Instead of competing on volume and scale, we're creating a space where meaningful transactions happen between people who know and trust each other.
+- Humans are eternal, the things we buy and sell are not.
+- Relationships have lasting value, profit margins do not.
+- Quality is worth far more than quantity.
 
 ## Core Features
 
 ### Request-Driven Commerce
-The heart of A Market is its unique request system. Users can post what they're looking for, and others in the network can fulfill those requests. Whether you need a used stove for $500 or a custom software solution, simply describe what you want and let the community respond.
+The heart of our market is the request system. Users can post what they're looking for, and others on the platform can attempt to fulfill those requests. Whether you need a used stove for $500 or a custom software solution, simply describe what you are looking for and leverage your social connections to reduce the time and effort it takes to find it.
 
 ### Three Item Categories
 - **New Items**: Locally made goods from artisans and small businesses (custom crafts, 3D printed items, handmade clothing, etc.)
@@ -22,9 +26,11 @@ The heart of A Market is its unique request system. Users can post what they're 
 - **Services**: Gig work and specialized skills (repairs, freelance work, custom shopping services, etc.)
 
 ### Trust Through Connections
-A Market is invite-only. New accounts can only be created through invite links from existing members, automatically establishing a connection between inviter and invitee. This creates an organic network of people who know each other, ensuring authenticity from day one.
+
+Our platform is invite-only during the beta phase. New accounts can only be created through invite links from existing members, automatically establishing a connection between inviter and invitee. This creates an organic network of people who know each other, ensuring authenticity from day one.
 
 ### Privacy-First Design
+
 Contact information (email and phone) has three visibility levels:
 - **Hidden**: Only the system can see it
 - **Private**: Only visible to your direct connections
@@ -48,15 +54,10 @@ When someone responds to your request, you see their offer first—not their con
 
 ## Project Status
 
-Currently in early development. We're focused on validating the core marketplace mechanics with a trusted beta group before adding more complex features.
+The project is currently in early development. We're focused on validating the core marketplace mechanics with a trusted beta group before adding more complex features.
 
 ## Contributing
 
-This is an open-source project, and contributions are welcome. As we're still defining the architecture and core features, please open an issue to discuss major changes before submitting pull requests.
+This is an open-source project, and contributions are welcome. See our [contributing guide](/CONTRIBUTING.md) to get started.
 
-## Philosophy
-
-A Market exists to serve people and communities, not investors or growth metrics. We're building a tool for small-scale, high-trust commerce that keeps the focus on authentic human connections.
-
----
 
