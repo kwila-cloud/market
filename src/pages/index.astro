@@ -11,109 +11,28 @@ const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
 		<title>{platformName}</title>
 	</head>
 	<body>
-		<main class="container">
-			<header>
-				<h1>{platformName}</h1>
-				<p class="tagline">We facilitate high quality transactions between high quality people.</p>
+		<main class="max-w-4xl mx-auto p-8 font-sans">
+			<header class="text-center mb-12">
+				<h1 class="text-5xl font-bold text-gray-800 mb-2">{platformName}</h1>
+				<p class="text-xl text-gray-600 italic">We facilitate high quality transactions between high quality people.</p>
 			</header>
 			
-			<section class="search-section">
+			<section class="mb-12">
 				<input 
 					type="text" 
 					placeholder="What are you looking for?" 
-					class="search-input"
+					class="w-full px-6 py-4 text-lg text-center border-2 border-gray-300 rounded-lg bg-white shadow-sm focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-200"
 				/>
 			</section>
 			
-			<section class="values-section">
-				<h2>Our Core Values</h2>
-				<ul>
-					<li>Humans are eternal, the things we buy and sell are not.</li>
-					<li>Relationships have lasting value, profit margins do not.</li>
-					<li>Quality is worth far more than quantity.</li>
+			<section class="bg-gray-50 p-8 rounded-lg border border-gray-200">
+				<h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">Our Core Values</h2>
+				<ul class="list-none p-0 m-0">
+					<li class="py-3 text-gray-700 text-center text-lg border-b border-gray-200 last:border-b-0">Humans are eternal, the things we buy and sell are not.</li>
+					<li class="py-3 text-gray-700 text-center text-lg border-b border-gray-200 last:border-b-0">Relationships have lasting value, profit margins do not.</li>
+					<li class="py-3 text-gray-700 text-center text-lg last:border-b-0">Quality is worth far more than quantity.</li>
 				</ul>
 			</section>
 		</main>
-		
-		<style>
-			.container {
-				max-width: 800px;
-				margin: 0 auto;
-				padding: 2rem;
-				font-family: system-ui, sans-serif;
-			}
-			
-			header {
-				text-align: center;
-				margin-bottom: 3rem;
-			}
-			
-			h1 {
-				font-size: 2.5rem;
-				font-weight: bold;
-				color: #1f2937;
-				margin-bottom: 0.5rem;
-			}
-			
-			.tagline {
-				font-size: 1.25rem;
-				color: #6b7280;
-				font-style: italic;
-			}
-			
-			.search-section {
-				margin-bottom: 3rem;
-			}
-			
-			.search-input {
-				width: 100%;
-				padding: 1rem 1.5rem;
-				font-size: 1.125rem;
-				border: 2px solid #e5e7eb;
-				border-radius: 0.5rem;
-				text-align: center;
-				background: white;
-				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-			}
-			
-			.search-input:focus {
-				outline: none;
-				border-color: #3b82f6;
-				box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-			}
-			
-			.values-section {
-				background: #f9fafb;
-				padding: 2rem;
-				border-radius: 0.5rem;
-				border: 1px solid #e5e7eb;
-			}
-			
-			.values-section h2 {
-				font-size: 1.5rem;
-				font-weight: 600;
-				color: #1f2937;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			
-			.values-section ul {
-				list-style: none;
-				padding: 0;
-				margin: 0;
-			}
-			
-			.values-section li {
-				padding: 0.75rem 0;
-				color: #4b5563;
-				text-align: center;
-				font-size: 1.125rem;
-				border-bottom: 1px solid #e5e7eb;
-			}
-			
-			.values-section li:last-child {
-				border-bottom: none;
-			}
-		</style>
 	</body>
 </html>
