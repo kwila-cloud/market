@@ -26,12 +26,6 @@ Required behavior (non-interactive flow)
      - `git push -u origin "$(git rev-parse --abbrev-ref HEAD)"`
    - Create the pull request non-interactively using `gh` (GitHub CLI). Provide a clear title and a PR body via a HEREDOC to avoid shell quoting issues. Example:
      - `gh pr create --title "<PR title>" --body "$(cat <<'EOF'\n<PR body>\nEOF\n)"`
-   - Retrieve the created PR number and URL to update `CHANGELOG.md`.
-     - Example to get the PR number: `gh pr view --json number,url --jq '.number'`
-   - Update `CHANGELOG.md` at the top (under the current unreleased section) with a single entry referencing the PR number in the repository style, for example:
-     - `- [#NN](https://github.com/kwila-cloud/simple-sync/pull/NN): Short description`
-   - Commit the `CHANGELOG.md` update and push the commit (it must be on the same branch so the changelog change is included in the PR):
-     - `git add CHANGELOG.md && git commit -m "chore: add changelog entry for PR #NN" && git push`
    - Ask the user for code review feedback on the new pull request.
    - DO NOT suggest starting on the next section of the task list.
 
