@@ -25,6 +25,12 @@ Every feature requires test coverage, verified on every PR:
 - **CI/CD**: All tests pass before merge, coverage reports
 - **Priority flows**: Signup, item operations with RLS, threads, connection requests
 
+### 4. Intuitive User Experience
+Every feature should support both power users and those who rank low on the "techniness" spectrum.
+- All the main features should be high intuitive, even to those who are totally new to the platform.
+- Create extra features for power users, but don't overwhelm normal users with power user features.
+- Prefer preserving simplicity over implementing additional complexity.
+
 ## Technology Stack
 
 ### Frontend
