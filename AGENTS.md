@@ -71,5 +71,6 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 3. **Bug fixes**: Check if related spec exists, verify with tests
 4. **Tests**: Run existing test suite before/after changes
 5. **Dependencies**: Check package.json before using new libraries
+6. **Pull Requests**: Use short, descriptive PR titles (3-7 words). See CONTRIBUTING.md for examples
 
 Be sure to refer to CONTRIBUTING.md for detailed guidelines on contributing to this project.

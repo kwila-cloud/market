@@ -39,3 +39,37 @@ Each spec file should contain the following:
 - **Files**: Astro (.astro), React (.tsx), TypeScript (.ts), CSS (.css)
 - **State**: React Context + Zustand for complex state, useState for simple
 - **Security**: Never log secrets, validate user input, enforce RLS in all queries
+
+## Commit Messages and PR Titles
+
+### Commit Messages
+Use conventional commit format:
+- `feat:` - New features
+- `fix:` - Bug fixes  
+- `docs:` - Documentation changes
+- `style:` - Code style changes (formatting, etc.)
+- `refactor:` - Code refactoring
+- `test:` - Adding or updating tests
+- `chore:` - Maintenance tasks
+
+**Examples:**
+```
+feat(0): add astro project with react islands
+fix: resolve build error in home page
+docs: update api documentation
+```
+
+### Pull Request Titles
+Keep PR titles **short and descriptive**, typically 3-7 words:
+
+**Good examples:**
+- `feat: basic infrastructure for home page`
+- `fix: tailwind css styling issues`
+- `docs: update contributing guidelines`
+
+**Bad examples (avoid):**
+- `feat(0): infrastructure setup for basic home page with astro 5.x and react 19 islands including typescript strict mode and tailwind css 4.x integration and environment variable configuration`
+- `update the home page` (too vague)
+
+### What Went Wrong
+Remember: PR titles should quickly communicate the core change, not list every technical detail. Use the body of the PR for detailed explanations.
