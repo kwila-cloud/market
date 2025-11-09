@@ -2,12 +2,28 @@
 
 _We facilitate high quality transactions between high quality people._
 
+> [!NOTE]
+> "A Market" is a working name. The final name will be determined based on beta tester feedback.
+
+## Problems to Solve
+
+### Used Market
+
+If you are looking for a good deal on something on the used market, it takes way too much time and effort to research and find what you need.
+
+What if you could simply post what you're looking for - "need a used stove, $200 budget" or "looking for a cleaning lady" - and your community could help you find what you are looking for?
+
+### Small Businesses
+
+If you are looking to have a digital presence for your small business without breaking the bank investing in a dedicated website, what do you do?
+
+What if you could quickly and easily set up a vendor page to list your inventory and portfolio?
+
+## Our Solution
+
 An online marketplace designed to foster authentic interactions and high-quality transactions within trusted communities. Built for local artisans, small businesses, and individuals who value relationships over profit margins.
 
 This market exists to serve people and communities, not investors or growth metrics. We're building a platform for small-scale, high-trust commerce that keeps the focus on authentic human relationships.
-
-> [!NOTE]
-> "A Market" is a working name. The final name will be determined based on beta tester feedback.
 
 ## Core Values
 
