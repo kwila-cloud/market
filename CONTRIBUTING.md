@@ -4,6 +4,10 @@
 
 Refer to the [architecture document](/ARCHITECTURE.md)
 
+## Infrastructure
+
+Refer to the [infrastructure document](/INFRASTRUCTURE.md)
+
 ## Getting Started
 
 TODO: add basic list of commands useful in a local dev environment (using docker compose).
