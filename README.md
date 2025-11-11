@@ -1,6 +1,6 @@
 # A Market
 
-_We facilitate high quality transactions between high quality people._
+_Find what you need through people you trust_
 
 > [!NOTE]
 > "A Market" is a working name. The final name will be determined based on beta tester feedback.
