@@ -7,7 +7,6 @@ export type ThemeName = 'seaweed' | 'twilight';
 export interface Theme {
   name: ThemeName;
   displayName: string;
-  description: string;
 }
 
 /**
@@ -17,12 +16,10 @@ export const themes: Record<ThemeName, Theme> = {
   seaweed: {
     name: 'seaweed',
     displayName: 'Seaweed',
-    description: 'Fresh and vibrant with green accents on light surfaces',
   },
   twilight: {
     name: 'twilight',
     displayName: 'Twilight',
-    description: 'Deep and calming with blue accents on dark surfaces',
   },
 };
 

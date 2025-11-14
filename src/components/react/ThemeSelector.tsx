@@ -23,6 +23,18 @@ export default function ThemeSelector() {
 
   const currentThemeData = themes.find((t) => t.name === currentTheme);
 
+  // Theme color mappings for previews
+  const themeColors: Record<ThemeName, { primary: string; surface: string }> = {
+    seaweed: {
+      primary: 'rgb(34, 197, 94)', // green-500
+      surface: 'rgb(255, 255, 255)', // white
+    },
+    twilight: {
+      primary: 'rgb(59, 130, 246)', // blue-500
+      surface: 'rgb(17, 24, 39)', // gray-900
+    },
+  };
+
   return (
     <div className="relative">
       <button
@@ -71,28 +83,32 @@ export default function ThemeSelector() {
           />
 
           {/* Dropdown menu */}
-          <div className="absolute right-0 mt-2 w-72 rounded-xl shadow-xl border border-[rgb(var(--color-surface-border))] bg-[rgb(var(--color-surface-elevated))] z-20 overflow-hidden">
+          <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-xl border border-[rgb(var(--color-surface-border))] bg-[rgb(var(--color-surface-elevated))] z-20 overflow-hidden">
             <div className="p-2">
               {themes.map((theme) => (
                 <button
                   key={theme.name}
                   onClick={() => handleThemeChange(theme.name)}
-                  className={`w-full text-left px-4 py-3 rounded-lg transition-all ${
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all ${
                     currentTheme === theme.name
                       ? 'bg-[rgb(var(--color-primary))] text-white'
                       : 'hover:bg-[rgb(var(--color-surface-border))] text-[rgb(var(--color-text))]'
                   }`}
                 >
-                  <div className="font-semibold mb-1">{theme.displayName}</div>
-                  <div
-                    className={`text-sm ${
-                      currentTheme === theme.name
-                        ? 'text-white/90'
-                        : 'text-[rgb(var(--color-text-muted))]'
-                    }`}
-                  >
-                    {theme.description}
+                  {/* Color preview circles */}
+                  <div className="flex gap-1">
+                    <div
+                      className="w-4 h-4 rounded-full border border-black/10"
+                      style={{ backgroundColor: themeColors[theme.name].primary }}
+                      aria-hidden="true"
+                    />
+                    <div
+                      className="w-4 h-4 rounded-full border border-black/10"
+                      style={{ backgroundColor: themeColors[theme.name].surface }}
+                      aria-hidden="true"
+                    />
                   </div>
+                  <span className="font-medium">{theme.displayName}</span>
                 </button>
               ))}
             </div>
