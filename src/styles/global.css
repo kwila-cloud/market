@@ -1,1 +1,75 @@
 @import 'tailwindcss';
+
+/**
+ * Theme System using CSS Custom Properties
+ * Supports modular theming with easy addition of new themes
+ */
+
+/* Base theme variables */
+:root {
+  /* Default to Twilight theme */
+  --color-primary: 59 130 246; /* blue-500 */
+  --color-primary-light: 96 165 250; /* blue-400 */
+  --color-primary-dark: 37 99 235; /* blue-600 */
+
+  --color-surface: 17 24 39; /* gray-900 */
+  --color-surface-elevated: 31 41 55; /* gray-800 */
+  --color-surface-border: 55 65 81; /* gray-700 */
+
+  --color-text: 255 255 255; /* white */
+  --color-text-secondary: 209 213 219; /* gray-300 */
+  --color-text-muted: 156 163 175; /* gray-400 */
+
+  --color-accent: 96 165 250; /* blue-400 */
+}
+
+/* Seaweed Theme - Fresh greens on light surfaces */
+.theme-seaweed {
+  --color-primary: 34 197 94; /* green-500 */
+  --color-primary-light: 74 222 128; /* green-400 */
+  --color-primary-dark: 22 163 74; /* green-600 */
+
+  --color-surface: 255 255 255; /* white */
+  --color-surface-elevated: 249 250 251; /* gray-50 */
+  --color-surface-border: 229 231 235; /* gray-200 */
+
+  --color-text: 17 24 39; /* gray-900 */
+  --color-text-secondary: 55 65 81; /* gray-700 */
+  --color-text-muted: 107 114 128; /* gray-500 */
+
+  --color-accent: 34 197 94; /* green-500 */
+}
+
+/* Twilight Theme - Deep blues on dark surfaces */
+.theme-twilight {
+  --color-primary: 59 130 246; /* blue-500 */
+  --color-primary-light: 96 165 250; /* blue-400 */
+  --color-primary-dark: 37 99 235; /* blue-600 */
+
+  --color-surface: 17 24 39; /* gray-900 */
+  --color-surface-elevated: 31 41 55; /* gray-800 */
+  --color-surface-border: 55 65 81; /* gray-700 */
+
+  --color-text: 255 255 255; /* white */
+  --color-text-secondary: 209 213 219; /* gray-300 */
+  --color-text-muted: 156 163 175; /* gray-400 */
+
+  --color-accent: 96 165 250; /* blue-400 */
+}
+
+/* Utility classes for theme colors */
+@theme {
+  --color-primary: rgb(var(--color-primary));
+  --color-primary-light: rgb(var(--color-primary-light));
+  --color-primary-dark: rgb(var(--color-primary-dark));
+
+  --color-surface: rgb(var(--color-surface));
+  --color-surface-elevated: rgb(var(--color-surface-elevated));
+  --color-surface-border: rgb(var(--color-surface-border));
+
+  --color-text: rgb(var(--color-text));
+  --color-text-secondary: rgb(var(--color-text-secondary));
+  --color-text-muted: rgb(var(--color-text-muted));
+
+  --color-accent: rgb(var(--color-accent));
+}
