@@ -40,6 +40,23 @@
   --color-accent: 34 197 94; /* green-500 */
 }
 
+/* Sunset Theme - Warm oranges on dark surfaces */
+.theme-sunset {
+  --color-primary: 249 115 22; /* orange-500 */
+  --color-primary-light: 251 146 60; /* orange-400 */
+  --color-primary-dark: 234 88 12; /* orange-600 */
+
+  --color-surface: 30 27 23; /* warm-gray-900 */
+  --color-surface-elevated: 41 37 36; /* warm-gray-800 */
+  --color-surface-border: 68 64 60; /* warm-gray-700 */
+
+  --color-text: 255 255 255; /* white */
+  --color-text-secondary: 231 229 228; /* warm-gray-200 */
+  --color-text-muted: 168 162 158; /* warm-gray-400 */
+
+  --color-accent: 251 146 60; /* orange-400 */
+}
+
 /* Twilight Theme - Deep blues on dark surfaces */
 .theme-twilight {
   --color-primary: 59 130 246; /* blue-500 */

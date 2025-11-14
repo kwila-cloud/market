@@ -77,10 +77,10 @@ export default function ThemeSelector() {
                 <button
                   key={theme.name}
                   onClick={() => handleThemeChange(theme.name)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all ${
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all text-[rgb(var(--color-text))] ${
                     currentTheme === theme.name
-                      ? 'bg-[rgb(var(--color-primary))] text-white outline outline-2 outline-[rgb(var(--color-primary-dark))]'
-                      : 'hover:bg-[rgb(var(--color-surface-border))] text-[rgb(var(--color-text))]'
+                      ? 'ring-2 ring-[rgb(var(--color-primary))] bg-[rgb(var(--color-surface-border))]'
+                      : 'hover:bg-[rgb(var(--color-surface-border))]'
                   }`}
                 >
                   {/* Color preview circles */}
