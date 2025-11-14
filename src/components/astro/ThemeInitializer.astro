@@ -5,9 +5,32 @@
  */
 ---
 
-<script>
-  import { initializeTheme } from '../../lib/themeManager';
+<script is:inline>
+  // Inline theme initialization to run synchronously before page renders
+  (function () {
+    const THEME_STORAGE_KEY = 'app-theme';
+    const DEFAULT_THEME = 'twilight';
+    const VALID_THEMES = ['seaweed', 'twilight', 'sunset'];
 
-  // Initialize theme immediately
-  initializeTheme();
+    try {
+      // Get stored theme
+      const stored = localStorage.getItem(THEME_STORAGE_KEY);
+      const theme =
+        stored && VALID_THEMES.includes(stored) ? stored : DEFAULT_THEME;
+
+      // Remove all theme classes
+      const classList = document.documentElement.classList;
+      Array.from(classList)
+        .filter((className) => className.startsWith('theme-'))
+        .forEach((className) => {
+          classList.remove(className);
+        });
+
+      // Apply theme immediately
+      document.documentElement.classList.add(`theme-${theme}`);
+    } catch (error) {
+      console.warn('Failed to initialize theme:', error);
+      document.documentElement.classList.add(`theme-${DEFAULT_THEME}`);
+    }
+  })();
 </script>
