@@ -2,7 +2,7 @@
  * Theme definitions and types for the application
  */
 
-export type ThemeName = 'seaweed' | 'twilight' | 'sunset';
+export type ThemeName = 'seaweed' | 'sky' | 'twilight' | 'autumn';
 
 export interface Theme {
   name: ThemeName;
@@ -25,12 +25,12 @@ export const themes: Record<ThemeName, Theme> = {
       surface: 'rgb(255, 255, 255)', // white
     },
   },
-  sunset: {
-    name: 'sunset',
-    displayName: 'Sunset',
+  sky: {
+    name: 'sky',
+    displayName: 'Sky',
     colors: {
-      primary: 'rgb(249, 115, 22)', // orange-500
-      surface: 'rgb(30, 27, 23)', // warm dark
+      primary: 'rgb(14, 165, 233)', // sky-500
+      surface: 'rgb(255, 255, 255)', // white
     },
   },
   twilight: {
@@ -39,6 +39,14 @@ export const themes: Record<ThemeName, Theme> = {
     colors: {
       primary: 'rgb(59, 130, 246)', // blue-500
       surface: 'rgb(17, 24, 39)', // gray-900
+    },
+  },
+  autumn: {
+    name: 'autumn',
+    displayName: 'Autumn',
+    colors: {
+      primary: 'rgb(249, 115, 22)', // orange-500
+      surface: 'rgb(30, 27, 23)', // warm dark
     },
   },
 };

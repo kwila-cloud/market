@@ -40,21 +40,21 @@
   --color-accent: 34 197 94; /* green-500 */
 }
 
-/* Sunset Theme - Warm oranges on dark surfaces */
-.theme-sunset {
-  --color-primary: 249 115 22; /* orange-500 */
-  --color-primary-light: 251 146 60; /* orange-400 */
-  --color-primary-dark: 234 88 12; /* orange-600 */
+/* Sky Theme - Bright blues on light surfaces */
+.theme-sky {
+  --color-primary: 14 165 233; /* sky-500 */
+  --color-primary-light: 56 189 248; /* sky-400 */
+  --color-primary-dark: 2 132 199; /* sky-600 */
 
-  --color-surface: 30 27 23; /* warm-gray-900 */
-  --color-surface-elevated: 41 37 36; /* warm-gray-800 */
-  --color-surface-border: 68 64 60; /* warm-gray-700 */
+  --color-surface: 255 255 255; /* white */
+  --color-surface-elevated: 240 249 255; /* sky-50 */
+  --color-surface-border: 186 230 253; /* sky-200 */
 
-  --color-text: 255 255 255; /* white */
-  --color-text-secondary: 231 229 228; /* warm-gray-200 */
-  --color-text-muted: 168 162 158; /* warm-gray-400 */
+  --color-text: 17 24 39; /* gray-900 */
+  --color-text-secondary: 55 65 81; /* gray-700 */
+  --color-text-muted: 107 114 128; /* gray-500 */
 
-  --color-accent: 251 146 60; /* orange-400 */
+  --color-accent: 14 165 233; /* sky-500 */
 }
 
 /* Twilight Theme - Deep blues on dark surfaces */
@@ -72,6 +72,23 @@
   --color-text-muted: 156 163 175; /* gray-400 */
 
   --color-accent: 96 165 250; /* blue-400 */
+}
+
+/* Autumn Theme - Warm oranges on dark surfaces */
+.theme-autumn {
+  --color-primary: 249 115 22; /* orange-500 */
+  --color-primary-light: 251 146 60; /* orange-400 */
+  --color-primary-dark: 234 88 12; /* orange-600 */
+
+  --color-surface: 30 27 23; /* warm-gray-900 */
+  --color-surface-elevated: 41 37 36; /* warm-gray-800 */
+  --color-surface-border: 68 64 60; /* warm-gray-700 */
+
+  --color-text: 255 255 255; /* white */
+  --color-text-secondary: 231 229 228; /* warm-gray-200 */
+  --color-text-muted: 168 162 158; /* warm-gray-400 */
+
+  --color-accent: 251 146 60; /* orange-400 */
 }
 
 /* Utility classes for theme colors */
