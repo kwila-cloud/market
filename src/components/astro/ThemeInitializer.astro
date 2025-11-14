@@ -15,11 +15,17 @@ const VALID_THEMES = Object.keys(themes);
 <script is:inline define:vars={{ DEFAULT_THEME, VALID_THEMES }}>
   // Inline theme initialization to run synchronously before page renders
   (function () {
+    // SSR safety check - only run in browser environment
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return;
+    }
+
     const THEME_STORAGE_KEY = 'app-theme';
 
     try {
-      // Get stored theme
-      const stored = localStorage.getItem(THEME_STORAGE_KEY);
+      // Get stored theme with defensive checks
+      const raw = localStorage.getItem(THEME_STORAGE_KEY);
+      const stored = typeof raw === 'string' ? raw : null;
       const theme =
         stored && VALID_THEMES.includes(stored) ? stored : DEFAULT_THEME;
 
