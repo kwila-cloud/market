@@ -49,7 +49,7 @@ export const themes: Record<ThemeName, Theme> = {
 
 ## Step 2: Add CSS Variables
 
-In `src/styles/global.css`, add a new theme class with all required CSS variables:
+In `src/styles/themes.css`, add a new theme class with all required CSS variables:
 
 ```css
 /* Your Theme Name - Description */
