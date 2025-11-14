@@ -2,7 +2,12 @@
  * Theme management utilities for persisting and applying themes
  */
 
-import { DEFAULT_THEME, isValidTheme, type ThemeName } from './themes';
+import {
+  DEFAULT_THEME,
+  isValidTheme,
+  getThemes,
+  type ThemeName,
+} from './themes';
 
 const THEME_STORAGE_KEY = 'app-theme';
 
@@ -49,8 +54,11 @@ export function applyTheme(theme: ThemeName): void {
     return;
   }
 
-  // Remove all theme classes
-  document.documentElement.classList.remove('theme-seaweed', 'theme-twilight');
+  // Remove all theme classes dynamically
+  const allThemes = getThemes();
+  allThemes.forEach((t) => {
+    document.documentElement.classList.remove(`theme-${t.name}`);
+  });
 
   // Add the new theme class
   document.documentElement.classList.add(`theme-${theme}`);
