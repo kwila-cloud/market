@@ -64,6 +64,16 @@ export function applyTheme(theme: ThemeName): void {
  * Set the current theme (save and apply)
  */
 export function setTheme(theme: ThemeName): void {
+  // Validate theme before saving/applying
+  if (!isValidTheme(theme)) {
+    console.warn(
+      `Invalid theme "${theme}" provided. Falling back to "${DEFAULT_THEME}".`
+    );
+    saveTheme(DEFAULT_THEME);
+    applyTheme(DEFAULT_THEME);
+    return;
+  }
+
   saveTheme(theme);
   applyTheme(theme);
 }
