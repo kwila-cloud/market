@@ -126,14 +126,14 @@
   --color-primary-800: 20 87 48; /* very dark green */
 
   /* Secondary palette - Tree bark brown */
-  --color-secondary-100: 192 154 124; /* light brown */
-  --color-secondary-200: 165 130 98; /* lighter brown */
-  --color-secondary-300: 133 98 66; /* mid-light brown */
-  --color-secondary: 101 67 33; /* tree bark brown */
-  --color-secondary-light: 133 98 66; /* lighter variant */
-  --color-secondary-dark: 81 54 26; /* darker brown */
-  --color-secondary-700: 67 45 22; /* dark brown */
-  --color-secondary-800: 50 34 16; /* very dark brown */
+  --color-secondary-100: 222 199 176; /* light tan */
+  --color-secondary-200: 205 175 149; /* lighter tan */
+  --color-secondary-300: 188 151 122; /* mid-light brown */
+  --color-secondary: 160 120 80; /* tree bark brown */
+  --color-secondary-light: 188 151 122; /* lighter variant */
+  --color-secondary-dark: 128 96 64; /* darker brown */
+  --color-secondary-700: 101 67 33; /* dark brown */
+  --color-secondary-800: 75 50 25; /* very dark brown */
 
   /* Surface palette - White/Light gray */
   --color-surface: 255 255 255; /* white */
