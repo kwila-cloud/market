@@ -22,7 +22,7 @@ export const themes: Record<ThemeName, Theme> = {
     displayName: 'Seaweed',
     colors: {
       primary: 'rgb(34, 197, 94)', // green-500
-      surface: 'rgb(255, 255, 255)', // white
+      surface: 'rgb(247, 254, 231)', // lime-50
     },
   },
   sky: {
@@ -30,7 +30,7 @@ export const themes: Record<ThemeName, Theme> = {
     displayName: 'Sky',
     colors: {
       primary: 'rgb(14, 165, 233)', // sky-500
-      surface: 'rgb(255, 255, 255)', // white
+      surface: 'rgb(240, 249, 255)', // sky-50
     },
   },
   twilight: {
@@ -38,7 +38,7 @@ export const themes: Record<ThemeName, Theme> = {
     displayName: 'Twilight',
     colors: {
       primary: 'rgb(59, 130, 246)', // blue-500
-      surface: 'rgb(17, 24, 39)', // gray-900
+      surface: 'rgb(15, 23, 42)', // slate-900
     },
   },
   autumn: {
@@ -46,7 +46,7 @@ export const themes: Record<ThemeName, Theme> = {
     displayName: 'Autumn',
     colors: {
       primary: 'rgb(249, 115, 22)', // orange-500
-      surface: 'rgb(30, 27, 23)', // warm dark
+      surface: 'rgb(28, 25, 23)', // stone-900
     },
   },
 };
