@@ -18,6 +18,24 @@ const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
   <body
     class="min-h-screen bg-[rgb(var(--color-surface))] text-[rgb(var(--color-text))] transition-colors"
   >
+    <noscript>
+      <div
+        style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #1f2937; color: #f3f4f6; display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 2rem; text-align: center;"
+      >
+        <div style="max-width: 500px;">
+          <h1 style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">
+            JavaScript Required
+          </h1>
+          <p style="font-size: 1.125rem; margin-bottom: 1rem;">
+            This application requires JavaScript to function properly.
+          </p>
+          <p style="font-size: 0.875rem; color: #9ca3af;">
+            Please enable JavaScript in your browser settings and reload the
+            page.
+          </p>
+        </div>
+      </div>
+    </noscript>
     <NavBar />
     <main class="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
       <div class="max-w-6xl mx-auto">
