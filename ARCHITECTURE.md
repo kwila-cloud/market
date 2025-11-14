@@ -1,32 +1,41 @@
 # A Market - High Level Architecture
 
 ## Overview
+
 A trust-based, invite-only marketplace built with Astro, React, and Supabase. Users can list items to sell or post requests for items they want to buy, then communicate directly through messaging threads.
 
 ## Engineering Principles
 
 ### 1. Declarative Configuration
+
 All infrastructure defined as code:
+
 - **Supabase**: Database schema via SQL migrations, RLS policies in migrations
 - **Cloudflare**: Workers config in `wrangler.toml`, environment variables in `.dev.vars`
 - **Benefits**: Version controlled, reproducible, reviewable, no manual dashboard configuration
 
 ### 2. Local Development Parity
+
 Full stack runs locally via Docker Compose with single command setup:
+
 - Supabase stack (database, auth, storage, API)
 - Astro dev server
 - Twilio test credentials
 - No cloud dependencies for development
 
 ### 3. Automated Testing
+
 Every feature requires test coverage, verified on every PR:
+
 - **Unit tests** (Vitest): Utilities, validation, business logic
 - **Integration tests** (Playwright): Auth, item CRUD, messaging, connections
 - **CI/CD**: All tests pass before merge, coverage reports
 - **Priority flows**: Signup, item operations with RLS, threads, connection requests
 
 ### 4. Intuitive User Experience
+
 Every feature should support both power users and those who rank low on the "techniness" spectrum.
+
 - All the main features should be high intuitive, even to those who are totally new to the platform.
 - Create extra features for power users, but don't overwhelm normal users with power user features.
 - Prefer preserving simplicity over implementing additional complexity.
@@ -34,6 +43,7 @@ Every feature should support both power users and those who rank low on the "tec
 ## Technology Stack
 
 ### Frontend
+
 - **Framework**: Astro 5.x (hybrid SSR + static)
 - **Interactive Components**: React 19
 - **Styling**: Tailwind CSS 4.x
@@ -42,6 +52,7 @@ Every feature should support both power users and those who rank low on the "tec
 - **PWA**: Service workers for installable app
 
 ### Backend
+
 - **Database**: Supabase (PostgreSQL)
 - **Authentication**: Supabase Auth (email/phone OTP via Twilio)
 - **Storage**: Supabase Storage (single bucket)
@@ -49,6 +60,7 @@ Every feature should support both power users and those who rank low on the "tec
 - **API**: Supabase REST + PostgREST with RLS
 
 ### Deployment
+
 - **Hosting**: Cloudflare Workers
 - **SSR**: Cloudflare Workers
 - **CDN**: Cloudflare CDN
@@ -56,12 +68,14 @@ Every feature should support both power users and those who rank low on the "tec
 ## Core Architecture
 
 ### Routing Strategy
+
 - **Static pages**: Landing, about
 - **SSR pages** (authenticated): Dashboard, items, item detail, profile, vendor pages, messages, signup
 - **Vendor routing**: `/{vendor_id}` primary, `/v/{vendor_id}` fallback for conflicts with built-in pages
 - Astro file-based routing handles precedence naturally
 
 ### Rendering Approach
+
 - Static pages for public content
 - SSR for authenticated/dynamic content
 - React islands for interactive components (forms, messaging, search/filters)
@@ -70,6 +84,7 @@ Every feature should support both power users and those who rank low on the "tec
 ## Database Schema
 
 ### user
+
 - id (uuid, pk)
 - display_name (text)
 - about (text)
@@ -79,6 +94,7 @@ Every feature should support both power users and those who rank low on the "tec
 - invited_by (uuid, fk -> user.id)
 
 ### contact_info
+
 - id (uuid, pk)
 - user_id (uuid, fk -> user.id)
 - contact_type (enum: email|phone)
@@ -87,6 +103,7 @@ Every feature should support both power users and those who rank low on the "tec
 - created_at (timestamp)
 
 ### user_settings
+
 - id (uuid, pk)
 - user_id (uuid, fk -> user.id)
 - setting_key (text)
@@ -95,12 +112,14 @@ Every feature should support both power users and those who rank low on the "tec
 - updated_at (timestamp)
 
 ### category
+
 - id (uuid, pk)
 - name (text) -- new, resale, service
 - description (text)
 - created_at (timestamp)
 
 ### item
+
 - id (uuid, pk)
 - user_id (uuid, fk -> user.id)
 - type (enum: buy|sell)
@@ -114,6 +133,7 @@ Every feature should support both power users and those who rank low on the "tec
 - updated_at (timestamp)
 
 ### item_image
+
 - id (uuid, pk)
 - item_id (uuid, fk -> item.id)
 - url (text)
@@ -122,12 +142,14 @@ Every feature should support both power users and those who rank low on the "tec
 - created_at (timestamp)
 
 ### watch
+
 - id (uuid, pk)
 - name (text)
 - query_params (text)
 - notify (uuid, fk -> contact_info.id, nullable)
 
 ### connection
+
 - id (uuid, pk)
 - user_a (uuid, fk -> user.id) -- requester
 - user_b (uuid, fk -> user.id) -- recipient
@@ -136,6 +158,7 @@ Every feature should support both power users and those who rank low on the "tec
 - unique(user_a, user_b)
 
 ### thread
+
 - id (uuid, pk)
 - item_id (uuid, fk -> item.id)
 - creator_id (uuid, fk -> user.id) -- thread initiator
@@ -144,6 +167,7 @@ Every feature should support both power users and those who rank low on the "tec
 - unique(item_id, creator_id, responder_id)
 
 ### message
+
 - id (uuid, pk)
 - thread_id (uuid, fk -> thread.id)
 - sender_id (uuid, fk -> user.id)
@@ -152,6 +176,7 @@ Every feature should support both power users and those who rank low on the "tec
 - created_at (timestamp)
 
 ### message_image
+
 - id (uuid, pk)
 - message_id (uuid, fk -> message.id)
 - url (text)
@@ -159,6 +184,7 @@ Every feature should support both power users and those who rank low on the "tec
 - created_at (timestamp)
 
 ### invite
+
 - id (uuid, pk)
 - inviter_id (uuid, fk -> user.id)
 - invite_code (text, unique) -- 8 alphanumeric characters
@@ -170,53 +196,65 @@ Every feature should support both power users and those who rank low on the "tec
 ## Row Level Security (RLS)
 
 ### user
+
 - Public profiles: All authenticated users
 - Vendor profiles: Accessible via public routes (does not require authentication)
 
 ### contact_info
+
 - Hidden: System only
 - Private: Direct connections only (status='accepted')
 - Public: Anyone can view, even if not authenticated
 
 ### user_settings
+
 - Read/Write: Owner only (user_id)
 
 ### category
+
 - Public: All authenticated users (read-only)
 
 ### item
+
 - Hidden: Creator only
 - Private: Creator + direct connections (status='accepted')
 - Public: All authenticated users
 - Buy items: Creator shown as "Anonymous" to non-connections
 
 ### item_image
+
 - Follows parent item visibility rules
 - Images inherit visibility from their item
 
 ### connection
+
 - Read: Both parties (user_a or user_b)
 - Write: user_a creates with status='pending', user_b updates status
 
 ### thread
+
 - Read/write: Participants only (creator_id or responder_id)
 - Thread creator identity follows item visibility rules
 
 ### message
+
 - Read/write: Participants only (sender_id or recipient in thread)
 - Message images inherit thread visibility
 
 ### message_image
+
 - Follows parent message visibility rules
 - Images inherit visibility from their message
 
 ### invite
+
 - Read/Write: Inviter only (inviter_id)
 - Read: Used by user (used_by) for validation
 
 ## Key Flows
 
 ### Invite & Onboarding
+
 1. User clicks invite link with code
 1. Server validates code (not used, not revoked)
 1. Shows inviter name + auth method choice (email or phone OTP)
@@ -230,6 +268,7 @@ Every feature should support both power users and those who rank low on the "tec
 1. Redirects to dashboard
 
 ### Item Creation
+
 1. User creates item (buy or sell)
 1. Form: type, category, title, description, price_string, images (required for sell), visibility
 1. Item created with status='active'
@@ -237,6 +276,7 @@ Every feature should support both power users and those who rank low on the "tec
 1. Visible per visibility rules + connection status
 
 ### Messaging
+
 1. User sees item, clicks "Start conversation"
 1. System checks for existing thread (one per user per item)
 1. If exists: opens thread; if not: creates thread
@@ -246,6 +286,7 @@ Every feature should support both power users and those who rank low on the "tec
 1. Thread stays active indefinitely
 
 ### Connection Requests
+
 1. User views profile, clicks "Connect"
 1. Creates connection record (user_a=requester, user_b=recipient, status='pending')
 1. Recipient sees pending request (manual check, no notifications in MVP)
@@ -253,6 +294,7 @@ Every feature should support both power users and those who rank low on the "tec
 1. If accepted: unlocks private contact info, private items, prioritization, direct messaging
 
 ### Invite Generation
+
 1. User clicks "Invite someone"
 1. System checks last invite timestamp
 1. If < 24 hours: shows limit message
@@ -264,6 +306,7 @@ Every feature should support both power users and those who rank low on the "tec
 ## Site Structure
 
 ### Main Navigation
+
 - **Vendors**: `/vendors` - a list of profiles that have `vendor_id` set
 - **New Items**: `/items?type=sell&category=new`
 - **Resale Items**: `/items?type=sell&category=resale`
@@ -271,6 +314,7 @@ Every feature should support both power users and those who rank low on the "tec
 - **Requests**: `/items?type=buy`
 
 ### Items Page
+
 - Unified search across all items
 - Filters: type, category, price range, connections
 - Sort: newest, relevance
@@ -278,18 +322,22 @@ Every feature should support both power users and those who rank low on the "tec
 - Buy items from non-connections show "Anonymous"
 
 ### Vendor Profiles
+
 Routes: `/{vendor_id}` or `/v/{vendor_id}`
 
 Content:
+
 - Vendor about, avatar, contact info (per visibility)
 - Main focus: all active and public sell items (all categories)
 - Include option to view public archived items (by default, filter will be set to show active items only)
 - No buy items shown
 
 ### User Profiles
+
 Routes: `/profile/{user_id}`
 
 Content:
+
 - About, avatar, contact info (per visibility)
 - Display all active and public sell AND buy items (all categories)
 - Include option to view archived items (by default, filter will be set to show active items only)
@@ -350,12 +398,14 @@ project-root/
 ## Security
 
 ### Authentication
+
 - Email or phone OTP (passwordless via Supabase/Twilio)
 - Session management via Supabase Auth
 - Protected routes via Astro middleware
 - Invite-only prevents open signups
 
 ### Authorization
+
 - RLS policies enforce all access control
 - Item visibility at DB level
 - Contact info visibility at DB level
@@ -363,20 +413,24 @@ project-root/
 - Connection status gates private content
 
 ### Data Protection
+
 - Image uploads auto-compressed (jpg/png, 5MB max)
 - Rate limiting on messages
 - Spam flagging on items (manual admin review)
 
 ### Static Generation
+
 - Landing page fully static
 - Public content cached at CDN edge
 
 ### SSR Strategy
+
 - Dynamic pages for authenticated content
 - Item feeds server-rendered for RLS enforcement
 - Fresh connection data on profile pages
 
 ### Image Handling
+
 - Auto-compression on upload (balanced quality/size)
 - 5 images per item/message
 - Single storage bucket (simpler for MVP)
@@ -397,6 +451,7 @@ project-root/
 ## Development Workflow
 
 ### Local Development (Docker Compose)
+
 Everything runs in containers, no local setup required:
 
 ```bash
@@ -424,11 +479,13 @@ docker-compose down
 ```
 
 **docker-compose.yml includes**:
+
 - Supabase (postgres, auth, storage, API)
 - Astro dev server with Workers
 - Test runner container
 
 ### Environment Variables
+
 ```
 # .env (in docker-compose)
 PUBLIC_SUPABASE_URL=http://localhost:54321
@@ -442,6 +499,7 @@ TWILIO_PHONE_NUMBER=<test-number>
 ## CI Pipelines (GitHub Actions)
 
 ### Merge Request Checks
+
 1. Checkout code
 1. Start Docker services
 1. Run migrations
@@ -460,6 +518,7 @@ TWILIO_PHONE_NUMBER=<test-number>
 ## MVP Scope
 
 ### Included
+
 - Email/phone OTP authentication
 - Invite-only signup (1/day, revocable)
 - Mandatory onboarding wizard
@@ -478,8 +537,9 @@ TWILIO_PHONE_NUMBER=<test-number>
 ## Future Enhancements
 
 ### Near-term (v1.0)
+
 - Notifications system (in-app, push, email/SMS, per-type preferences)
-- Content reporting/moderation 
+- Content reporting/moderation
 - Thread archiving (user-level, doesn't affect other participant)
 - Multi-user threads (3+ participants)
 - Separate storage buckets (items/messages/profiles)
@@ -487,6 +547,7 @@ TWILIO_PHONE_NUMBER=<test-number>
 - Data export
 
 ### Medium-term (After onboarding several dozen regular users)
+
 - Multi-user vendors
 - Reputation/trust scores
 - Business analytics dashboard
@@ -495,6 +556,7 @@ TWILIO_PHONE_NUMBER=<test-number>
 - Offline mode (cached browsing)
 
 ### Long-term (Only when necessary)
+
 - Payment integration (optional escrow)
 - Shipping/logistics
 - Community features (forums, events)

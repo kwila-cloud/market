@@ -24,7 +24,7 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 /src/
 ├── pages/              # Astro routes (.astro files)
 ├── components/react/   # Interactive components (.tsx)
-├── components/astro/   # Static components (.astro) 
+├── components/astro/   # Static components (.astro)
 ├── layouts/            # Page layouts
 └── lib/               # Utilities (supabase.ts, auth.ts)
 
@@ -36,22 +36,26 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 ## What Agents Should Know
 
 ### Development Workflow
+
 - **Local development**: `docker-compose up` (full stack including Supabase)
-- **Testing**: Unit tests (Vitest) + E2E tests (Playwright) 
+- **Testing**: Unit tests (Vitest) + E2E tests (Playwright)
 - **Key commands**: Check for package.json, README, or ask user for local dev commands
 
 ### Security & Best Practices
+
 - **Never commit secrets** or environment variables
 - **Validate user input** and enforce RLS policies
 - **Use TypeScript strict mode**
 - **Don't modify git config**
 
 ### Contribution Process
+
 - **Specs**: Feature requests → `specs/` directory (see CONTRIBUTING.md)
 - **Issues**: Bug reports only in GitHub
 - **Code style**: See CONTRIBUTING.md for full guidelines
 
 ### Files You Should NOT Touch
+
 - `.github/workflows/` (CI/CD configuration)
 - `docker-compose.yml` (dev environment setup)
 - `wrangler.toml` (Cloudflare Workers config)
