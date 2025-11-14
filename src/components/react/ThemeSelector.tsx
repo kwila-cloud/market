@@ -10,7 +10,7 @@ import { getStoredTheme, setTheme } from '../../lib/themeManager';
 export default function ThemeSelector() {
   // Initialize theme with lazy initialization to avoid effect
   const [currentTheme, setCurrentTheme] = useState<ThemeName>(() =>
-    getStoredTheme(),
+    getStoredTheme()
   );
   const [isOpen, setIsOpen] = useState(false);
   const themes = getThemes();

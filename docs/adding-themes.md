@@ -7,11 +7,13 @@ The theming system is designed to make adding new themes straightforward. Here's
 In `src/lib/themes.ts`:
 
 1. Add your theme name to the `ThemeName` type:
+
 ```typescript
 export type ThemeName = 'seaweed' | 'twilight' | 'your-theme-name';
 ```
 
 2. Add your theme to the `themes` object:
+
 ```typescript
 export const themes: Record<ThemeName, Theme> = {
   // ... existing themes
@@ -20,7 +22,7 @@ export const themes: Record<ThemeName, Theme> = {
     displayName: 'Your Theme Name',
     colors: {
       primary: 'rgb(255, 100, 50)', // Your primary color
-      surface: 'rgb(20, 20, 20)',   // Your surface color
+      surface: 'rgb(20, 20, 20)', // Your surface color
     },
   },
 };
