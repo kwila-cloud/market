@@ -23,18 +23,6 @@ export default function ThemeSelector() {
 
   const currentThemeData = themes.find((t) => t.name === currentTheme);
 
-  // Theme color mappings for previews
-  const themeColors: Record<ThemeName, { primary: string; surface: string }> = {
-    seaweed: {
-      primary: 'rgb(34, 197, 94)', // green-500
-      surface: 'rgb(255, 255, 255)', // white
-    },
-    twilight: {
-      primary: 'rgb(59, 130, 246)', // blue-500
-      surface: 'rgb(17, 24, 39)', // gray-900
-    },
-  };
-
   return (
     <div className="relative">
       <button
@@ -99,12 +87,12 @@ export default function ThemeSelector() {
                   <div className="flex gap-1">
                     <div
                       className="w-4 h-4 rounded-full border border-black/10"
-                      style={{ backgroundColor: themeColors[theme.name].primary }}
+                      style={{ backgroundColor: theme.colors.primary }}
                       aria-hidden="true"
                     />
                     <div
                       className="w-4 h-4 rounded-full border border-black/10"
-                      style={{ backgroundColor: themeColors[theme.name].surface }}
+                      style={{ backgroundColor: theme.colors.surface }}
                       aria-hidden="true"
                     />
                   </div>

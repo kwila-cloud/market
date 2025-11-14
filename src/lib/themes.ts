@@ -7,6 +7,10 @@ export type ThemeName = 'seaweed' | 'twilight';
 export interface Theme {
   name: ThemeName;
   displayName: string;
+  colors: {
+    primary: string;
+    surface: string;
+  };
 }
 
 /**
@@ -16,10 +20,18 @@ export const themes: Record<ThemeName, Theme> = {
   seaweed: {
     name: 'seaweed',
     displayName: 'Seaweed',
+    colors: {
+      primary: 'rgb(34, 197, 94)', // green-500
+      surface: 'rgb(255, 255, 255)', // white
+    },
   },
   twilight: {
     name: 'twilight',
     displayName: 'Twilight',
+    colors: {
+      primary: 'rgb(59, 130, 246)', // blue-500
+      surface: 'rgb(17, 24, 39)', // gray-900
+    },
   },
 };
 
