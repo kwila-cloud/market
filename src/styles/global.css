@@ -53,15 +53,15 @@
   --color-primary-700: 153 84 23; /* dark orange */
   --color-primary-800: 115 63 17; /* very dark orange */
 
-  /* Secondary palette - Dark red */
-  --color-secondary-100: 242 215 213; /* light red */
-  --color-secondary-200: 229 152 145; /* lighter red */
-  --color-secondary-300: 216 105 94; /* mid-light red */
-  --color-secondary: 192 57 43; /* dark red */
-  --color-secondary-light: 216 105 94; /* lighter variant */
-  --color-secondary-dark: 154 46 34; /* darker red */
-  --color-secondary-700: 128 38 29; /* very dark red */
-  --color-secondary-800: 96 29 22; /* extremely dark red */
+  /* Secondary palette - Bright gold */
+  --color-secondary-100: 254 249 195; /* light gold */
+  --color-secondary-200: 253 240 146; /* lighter gold */
+  --color-secondary-300: 250 219 95; /* mid-light gold */
+  --color-secondary: 245 194 36; /* bright gold */
+  --color-secondary-light: 250 219 95; /* lighter variant */
+  --color-secondary-dark: 217 162 23; /* darker gold */
+  --color-secondary-700: 180 130 15; /* dark gold */
+  --color-secondary-800: 133 92 8; /* very dark gold */
 
   /* Surface palette - Dark gray */
   --color-surface: 34 34 34; /* very dark gray */
