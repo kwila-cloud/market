@@ -25,7 +25,7 @@ export default function ThemeSelector() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-10 h-10 rounded-lg transition-colors bg-[rgb(var(--color-surface-elevated))] hover:bg-[rgb(var(--color-surface-border))] text-[rgb(var(--color-text))] border border-[rgb(var(--color-surface-border))]"
+        className="flex items-center justify-center w-10 h-10 rounded-lg transition-all bg-[rgb(var(--color-surface-elevated))] hover:bg-[rgb(var(--color-surface-border))] hover:ring-2 hover:ring-[rgb(var(--color-secondary))] text-[rgb(var(--color-text))] border border-[rgb(var(--color-surface-border))]"
         aria-label="Select theme"
         aria-expanded={isOpen}
       >

@@ -17,9 +17,13 @@ const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
       <div class="flex-shrink-0">
         <a
           href="/"
-          class="text-xl font-bold bg-gradient-to-r from-[rgb(var(--color-primary-light))] to-[rgb(var(--color-primary))] bg-clip-text text-transparent hover:opacity-80 transition-opacity"
+          class="group text-xl font-bold bg-gradient-to-r from-[rgb(var(--color-primary-light))] to-[rgb(var(--color-primary))] bg-clip-text text-transparent hover:opacity-80 transition-opacity relative"
         >
           {platformName}
+          <!-- Secondary color underline accent on hover -->
+          <span
+            class="absolute bottom-0 left-0 w-0 h-0.5 bg-[rgb(var(--color-secondary))] transition-all duration-300 group-hover:w-full"
+          ></span>
         </a>
       </div>
 
