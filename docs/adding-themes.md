@@ -1,6 +1,24 @@
 # Adding New Themes
 
-The theming system is designed to make adding new themes straightforward. Here's how to add a new theme:
+The theming system is designed to make adding new themes straightforward.
+
+## Current Themes
+
+The application currently has 4 themes:
+
+### Dark Themes
+
+- **Dusk** (default) - Blue primary with dusk orange secondary on dark blue-gray surface
+- **Ember** - Orange primary with copper secondary on dark gray surface
+
+### Light Themes
+
+- **Ocean** - Blue primary with teal secondary on white surface
+- **Forest** - Green primary with tree bark brown secondary on white surface
+
+## Adding a New Theme
+
+Here's how to add a new theme:
 
 ## Step 1: Define the Theme
 
@@ -9,15 +27,10 @@ In `src/lib/themes.ts`:
 1. Add your theme name to the `ThemeName` type:
 
 ```typescript
-export type ThemeName =
-  | 'seaweed'
-  | 'sky'
-  | 'twilight'
-  | 'autumn'
-  | 'your-theme-name';
+export type ThemeName = 'dusk' | 'ember' | 'ocean' | 'forest' | 'your-theme-name';
 ```
 
-2. Add your theme to the `themes` object:
+2. Add your theme to the `themes` object with preview colors:
 
 ```typescript
 export const themes: Record<ThemeName, Theme> = {
@@ -25,6 +38,11 @@ export const themes: Record<ThemeName, Theme> = {
   'your-theme-name': {
     name: 'your-theme-name',
     displayName: 'Your Theme Name',
+    preview: {
+      surface: '20 20 20', // RGB values for background preview
+      primary: '255 100 50', // RGB values for primary color preview
+      secondary: '50 150 255', // RGB values for secondary color preview
+    },
   },
 };
 ```
@@ -76,20 +94,7 @@ In `src/styles/global.css`, add a new theme class with all required CSS variable
 - Colors must be in RGB format without `rgb()` wrapper (e.g., `255 100 50` not `rgb(255, 100, 50)`)
 - Include full primary and secondary palettes (100-800 range) for maximum flexibility
 - Secondary colors should complement the primary colors for visual harmony
-
-## Step 3: Update ThemeInitializer
-
-In `src/components/astro/ThemeInitializer.astro`, add your theme to the `VALID_THEMES` array:
-
-```javascript
-const VALID_THEMES = [
-  'seaweed',
-  'sky',
-  'twilight',
-  'autumn',
-  'your-theme-name',
-];
-```
+- Preview colors should match the base surface, primary, and secondary colors from your CSS
 
 ## That's It!
 
@@ -99,7 +104,7 @@ The theme will automatically appear in the theme selector with the correct color
 - Primary color as first dot
 - Secondary color as second dot
 
-No other files need to be modified.
+No other files need to be modified. The `ThemeInitializer` component automatically pulls theme names from the centralized `themes.ts` configuration, so it updates automatically when you add new themes.
 
 ## Optional: Set as Default
 
@@ -129,10 +134,10 @@ A complementary color that works well with the primary. Used for:
 
 Choose secondary colors that complement the primary:
 
-- **Seaweed** (green) → Teal secondary
-- **Sky** (sky blue) → Indigo secondary
-- **Twilight** (blue) → Purple secondary
-- **Autumn** (orange) → Red secondary
+- **Dusk** (blue) → Dusk orange/peach secondary
+- **Ember** (orange) → Copper/bronze secondary
+- **Ocean** (blue) → Teal secondary
+- **Forest** (green) → Tree bark brown secondary
 
 ### Surface Colors
 
