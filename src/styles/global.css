@@ -8,102 +8,156 @@
 /* Base theme variables */
 :root {
   /* Default to Twilight theme */
+  /* Primary palette */
+  --color-primary-100: 219 234 254; /* blue-100 */
+  --color-primary-200: 191 219 254; /* blue-200 */
+  --color-primary-300: 147 197 253; /* blue-300 */
   --color-primary: 59 130 246; /* blue-500 */
   --color-primary-light: 96 165 250; /* blue-400 */
   --color-primary-dark: 37 99 235; /* blue-600 */
+  --color-primary-700: 29 78 216; /* blue-700 */
+  --color-primary-800: 30 64 175; /* blue-800 */
 
+  /* Surface palette */
   --color-surface: 17 24 39; /* gray-900 */
   --color-surface-elevated: 31 41 55; /* gray-800 */
   --color-surface-border: 55 65 81; /* gray-700 */
 
+  /* Text palette */
   --color-text: 255 255 255; /* white */
   --color-text-secondary: 209 213 219; /* gray-300 */
   --color-text-muted: 156 163 175; /* gray-400 */
 
+  /* Accent */
   --color-accent: 96 165 250; /* blue-400 */
 }
 
 /* Seaweed Theme - Fresh greens on light surfaces */
 .theme-seaweed {
+  /* Primary palette */
+  --color-primary-100: 220 252 231; /* green-100 */
+  --color-primary-200: 187 247 208; /* green-200 */
+  --color-primary-300: 134 239 172; /* green-300 */
   --color-primary: 34 197 94; /* green-500 */
   --color-primary-light: 74 222 128; /* green-400 */
   --color-primary-dark: 22 163 74; /* green-600 */
+  --color-primary-700: 21 128 61; /* green-700 */
+  --color-primary-800: 22 101 52; /* green-800 */
 
-  --color-surface: 247 254 231; /* lime-50 */
-  --color-surface-elevated: 236 252 203; /* lime-100 */
-  --color-surface-border: 217 249 157; /* lime-200 */
+  /* Surface palette */
+  --color-surface: 252 255 250; /* very subtle green-tinted white */
+  --color-surface-elevated: 247 254 243; /* subtle green */
+  --color-surface-border: 229 245 224; /* green-100 */
 
+  /* Text palette */
   --color-text: 20 83 45; /* green-900 */
   --color-text-secondary: 22 101 52; /* green-800 */
   --color-text-muted: 21 128 61; /* green-700 */
 
+  /* Accent */
   --color-accent: 34 197 94; /* green-500 */
 }
 
 /* Sky Theme - Bright blues on light surfaces */
 .theme-sky {
+  /* Primary palette */
+  --color-primary-100: 224 242 254; /* sky-100 */
+  --color-primary-200: 186 230 253; /* sky-200 */
+  --color-primary-300: 125 211 252; /* sky-300 */
   --color-primary: 14 165 233; /* sky-500 */
   --color-primary-light: 56 189 248; /* sky-400 */
   --color-primary-dark: 2 132 199; /* sky-600 */
+  --color-primary-700: 3 105 161; /* sky-700 */
+  --color-primary-800: 7 89 133; /* sky-800 */
 
+  /* Surface palette */
   --color-surface: 240 249 255; /* sky-50 */
   --color-surface-elevated: 224 242 254; /* sky-100 */
   --color-surface-border: 186 230 253; /* sky-200 */
 
+  /* Text palette */
   --color-text: 12 74 110; /* sky-900 */
   --color-text-secondary: 7 89 133; /* sky-800 */
   --color-text-muted: 3 105 161; /* sky-700 */
 
+  /* Accent */
   --color-accent: 14 165 233; /* sky-500 */
 }
 
 /* Twilight Theme - Deep blues on dark surfaces */
 .theme-twilight {
+  /* Primary palette */
+  --color-primary-100: 219 234 254; /* blue-100 */
+  --color-primary-200: 191 219 254; /* blue-200 */
+  --color-primary-300: 147 197 253; /* blue-300 */
   --color-primary: 59 130 246; /* blue-500 */
   --color-primary-light: 96 165 250; /* blue-400 */
   --color-primary-dark: 37 99 235; /* blue-600 */
+  --color-primary-700: 29 78 216; /* blue-700 */
+  --color-primary-800: 30 64 175; /* blue-800 */
 
+  /* Surface palette */
   --color-surface: 15 23 42; /* slate-900 */
   --color-surface-elevated: 30 41 59; /* slate-800 */
   --color-surface-border: 51 65 85; /* slate-700 */
 
+  /* Text palette */
   --color-text: 248 250 252; /* slate-50 */
   --color-text-secondary: 203 213 225; /* slate-300 */
   --color-text-muted: 148 163 184; /* slate-400 */
 
+  /* Accent */
   --color-accent: 96 165 250; /* blue-400 */
 }
 
 /* Autumn Theme - Warm oranges on dark surfaces */
 .theme-autumn {
+  /* Primary palette */
+  --color-primary-100: 255 237 213; /* orange-100 */
+  --color-primary-200: 254 215 170; /* orange-200 */
+  --color-primary-300: 253 186 116; /* orange-300 */
   --color-primary: 249 115 22; /* orange-500 */
   --color-primary-light: 251 146 60; /* orange-400 */
   --color-primary-dark: 234 88 12; /* orange-600 */
+  --color-primary-700: 194 65 12; /* orange-700 */
+  --color-primary-800: 154 52 18; /* orange-800 */
 
+  /* Surface palette */
   --color-surface: 28 25 23; /* stone-900 */
   --color-surface-elevated: 41 37 36; /* stone-800 */
   --color-surface-border: 68 64 60; /* stone-700 */
 
+  /* Text palette */
   --color-text: 250 250 249; /* stone-50 */
   --color-text-secondary: 231 229 228; /* stone-200 */
   --color-text-muted: 168 162 158; /* stone-400 */
 
+  /* Accent */
   --color-accent: 251 146 60; /* orange-400 */
 }
 
 /* Utility classes for theme colors */
 @theme {
+  /* Primary palette */
+  --color-primary-100: rgb(var(--color-primary-100));
+  --color-primary-200: rgb(var(--color-primary-200));
+  --color-primary-300: rgb(var(--color-primary-300));
   --color-primary: rgb(var(--color-primary));
   --color-primary-light: rgb(var(--color-primary-light));
   --color-primary-dark: rgb(var(--color-primary-dark));
+  --color-primary-700: rgb(var(--color-primary-700));
+  --color-primary-800: rgb(var(--color-primary-800));
 
+  /* Surface palette */
   --color-surface: rgb(var(--color-surface));
   --color-surface-elevated: rgb(var(--color-surface-elevated));
   --color-surface-border: rgb(var(--color-surface-border));
 
+  /* Text palette */
   --color-text: rgb(var(--color-text));
   --color-text-secondary: rgb(var(--color-text-secondary));
   --color-text-muted: rgb(var(--color-text-muted));
 
+  /* Accent */
   --color-accent: rgb(var(--color-accent));
 }

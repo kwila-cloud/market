@@ -55,7 +55,7 @@ export default function ThemeSelector() {
           />
 
           {/* Dropdown menu */}
-          <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-xl border border-[rgb(var(--color-surface-border))] bg-[rgb(var(--color-surface-elevated))] z-20 overflow-hidden">
+          <div className="absolute right-0 mt-2 w-48 rounded-lg border border-[rgb(var(--color-surface-border))] bg-[rgb(var(--color-surface-elevated))] z-20 overflow-hidden">
             <div className="p-2">
               {themes.map((theme) => (
                 <button

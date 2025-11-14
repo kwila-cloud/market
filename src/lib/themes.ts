@@ -22,7 +22,7 @@ export const themes: Record<ThemeName, Theme> = {
     displayName: 'Seaweed',
     colors: {
       primary: 'rgb(34, 197, 94)', // green-500
-      surface: 'rgb(247, 254, 231)', // lime-50
+      surface: 'rgb(252, 255, 250)', // very subtle green-tinted white
     },
   },
   sky: {
