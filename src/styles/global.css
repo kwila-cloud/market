@@ -5,43 +5,6 @@
  * Supports modular theming with easy addition of new themes
  */
 
-/* Base theme variables */
-:root {
-  /* Default to Twilight theme */
-  /* Primary palette */
-  --color-primary-100: 219 234 254; /* blue-100 */
-  --color-primary-200: 191 219 254; /* blue-200 */
-  --color-primary-300: 147 197 253; /* blue-300 */
-  --color-primary: 59 130 246; /* blue-500 */
-  --color-primary-light: 96 165 250; /* blue-400 */
-  --color-primary-dark: 37 99 235; /* blue-600 */
-  --color-primary-700: 29 78 216; /* blue-700 */
-  --color-primary-800: 30 64 175; /* blue-800 */
-
-  /* Secondary palette */
-  --color-secondary-100: 243 232 255; /* purple-100 */
-  --color-secondary-200: 233 213 255; /* purple-200 */
-  --color-secondary-300: 216 180 254; /* purple-300 */
-  --color-secondary: 168 85 247; /* purple-500 */
-  --color-secondary-light: 192 132 252; /* purple-400 */
-  --color-secondary-dark: 147 51 234; /* purple-600 */
-  --color-secondary-700: 126 34 206; /* purple-700 */
-  --color-secondary-800: 107 33 168; /* purple-800 */
-
-  /* Surface palette */
-  --color-surface: 17 24 39; /* gray-900 */
-  --color-surface-elevated: 31 41 55; /* gray-800 */
-  --color-surface-border: 55 65 81; /* gray-700 */
-
-  /* Text palette */
-  --color-text: 255 255 255; /* white */
-  --color-text-secondary: 209 213 219; /* gray-300 */
-  --color-text-muted: 156 163 175; /* gray-400 */
-
-  /* Accent */
-  --color-accent: 96 165 250; /* blue-400 */
-}
-
 /* Seaweed Theme - Fresh greens on light surfaces */
 .theme-seaweed {
   /* Primary palette */
