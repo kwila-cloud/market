@@ -6,10 +6,6 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 
-/**
- * ESLint Flat Config (v9+)
- * @see https://eslint.org/docs/latest/use/configure/configuration-files
- */
 export default [
   js.configs.recommended,
   // TypeScript files
@@ -90,8 +86,7 @@ export default [
       },
     },
   },
-  // Astro files - spread recommended config array into our config
-  // This is the correct way to include plugin configs in ESLint flat config
+  // Astro files
   ...astroPlugin.configs.recommended,
   {
     ignores: [
