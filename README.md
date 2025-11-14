@@ -58,12 +58,12 @@ Our platform is invite-only during the beta phase. New accounts can only be crea
 ### Privacy-First Design
 
 Contact information (email and phone) has three visibility levels:
+
 - **Hidden**: Only the system can see it
 - **Private**: Only visible to your direct connections
 - **Public**: Visible to all users and visitors
 
 When someone responds to your request, you see their offer first—not their contact details. You choose whether to open a direct messaging channel or decline with no further contact.
-
 
 ## Technical Stack
 
@@ -78,5 +78,3 @@ The project is currently in early development. We're focused on validating the c
 ## Contributing
 
 This is an open-source project, and contributions are welcome. See our [contributing guide](/CONTRIBUTING.md) to get started.
-
-

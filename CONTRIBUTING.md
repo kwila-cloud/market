@@ -23,13 +23,14 @@ Specs are stored in the `specs/` directory.
 Each spec should be a markdown file with a numeric prefix - for example, `000-mvp.md`.
 
 Each spec file should contain the following:
+
 - Title
 - Description
-	- A few sentences describing why this change will be useful.
+  - A few sentences describing why this change will be useful.
 - Design decisions
-    - An optional list of design decisions that were made, with pros and cons for the different options considered.
+  - An optional list of design decisions that were made, with pros and cons for the different options considered.
 - Task List
-	- A checklist of tasks for the implementing the change.
+  - A checklist of tasks for the implementing the change.
 
 ## Code Style
 
@@ -47,9 +48,11 @@ Each spec file should contain the following:
 ## Commit Messages and PR Titles
 
 ### Commit Messages
+
 Use conventional commit format:
+
 - `feat:` - New features
-- `fix:` - Bug fixes  
+- `fix:` - Bug fixes
 - `docs:` - Documentation changes
 - `style:` - Code style changes (formatting, etc.)
 - `refactor:` - Code refactoring
@@ -57,6 +60,7 @@ Use conventional commit format:
 - `chore:` - Maintenance tasks
 
 **Examples:**
+
 ```
 feat(0): add astro project with react islands
 fix: resolve build error in home page
@@ -64,16 +68,20 @@ docs: update api documentation
 ```
 
 ### Pull Request Titles
+
 Keep PR titles **short and descriptive**, typically 3-7 words:
 
 **Good examples:**
+
 - `feat: basic infrastructure for home page`
 - `fix: tailwind css styling issues`
 - `docs: update contributing guidelines`
 
 **Bad examples (avoid):**
+
 - `feat(0): infrastructure setup for basic home page with astro 5.x and react 19 islands including typescript strict mode and tailwind css 4.x integration and environment variable configuration`
 - `update the home page` (too vague)
 
 ### What Went Wrong
+
 Remember: PR titles should quickly communicate the core change, not list every technical detail. Use the body of the PR for detailed explanations.
