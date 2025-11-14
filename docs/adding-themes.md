@@ -9,7 +9,12 @@ In `src/lib/themes.ts`:
 1. Add your theme name to the `ThemeName` type:
 
 ```typescript
-export type ThemeName = 'seaweed' | 'sky' | 'twilight' | 'autumn' | 'your-theme-name';
+export type ThemeName =
+  | 'seaweed'
+  | 'sky'
+  | 'twilight'
+  | 'autumn'
+  | 'your-theme-name';
 ```
 
 2. Add your theme to the `themes` object:
@@ -67,6 +72,7 @@ In `src/styles/global.css`, add a new theme class with all required CSS variable
 ```
 
 **Important Notes:**
+
 - Colors must be in RGB format without `rgb()` wrapper (e.g., `255 100 50` not `rgb(255, 100, 50)`)
 - Include full primary and secondary palettes (100-800 range) for maximum flexibility
 - Secondary colors should complement the primary colors for visual harmony
@@ -76,12 +82,19 @@ In `src/styles/global.css`, add a new theme class with all required CSS variable
 In `src/components/astro/ThemeInitializer.astro`, add your theme to the `VALID_THEMES` array:
 
 ```javascript
-const VALID_THEMES = ['seaweed', 'sky', 'twilight', 'autumn', 'your-theme-name'];
+const VALID_THEMES = [
+  'seaweed',
+  'sky',
+  'twilight',
+  'autumn',
+  'your-theme-name',
+];
 ```
 
 ## That's It!
 
 The theme will automatically appear in the theme selector with the correct color previews showing:
+
 - Surface color as background
 - Primary color as first dot
 - Secondary color as second dot
@@ -99,30 +112,39 @@ export const DEFAULT_THEME: ThemeName = 'your-theme-name';
 ## Color Palette Guidelines
 
 ### Primary Color
+
 The main brand color of the theme. Used for:
+
 - Links and interactive elements
 - Call-to-action buttons
 - Important highlights
 
 ### Secondary Color
+
 A complementary color that works well with the primary. Used for:
+
 - Secondary actions
 - Visual variety
 - Accent elements
 
 Choose secondary colors that complement the primary:
+
 - **Seaweed** (green) → Teal secondary
 - **Sky** (sky blue) → Indigo secondary
 - **Twilight** (blue) → Purple secondary
 - **Autumn** (orange) → Red secondary
 
 ### Surface Colors
+
 Background colors for the theme:
+
 - **Light themes**: Use very subtle tints (50-100 range)
 - **Dark themes**: Use dark grays/slates (800-900 range)
 
 ### Text Colors
+
 Ensure proper contrast ratios for accessibility:
+
 - Primary text: Highest contrast
 - Secondary text: Medium contrast
 - Muted text: Lower contrast (still readable)
