@@ -91,7 +91,7 @@ export default function ThemeSelector() {
                   onClick={() => handleThemeChange(theme.name)}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all ${
                     currentTheme === theme.name
-                      ? 'bg-[rgb(var(--color-primary))] text-white'
+                      ? 'bg-[rgb(var(--color-primary))] text-white outline outline-2 outline-[rgb(var(--color-primary-dark))]'
                       : 'hover:bg-[rgb(var(--color-surface-border))] text-[rgb(var(--color-text))]'
                   }`}
                 >
