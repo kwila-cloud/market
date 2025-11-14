@@ -5,148 +5,148 @@
  * Supports modular theming with easy addition of new themes
  */
 
-/* Seaweed Theme - Fresh greens on light surfaces */
-.theme-seaweed {
-  /* Primary palette */
-  --color-primary-100: 220 252 231; /* green-100 */
-  --color-primary-200: 187 247 208; /* green-200 */
-  --color-primary-300: 134 239 172; /* green-300 */
-  --color-primary: 34 197 94; /* green-500 */
-  --color-primary-light: 74 222 128; /* green-400 */
-  --color-primary-dark: 22 163 74; /* green-600 */
-  --color-primary-700: 21 128 61; /* green-700 */
-  --color-primary-800: 22 101 52; /* green-800 */
+/* Dusk Theme - Purple and red on dark blue-gray (Default, Dark) */
+.theme-dusk {
+  /* Primary palette - Purple */
+  --color-primary-100: 225 190 231; /* light purple */
+  --color-primary-200: 195 125 207; /* lighter purple */
+  --color-primary-300: 169 102 194; /* mid-light purple */
+  --color-primary: 142 68 173; /* purple */
+  --color-primary-light: 169 102 194; /* lighter variant */
+  --color-primary-dark: 115 54 138; /* darker purple */
+  --color-primary-700: 95 45 115; /* dark purple */
+  --color-primary-800: 71 34 86; /* very dark purple */
 
-  /* Secondary palette */
-  --color-secondary-100: 204 251 241; /* teal-100 */
-  --color-secondary-200: 153 246 228; /* teal-200 */
-  --color-secondary-300: 94 234 212; /* teal-300 */
-  --color-secondary: 20 184 166; /* teal-500 */
-  --color-secondary-light: 45 212 191; /* teal-400 */
-  --color-secondary-dark: 13 148 136; /* teal-600 */
-  --color-secondary-700: 15 118 110; /* teal-700 */
-  --color-secondary-800: 17 94 89; /* teal-800 */
+  /* Secondary palette - Red */
+  --color-secondary-100: 248 215 218; /* light red */
+  --color-secondary-200: 242 156 161; /* lighter red */
+  --color-secondary-300: 237 116 131; /* mid-light red */
+  --color-secondary: 231 76 60; /* red */
+  --color-secondary-light: 237 116 131; /* lighter variant */
+  --color-secondary-dark: 185 61 48; /* darker red */
+  --color-secondary-700: 154 50 40; /* dark red */
+  --color-secondary-800: 116 38 30; /* very dark red */
 
-  /* Surface palette */
-  --color-surface: 252 255 250; /* very subtle green-tinted white */
-  --color-surface-elevated: 247 254 243; /* subtle green */
-  --color-surface-border: 229 245 224; /* green-100 */
+  /* Surface palette - Dark blue-gray */
+  --color-surface: 44 62 80; /* dark blue-gray */
+  --color-surface-elevated: 52 73 94; /* elevated surface */
+  --color-surface-border: 71 85 105; /* border */
 
   /* Text palette */
-  --color-text: 20 83 45; /* green-900 */
-  --color-text-secondary: 22 101 52; /* green-800 */
-  --color-text-muted: 21 128 61; /* green-700 */
+  --color-text: 248 250 252; /* light text */
+  --color-text-secondary: 203 213 225; /* secondary text */
+  --color-text-muted: 148 163 184; /* muted text */
 
   /* Accent */
-  --color-accent: 34 197 94; /* green-500 */
+  --color-accent: 169 102 194; /* light purple */
 }
 
-/* Sky Theme - Bright blues on light surfaces */
-.theme-sky {
-  /* Primary palette */
-  --color-primary-100: 224 242 254; /* sky-100 */
-  --color-primary-200: 186 230 253; /* sky-200 */
-  --color-primary-300: 125 211 252; /* sky-300 */
-  --color-primary: 14 165 233; /* sky-500 */
-  --color-primary-light: 56 189 248; /* sky-400 */
-  --color-primary-dark: 2 132 199; /* sky-600 */
-  --color-primary-700: 3 105 161; /* sky-700 */
-  --color-primary-800: 7 89 133; /* sky-800 */
+/* Ember Theme - Orange and red on dark gray (Dark) */
+.theme-ember {
+  /* Primary palette - Orange */
+  --color-primary-100: 254 237 224; /* light orange */
+  --color-primary-200: 253 190 153; /* lighter orange */
+  --color-primary-300: 242 158 94; /* mid-light orange */
+  --color-primary: 230 126 34; /* orange */
+  --color-primary-light: 242 158 94; /* lighter variant */
+  --color-primary-dark: 184 101 27; /* darker orange */
+  --color-primary-700: 153 84 23; /* dark orange */
+  --color-primary-800: 115 63 17; /* very dark orange */
 
-  /* Secondary palette */
-  --color-secondary-100: 224 231 255; /* indigo-100 */
-  --color-secondary-200: 199 210 254; /* indigo-200 */
-  --color-secondary-300: 165 180 252; /* indigo-300 */
-  --color-secondary: 99 102 241; /* indigo-500 */
-  --color-secondary-light: 129 140 248; /* indigo-400 */
-  --color-secondary-dark: 79 70 229; /* indigo-600 */
-  --color-secondary-700: 67 56 202; /* indigo-700 */
-  --color-secondary-800: 55 48 163; /* indigo-800 */
+  /* Secondary palette - Dark red */
+  --color-secondary-100: 242 215 213; /* light red */
+  --color-secondary-200: 229 152 145; /* lighter red */
+  --color-secondary-300: 216 105 94; /* mid-light red */
+  --color-secondary: 192 57 43; /* dark red */
+  --color-secondary-light: 216 105 94; /* lighter variant */
+  --color-secondary-dark: 154 46 34; /* darker red */
+  --color-secondary-700: 128 38 29; /* very dark red */
+  --color-secondary-800: 96 29 22; /* extremely dark red */
 
-  /* Surface palette */
-  --color-surface: 240 249 255; /* sky-50 */
-  --color-surface-elevated: 224 242 254; /* sky-100 */
-  --color-surface-border: 186 230 253; /* sky-200 */
+  /* Surface palette - Dark gray */
+  --color-surface: 34 34 34; /* very dark gray */
+  --color-surface-elevated: 45 45 45; /* elevated surface */
+  --color-surface-border: 64 64 64; /* border */
 
   /* Text palette */
-  --color-text: 12 74 110; /* sky-900 */
-  --color-text-secondary: 7 89 133; /* sky-800 */
-  --color-text-muted: 3 105 161; /* sky-700 */
+  --color-text: 250 250 250; /* light text */
+  --color-text-secondary: 212 212 212; /* secondary text */
+  --color-text-muted: 163 163 163; /* muted text */
 
   /* Accent */
-  --color-accent: 14 165 233; /* sky-500 */
+  --color-accent: 242 158 94; /* light orange */
 }
 
-/* Twilight Theme - Deep blues on dark surfaces */
-.theme-twilight {
-  /* Primary palette */
-  --color-primary-100: 219 234 254; /* blue-100 */
-  --color-primary-200: 191 219 254; /* blue-200 */
-  --color-primary-300: 147 197 253; /* blue-300 */
-  --color-primary: 59 130 246; /* blue-500 */
-  --color-primary-light: 96 165 250; /* blue-400 */
-  --color-primary-dark: 37 99 235; /* blue-600 */
-  --color-primary-700: 29 78 216; /* blue-700 */
-  --color-primary-800: 30 64 175; /* blue-800 */
+/* Ocean Theme - Blue and teal on white (Light) */
+.theme-ocean {
+  /* Primary palette - Blue */
+  --color-primary-100: 212 230 241; /* light blue */
+  --color-primary-200: 169 204 227; /* lighter blue */
+  --color-primary-300: 105 179 216; /* mid-light blue */
+  --color-primary: 41 128 185; /* blue */
+  --color-primary-light: 105 179 216; /* lighter variant */
+  --color-primary-dark: 33 102 148; /* darker blue */
+  --color-primary-700: 27 85 123; /* dark blue */
+  --color-primary-800: 20 64 92; /* very dark blue */
 
-  /* Secondary palette */
-  --color-secondary-100: 243 232 255; /* purple-100 */
-  --color-secondary-200: 233 213 255; /* purple-200 */
-  --color-secondary-300: 216 180 254; /* purple-300 */
-  --color-secondary: 168 85 247; /* purple-500 */
-  --color-secondary-light: 192 132 252; /* purple-400 */
-  --color-secondary-dark: 147 51 234; /* purple-600 */
-  --color-secondary-700: 126 34 206; /* purple-700 */
-  --color-secondary-800: 107 33 168; /* purple-800 */
+  /* Secondary palette - Teal */
+  --color-secondary-100: 209 242 235; /* light teal */
+  --color-secondary-200: 163 228 215; /* lighter teal */
+  --color-secondary-300: 95 211 186; /* mid-light teal */
+  --color-secondary: 26 188 156; /* teal */
+  --color-secondary-light: 95 211 186; /* lighter variant */
+  --color-secondary-dark: 21 150 125; /* darker teal */
+  --color-secondary-700: 17 125 104; /* dark teal */
+  --color-secondary-800: 13 94 78; /* very dark teal */
 
-  /* Surface palette */
-  --color-surface: 15 23 42; /* slate-900 */
-  --color-surface-elevated: 30 41 59; /* slate-800 */
-  --color-surface-border: 51 65 85; /* slate-700 */
+  /* Surface palette - White/Light gray */
+  --color-surface: 255 255 255; /* white */
+  --color-surface-elevated: 249 250 251; /* very light gray */
+  --color-surface-border: 229 231 235; /* light gray border */
 
   /* Text palette */
-  --color-text: 248 250 252; /* slate-50 */
-  --color-text-secondary: 203 213 225; /* slate-300 */
-  --color-text-muted: 148 163 184; /* slate-400 */
+  --color-text: 17 24 39; /* very dark text */
+  --color-text-secondary: 55 65 81; /* dark gray text */
+  --color-text-muted: 107 114 128; /* medium gray text */
 
   /* Accent */
-  --color-accent: 96 165 250; /* blue-400 */
+  --color-accent: 41 128 185; /* blue */
 }
 
-/* Autumn Theme - Warm oranges on dark surfaces */
-.theme-autumn {
-  /* Primary palette */
-  --color-primary-100: 255 237 213; /* orange-100 */
-  --color-primary-200: 254 215 170; /* orange-200 */
-  --color-primary-300: 253 186 116; /* orange-300 */
-  --color-primary: 249 115 22; /* orange-500 */
-  --color-primary-light: 251 146 60; /* orange-400 */
-  --color-primary-dark: 234 88 12; /* orange-600 */
-  --color-primary-700: 194 65 12; /* orange-700 */
-  --color-primary-800: 154 52 18; /* orange-800 */
+/* Forest Theme - Green and yellow on white (Light) */
+.theme-forest {
+  /* Primary palette - Green */
+  --color-primary-100: 212 237 218; /* light green */
+  --color-primary-200: 169 219 181; /* lighter green */
+  --color-primary-300: 104 196 139; /* mid-light green */
+  --color-primary: 39 174 96; /* green */
+  --color-primary-light: 104 196 139; /* lighter variant */
+  --color-primary-dark: 31 139 77; /* darker green */
+  --color-primary-700: 26 116 64; /* dark green */
+  --color-primary-800: 20 87 48; /* very dark green */
 
-  /* Secondary palette */
-  --color-secondary-100: 254 226 226; /* red-100 */
-  --color-secondary-200: 254 202 202; /* red-200 */
-  --color-secondary-300: 252 165 165; /* red-300 */
-  --color-secondary: 239 68 68; /* red-500 */
-  --color-secondary-light: 248 113 113; /* red-400 */
-  --color-secondary-dark: 220 38 38; /* red-600 */
-  --color-secondary-700: 185 28 28; /* red-700 */
-  --color-secondary-800: 153 27 27; /* red-800 */
+  /* Secondary palette - Yellow */
+  --color-secondary-100: 254 249 195; /* light yellow */
+  --color-secondary-200: 253 242 135; /* lighter yellow */
+  --color-secondary-300: 249 223 75; /* mid-light yellow */
+  --color-secondary: 241 196 15; /* yellow */
+  --color-secondary-light: 249 223 75; /* lighter variant */
+  --color-secondary-dark: 193 157 12; /* darker yellow */
+  --color-secondary-700: 161 131 10; /* dark yellow */
+  --color-secondary-800: 121 98 7; /* very dark yellow */
 
-  /* Surface palette */
-  --color-surface: 28 25 23; /* stone-900 */
-  --color-surface-elevated: 41 37 36; /* stone-800 */
-  --color-surface-border: 68 64 60; /* stone-700 */
+  /* Surface palette - White/Light gray */
+  --color-surface: 255 255 255; /* white */
+  --color-surface-elevated: 249 250 251; /* very light gray */
+  --color-surface-border: 229 231 235; /* light gray border */
 
   /* Text palette */
-  --color-text: 250 250 249; /* stone-50 */
-  --color-text-secondary: 231 229 228; /* stone-200 */
-  --color-text-muted: 168 162 158; /* stone-400 */
+  --color-text: 17 24 39; /* very dark text */
+  --color-text-secondary: 55 65 81; /* dark gray text */
+  --color-text-muted: 107 114 128; /* medium gray text */
 
   /* Accent */
-  --color-accent: 251 146 60; /* orange-400 */
+  --color-accent: 39 174 96; /* green */
 }
 
 /* Utility classes for theme colors */

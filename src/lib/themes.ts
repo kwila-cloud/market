@@ -2,7 +2,7 @@
  * Theme definitions and types for the application
  */
 
-export type ThemeName = 'seaweed' | 'sky' | 'twilight' | 'autumn';
+export type ThemeName = 'dusk' | 'ember' | 'ocean' | 'forest';
 
 export interface Theme {
   name: ThemeName;
@@ -11,30 +11,31 @@ export interface Theme {
 
 /**
  * Available themes in the application
+ * Ordered with dark themes first
  */
 export const themes: Record<ThemeName, Theme> = {
-  seaweed: {
-    name: 'seaweed',
-    displayName: 'Seaweed',
+  dusk: {
+    name: 'dusk',
+    displayName: 'Dusk',
   },
-  sky: {
-    name: 'sky',
-    displayName: 'Sky',
+  ember: {
+    name: 'ember',
+    displayName: 'Ember',
   },
-  twilight: {
-    name: 'twilight',
-    displayName: 'Twilight',
+  ocean: {
+    name: 'ocean',
+    displayName: 'Ocean',
   },
-  autumn: {
-    name: 'autumn',
-    displayName: 'Autumn',
+  forest: {
+    name: 'forest',
+    displayName: 'Forest',
   },
 };
 
 /**
  * Default theme
  */
-export const DEFAULT_THEME: ThemeName = 'twilight';
+export const DEFAULT_THEME: ThemeName = 'dusk';
 
 /**
  * Get all available themes as an array
