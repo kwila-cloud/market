@@ -18,6 +18,16 @@
   --color-primary-700: 29 78 216; /* blue-700 */
   --color-primary-800: 30 64 175; /* blue-800 */
 
+  /* Secondary palette */
+  --color-secondary-100: 243 232 255; /* purple-100 */
+  --color-secondary-200: 233 213 255; /* purple-200 */
+  --color-secondary-300: 216 180 254; /* purple-300 */
+  --color-secondary: 168 85 247; /* purple-500 */
+  --color-secondary-light: 192 132 252; /* purple-400 */
+  --color-secondary-dark: 147 51 234; /* purple-600 */
+  --color-secondary-700: 126 34 206; /* purple-700 */
+  --color-secondary-800: 107 33 168; /* purple-800 */
+
   /* Surface palette */
   --color-surface: 17 24 39; /* gray-900 */
   --color-surface-elevated: 31 41 55; /* gray-800 */
@@ -43,6 +53,16 @@
   --color-primary-dark: 22 163 74; /* green-600 */
   --color-primary-700: 21 128 61; /* green-700 */
   --color-primary-800: 22 101 52; /* green-800 */
+
+  /* Secondary palette */
+  --color-secondary-100: 204 251 241; /* teal-100 */
+  --color-secondary-200: 153 246 228; /* teal-200 */
+  --color-secondary-300: 94 234 212; /* teal-300 */
+  --color-secondary: 20 184 166; /* teal-500 */
+  --color-secondary-light: 45 212 191; /* teal-400 */
+  --color-secondary-dark: 13 148 136; /* teal-600 */
+  --color-secondary-700: 15 118 110; /* teal-700 */
+  --color-secondary-800: 17 94 89; /* teal-800 */
 
   /* Surface palette */
   --color-surface: 252 255 250; /* very subtle green-tinted white */
@@ -70,6 +90,16 @@
   --color-primary-700: 3 105 161; /* sky-700 */
   --color-primary-800: 7 89 133; /* sky-800 */
 
+  /* Secondary palette */
+  --color-secondary-100: 224 231 255; /* indigo-100 */
+  --color-secondary-200: 199 210 254; /* indigo-200 */
+  --color-secondary-300: 165 180 252; /* indigo-300 */
+  --color-secondary: 99 102 241; /* indigo-500 */
+  --color-secondary-light: 129 140 248; /* indigo-400 */
+  --color-secondary-dark: 79 70 229; /* indigo-600 */
+  --color-secondary-700: 67 56 202; /* indigo-700 */
+  --color-secondary-800: 55 48 163; /* indigo-800 */
+
   /* Surface palette */
   --color-surface: 240 249 255; /* sky-50 */
   --color-surface-elevated: 224 242 254; /* sky-100 */
@@ -95,6 +125,16 @@
   --color-primary-dark: 37 99 235; /* blue-600 */
   --color-primary-700: 29 78 216; /* blue-700 */
   --color-primary-800: 30 64 175; /* blue-800 */
+
+  /* Secondary palette */
+  --color-secondary-100: 243 232 255; /* purple-100 */
+  --color-secondary-200: 233 213 255; /* purple-200 */
+  --color-secondary-300: 216 180 254; /* purple-300 */
+  --color-secondary: 168 85 247; /* purple-500 */
+  --color-secondary-light: 192 132 252; /* purple-400 */
+  --color-secondary-dark: 147 51 234; /* purple-600 */
+  --color-secondary-700: 126 34 206; /* purple-700 */
+  --color-secondary-800: 107 33 168; /* purple-800 */
 
   /* Surface palette */
   --color-surface: 15 23 42; /* slate-900 */
@@ -122,6 +162,16 @@
   --color-primary-700: 194 65 12; /* orange-700 */
   --color-primary-800: 154 52 18; /* orange-800 */
 
+  /* Secondary palette */
+  --color-secondary-100: 254 226 226; /* red-100 */
+  --color-secondary-200: 254 202 202; /* red-200 */
+  --color-secondary-300: 252 165 165; /* red-300 */
+  --color-secondary: 239 68 68; /* red-500 */
+  --color-secondary-light: 248 113 113; /* red-400 */
+  --color-secondary-dark: 220 38 38; /* red-600 */
+  --color-secondary-700: 185 28 28; /* red-700 */
+  --color-secondary-800: 153 27 27; /* red-800 */
+
   /* Surface palette */
   --color-surface: 28 25 23; /* stone-900 */
   --color-surface-elevated: 41 37 36; /* stone-800 */
@@ -147,6 +197,16 @@
   --color-primary-dark: rgb(var(--color-primary-dark));
   --color-primary-700: rgb(var(--color-primary-700));
   --color-primary-800: rgb(var(--color-primary-800));
+
+  /* Secondary palette */
+  --color-secondary-100: rgb(var(--color-secondary-100));
+  --color-secondary-200: rgb(var(--color-secondary-200));
+  --color-secondary-300: rgb(var(--color-secondary-300));
+  --color-secondary: rgb(var(--color-secondary));
+  --color-secondary-light: rgb(var(--color-secondary-light));
+  --color-secondary-dark: rgb(var(--color-secondary-dark));
+  --color-secondary-700: rgb(var(--color-secondary-700));
+  --color-secondary-800: rgb(var(--color-secondary-800));
 
   /* Surface palette */
   --color-surface: rgb(var(--color-surface));

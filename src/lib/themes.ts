@@ -9,6 +9,7 @@ export interface Theme {
   displayName: string;
   colors: {
     primary: string;
+    secondary: string;
     surface: string;
   };
 }
@@ -22,6 +23,7 @@ export const themes: Record<ThemeName, Theme> = {
     displayName: 'Seaweed',
     colors: {
       primary: 'rgb(34, 197, 94)', // green-500
+      secondary: 'rgb(20, 184, 166)', // teal-500
       surface: 'rgb(252, 255, 250)', // very subtle green-tinted white
     },
   },
@@ -30,6 +32,7 @@ export const themes: Record<ThemeName, Theme> = {
     displayName: 'Sky',
     colors: {
       primary: 'rgb(14, 165, 233)', // sky-500
+      secondary: 'rgb(99, 102, 241)', // indigo-500
       surface: 'rgb(240, 249, 255)', // sky-50
     },
   },
@@ -38,6 +41,7 @@ export const themes: Record<ThemeName, Theme> = {
     displayName: 'Twilight',
     colors: {
       primary: 'rgb(59, 130, 246)', // blue-500
+      secondary: 'rgb(168, 85, 247)', // purple-500
       surface: 'rgb(15, 23, 42)', // slate-900
     },
   },
@@ -46,6 +50,7 @@ export const themes: Record<ThemeName, Theme> = {
     displayName: 'Autumn',
     colors: {
       primary: 'rgb(249, 115, 22)', // orange-500
+      secondary: 'rgb(239, 68, 68)', // red-500
       surface: 'rgb(28, 25, 23)', // stone-900
     },
   },

@@ -67,17 +67,19 @@ export default function ThemeSelector() {
                       : 'hover:bg-[rgb(var(--color-surface-border))]'
                   }`}
                 >
-                  {/* Color preview circles */}
-                  <div className="flex gap-1">
+                  {/* Color preview - surface rectangle with primary and secondary dots */}
+                  <div
+                    className="flex items-center justify-center gap-1 px-2 py-1.5 rounded border border-black/10"
+                    style={{ backgroundColor: theme.colors.surface }}
+                    aria-hidden="true"
+                  >
                     <div
-                      className="w-4 h-4 rounded-full border border-black/10"
+                      className="w-2 h-2 rounded-full border border-black/10"
                       style={{ backgroundColor: theme.colors.primary }}
-                      aria-hidden="true"
                     />
                     <div
-                      className="w-4 h-4 rounded-full border border-black/10"
-                      style={{ backgroundColor: theme.colors.surface }}
-                      aria-hidden="true"
+                      className="w-2 h-2 rounded-full border border-black/10"
+                      style={{ backgroundColor: theme.colors.secondary }}
                     />
                   </div>
                   <span className="font-medium">{theme.displayName}</span>
