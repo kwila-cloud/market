@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import ThemeInitializer from '../components/astro/ThemeInitializer.astro';
-import ThemeSelector from '../components/react/ThemeSelector';
+import NavBar from '../components/astro/NavBar.astro';
 
 const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
 ---
@@ -16,10 +16,7 @@ const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
     <ThemeInitializer />
   </head>
   <body class="min-h-screen bg-[rgb(var(--color-surface))] text-[rgb(var(--color-text))] transition-colors">
-    <!-- Theme Selector - Fixed in top right -->
-    <div class="fixed top-4 right-4 z-50">
-      <ThemeSelector client:load />
-    </div>
+    <NavBar />
     <main class="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
       <div class="max-w-6xl mx-auto">
         <!-- Hero Section -->
