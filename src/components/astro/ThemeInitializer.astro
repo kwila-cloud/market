@@ -2,15 +2,20 @@
 /**
  * Theme Initializer
  * Initializes the theme before the page renders to prevent FOUC (Flash of Unstyled Content)
+ *
+ * IMPORTANT: Theme configuration is imported from themes.ts at build time.
+ * All theme names and defaults are centralized in src/lib/themes.ts
  */
+import { DEFAULT_THEME, themes } from '../../lib/themes';
+
+// Extract theme names from the centralized configuration
+const VALID_THEMES = Object.keys(themes);
 ---
 
-<script is:inline>
+<script is:inline define:vars={{ DEFAULT_THEME, VALID_THEMES }}>
   // Inline theme initialization to run synchronously before page renders
   (function () {
     const THEME_STORAGE_KEY = 'app-theme';
-    const DEFAULT_THEME = 'dusk';
-    const VALID_THEMES = ['dusk', 'ember', 'ocean', 'forest'];
 
     try {
       // Get stored theme
