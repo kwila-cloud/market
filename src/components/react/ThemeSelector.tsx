@@ -69,18 +69,11 @@ export default function ThemeSelector() {
                 >
                   {/* Color preview - surface rectangle with primary and secondary dots */}
                   <div
-                    className="flex items-center justify-center gap-1 px-2 py-1.5 rounded border border-black/10"
-                    style={{ backgroundColor: theme.colors.surface }}
+                    className={`theme-${theme.name} flex items-center justify-center gap-1 px-2 py-1.5 rounded border border-black/10 bg-[rgb(var(--color-surface))]`}
                     aria-hidden="true"
                   >
-                    <div
-                      className="w-2 h-2 rounded-full border border-black/10"
-                      style={{ backgroundColor: theme.colors.primary }}
-                    />
-                    <div
-                      className="w-2 h-2 rounded-full border border-black/10"
-                      style={{ backgroundColor: theme.colors.secondary }}
-                    />
+                    <div className="w-2 h-2 rounded-full border border-black/10 bg-[rgb(var(--color-primary))]" />
+                    <div className="w-2 h-2 rounded-full border border-black/10 bg-[rgb(var(--color-secondary))]" />
                   </div>
                   <span className="font-medium">{theme.displayName}</span>
                 </button>
