@@ -41,8 +41,6 @@
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "tailwindcss": "^4.1.17",
-    "vite-plugin-pwa": "^1.1.0",
-    "workbox-window": "^7.3.0",
     "wrangler": "^4.46.0"
   }
 }
