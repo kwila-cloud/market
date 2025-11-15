@@ -45,7 +45,7 @@ This project uses Docker Compose to run the full stack locally, including Supaba
 
 4. **Start Docker services**
    ```bash
-   npm run docker:up
+   docker compose up -d
    ```
 
    This starts all services in the background:
@@ -54,10 +54,10 @@ This project uses Docker Compose to run the full stack locally, including Supaba
    - Kong API gateway (port 8000)
    - Auth, Storage, Realtime, and other Supabase services
 
-5. **Wait for services to be ready** (about 30 seconds)
+5. **Wait for services to be ready** (~15-30 seconds)
    ```bash
    # Watch logs to see when services are ready
-   npm run docker:logs
+   docker compose logs -f
    # Press Ctrl+C to exit logs
    ```
 
@@ -89,31 +89,31 @@ This project uses Docker Compose to run the full stack locally, including Supaba
 
 ```bash
 # Start all Docker services
-npm run docker:up
+docker compose up -d
 
 # Start Astro dev server
 npm run dev
 
 # View logs from all services
-npm run docker:logs
+docker compose logs -f
 
 # Stop all services (keeps data)
-npm run docker:down
+docker compose down
 
 # Restart all services
-npm run docker:restart
+docker compose restart
 ```
 
 #### Database Management
 
 ```bash
-# Run migrations manually
+# Run migrations
 npm run docker:db:migrate
 
 # Seed test data
 npm run docker:db:seed
 
-# Reset database (WARNING: deletes all data!)
+# Full reset (WARNING: deletes all data and recreates everything)
 npm run docker:db:reset
 
 # Access PostgreSQL directly

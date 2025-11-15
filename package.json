@@ -16,15 +16,9 @@
     "test:unit": "vitest run",
     "test:e2e": "npx playwright test",
     "test:watch": "vitest",
-    "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down",
-    "docker:restart": "docker compose restart",
-    "docker:logs": "docker compose logs -f",
-    "docker:db:reset": "docker compose down -v && docker compose up -d && npm run docker:db:wait && npm run docker:db:migrate && npm run docker:db:seed",
-    "docker:db:wait": "echo 'Waiting for database to be ready...' && sleep 10",
     "docker:db:migrate": "docker compose exec -T db bash /docker-entrypoint-initdb.d/run-migrations.sh",
     "docker:db:seed": "docker compose exec -T db psql -U postgres -d postgres -f /docker-entrypoint-initdb.d/seed.sql",
-    "docker:studio": "echo 'Supabase Studio: http://localhost:3000'"
+    "docker:db:reset": "docker compose down -v && docker compose up -d && sleep 15 && npm run docker:db:migrate && npm run docker:db:seed"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.5",
