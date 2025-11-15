@@ -25,9 +25,7 @@ for migration_file in $(find "$MIGRATIONS_DIR" -name "*.sql" -not -name "seed.sq
     filename=$(basename "$migration_file")
     echo "  ▶ Running migration: $filename"
 
-    psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -f "$migration_file" > /dev/null 2>&1
-
-    if [ $? -eq 0 ]; then
+    if psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -v ON_ERROR_STOP=1 -f "$migration_file"; then
         echo "  ✓ $filename completed successfully"
     else
         echo "  ❌ $filename failed"

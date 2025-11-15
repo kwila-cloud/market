@@ -1,18 +1,44 @@
 -- Setup Supabase database users, roles, and schemas
 -- This must run before other migrations
 
--- Create roles
-CREATE ROLE IF NOT EXISTS anon NOLOGIN;
-CREATE ROLE IF NOT EXISTS authenticated NOLOGIN;
-CREATE ROLE IF NOT EXISTS service_role NOLOGIN;
+DO $$
+BEGIN
+    -- Create roles
+    IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'anon') THEN
+        CREATE ROLE anon NOLOGIN;
+    END IF;
 
--- Create users with password from environment
--- Note: We use a placeholder password here, in production this would be from secrets
-CREATE USER IF NOT EXISTS supabase_auth_admin WITH PASSWORD 'your-super-secret-and-long-postgres-password' CREATEDB CREATEROLE;
-CREATE USER IF NOT EXISTS supabase_storage_admin WITH PASSWORD 'your-super-secret-and-long-postgres-password' CREATEDB CREATEROLE;
-CREATE USER IF NOT EXISTS supabase_admin WITH PASSWORD 'your-super-secret-and-long-postgres-password' SUPERUSER CREATEDB CREATEROLE REPLICATION;
-CREATE USER IF NOT EXISTS authenticator WITH PASSWORD 'your-super-secret-and-long-postgres-password' NOINHERIT;
-CREATE USER IF NOT EXISTS supabase WITH PASSWORD 'your-super-secret-and-long-postgres-password';
+    IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'authenticated') THEN
+        CREATE ROLE authenticated NOLOGIN;
+    END IF;
+
+    IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'service_role') THEN
+        CREATE ROLE service_role NOLOGIN;
+    END IF;
+
+    -- Create users with password from environment
+    -- Note: We use a placeholder password here, in production this would be from secrets
+    IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'supabase_auth_admin') THEN
+        CREATE USER supabase_auth_admin WITH PASSWORD 'your-super-secret-and-long-postgres-password' CREATEDB CREATEROLE;
+    END IF;
+
+    IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'supabase_storage_admin') THEN
+        CREATE USER supabase_storage_admin WITH PASSWORD 'your-super-secret-and-long-postgres-password' CREATEDB CREATEROLE;
+    END IF;
+
+    IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'supabase_admin') THEN
+        CREATE USER supabase_admin WITH PASSWORD 'your-super-secret-and-long-postgres-password' SUPERUSER CREATEDB CREATEROLE REPLICATION;
+    END IF;
+
+    IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'authenticator') THEN
+        CREATE USER authenticator WITH PASSWORD 'your-super-secret-and-long-postgres-password' NOINHERIT;
+    END IF;
+
+    IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'supabase') THEN
+        CREATE USER supabase WITH PASSWORD 'your-super-secret-and-long-postgres-password';
+    END IF;
+END
+$$;
 
 -- Grant roles to authenticator
 GRANT anon, authenticated, service_role TO authenticator;
@@ -43,3 +69,25 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON ROUTINES TO postgres, sup
 
 -- Set search path for auth user
 ALTER ROLE supabase_auth_admin SET search_path TO auth;
+
+-- Create auth.uid() function (Supabase helper function)
+CREATE OR REPLACE FUNCTION auth.uid()
+RETURNS uuid
+LANGUAGE sql STABLE
+AS $$
+  SELECT COALESCE(
+    current_setting('request.jwt.claim.sub', true),
+    (current_setting('request.jwt.claims', true)::jsonb ->> 'sub')
+  )::uuid
+$$;
+
+-- Create auth.role() function (Supabase helper function)
+CREATE OR REPLACE FUNCTION auth.role()
+RETURNS text
+LANGUAGE sql STABLE
+AS $$
+  SELECT COALESCE(
+    current_setting('request.jwt.claim.role', true),
+    (current_setting('request.jwt.claims', true)::jsonb ->> 'role')
+  )::text
+$$;
