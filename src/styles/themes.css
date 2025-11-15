@@ -40,8 +40,8 @@
   --color-accent: 147 197 253; /* light blue */
 }
 
-/* Ember Theme - Orange and red on dark gray (Dark) */
-.theme-ember {
+/* Ember 1 Theme - Orange and copper on dark gray (Dark) */
+.theme-ember1 {
   /* Primary palette - Orange */
   --color-primary-100: 254 237 224; /* light orange */
   --color-primary-200: 253 190 153; /* lighter orange */
@@ -61,6 +61,150 @@
   --color-secondary-dark: 147 92 41; /* darker copper */
   --color-secondary-700: 122 77 34; /* dark copper */
   --color-secondary-800: 92 58 26; /* very dark copper */
+
+  /* Surface palette - Dark gray */
+  --color-surface: 34 34 34; /* very dark gray */
+  --color-surface-elevated: 45 45 45; /* elevated surface */
+  --color-surface-border: 64 64 64; /* border */
+
+  /* Text palette */
+  --color-text: 250 250 250; /* light text */
+  --color-text-secondary: 212 212 212; /* secondary text */
+  --color-text-muted: 163 163 163; /* muted text */
+
+  /* Accent */
+  --color-accent: 242 158 94; /* light orange */
+}
+
+/* Ember 2 Theme - Orange and amber gold on dark gray (Dark) */
+.theme-ember2 {
+  /* Primary palette - Orange */
+  --color-primary-100: 254 237 224; /* light orange */
+  --color-primary-200: 253 190 153; /* lighter orange */
+  --color-primary-300: 242 158 94; /* mid-light orange */
+  --color-primary: 230 126 34; /* orange */
+  --color-primary-light: 242 158 94; /* lighter variant */
+  --color-primary-dark: 184 101 27; /* darker orange */
+  --color-primary-700: 153 84 23; /* dark orange */
+  --color-primary-800: 115 63 17; /* very dark orange */
+
+  /* Secondary palette - Amber Gold */
+  --color-secondary-100: 254 243 199; /* light amber */
+  --color-secondary-200: 253 224 107; /* lighter amber */
+  --color-secondary-300: 245 158 11; /* mid amber */
+  --color-secondary: 217 119 6; /* amber gold */
+  --color-secondary-light: 245 158 11; /* lighter variant */
+  --color-secondary-dark: 180 83 9; /* darker amber */
+  --color-secondary-700: 146 64 14; /* dark amber */
+  --color-secondary-800: 120 53 15; /* very dark amber */
+
+  /* Surface palette - Dark gray */
+  --color-surface: 34 34 34; /* very dark gray */
+  --color-surface-elevated: 45 45 45; /* elevated surface */
+  --color-surface-border: 64 64 64; /* border */
+
+  /* Text palette */
+  --color-text: 250 250 250; /* light text */
+  --color-text-secondary: 212 212 212; /* secondary text */
+  --color-text-muted: 163 163 163; /* muted text */
+
+  /* Accent */
+  --color-accent: 242 158 94; /* light orange */
+}
+
+/* Ember 3 Theme - Orange and coral on dark gray (Dark) */
+.theme-ember3 {
+  /* Primary palette - Orange */
+  --color-primary-100: 254 237 224; /* light orange */
+  --color-primary-200: 253 190 153; /* lighter orange */
+  --color-primary-300: 242 158 94; /* mid-light orange */
+  --color-primary: 230 126 34; /* orange */
+  --color-primary-light: 242 158 94; /* lighter variant */
+  --color-primary-dark: 184 101 27; /* darker orange */
+  --color-primary-700: 153 84 23; /* dark orange */
+  --color-primary-800: 115 63 17; /* very dark orange */
+
+  /* Secondary palette - Coral */
+  --color-secondary-100: 255 218 185; /* light coral */
+  --color-secondary-200: 255 179 140; /* lighter coral */
+  --color-secondary-300: 255 160 122; /* mid coral */
+  --color-secondary: 255 127 80; /* coral */
+  --color-secondary-light: 255 160 122; /* lighter variant */
+  --color-secondary-dark: 233 93 56; /* darker coral */
+  --color-secondary-700: 205 92 92; /* dark coral */
+  --color-secondary-800: 178 70 70; /* very dark coral */
+
+  /* Surface palette - Dark gray */
+  --color-surface: 34 34 34; /* very dark gray */
+  --color-surface-elevated: 45 45 45; /* elevated surface */
+  --color-surface-border: 64 64 64; /* border */
+
+  /* Text palette */
+  --color-text: 250 250 250; /* light text */
+  --color-text-secondary: 212 212 212; /* secondary text */
+  --color-text-muted: 163 163 163; /* muted text */
+
+  /* Accent */
+  --color-accent: 242 158 94; /* light orange */
+}
+
+/* Ember 4 Theme - Orange and burgundy on dark gray (Dark) */
+.theme-ember4 {
+  /* Primary palette - Orange */
+  --color-primary-100: 254 237 224; /* light orange */
+  --color-primary-200: 253 190 153; /* lighter orange */
+  --color-primary-300: 242 158 94; /* mid-light orange */
+  --color-primary: 230 126 34; /* orange */
+  --color-primary-light: 242 158 94; /* lighter variant */
+  --color-primary-dark: 184 101 27; /* darker orange */
+  --color-primary-700: 153 84 23; /* dark orange */
+  --color-primary-800: 115 63 17; /* very dark orange */
+
+  /* Secondary palette - Burgundy */
+  --color-secondary-100: 239 205 210; /* light burgundy */
+  --color-secondary-200: 220 144 154; /* lighter burgundy */
+  --color-secondary-300: 194 78 92; /* mid burgundy */
+  --color-secondary: 165 42 42; /* burgundy */
+  --color-secondary-light: 194 78 92; /* lighter variant */
+  --color-secondary-dark: 128 0 0; /* darker burgundy */
+  --color-secondary-700: 100 0 0; /* dark burgundy */
+  --color-secondary-800: 75 0 0; /* very dark burgundy */
+
+  /* Surface palette - Dark gray */
+  --color-surface: 34 34 34; /* very dark gray */
+  --color-surface-elevated: 45 45 45; /* elevated surface */
+  --color-surface-border: 64 64 64; /* border */
+
+  /* Text palette */
+  --color-text: 250 250 250; /* light text */
+  --color-text-secondary: 212 212 212; /* secondary text */
+  --color-text-muted: 163 163 163; /* muted text */
+
+  /* Accent */
+  --color-accent: 242 158 94; /* light orange */
+}
+
+/* Ember 5 Theme - Orange and burnt orange on dark gray (Dark) */
+.theme-ember5 {
+  /* Primary palette - Orange */
+  --color-primary-100: 254 237 224; /* light orange */
+  --color-primary-200: 253 190 153; /* lighter orange */
+  --color-primary-300: 242 158 94; /* mid-light orange */
+  --color-primary: 230 126 34; /* orange */
+  --color-primary-light: 242 158 94; /* lighter variant */
+  --color-primary-dark: 184 101 27; /* darker orange */
+  --color-primary-700: 153 84 23; /* dark orange */
+  --color-primary-800: 115 63 17; /* very dark orange */
+
+  /* Secondary palette - Burnt Orange */
+  --color-secondary-100: 255 216 191; /* light burnt orange */
+  --color-secondary-200: 255 165 107; /* lighter burnt orange */
+  --color-secondary-300: 232 119 34; /* mid burnt orange */
+  --color-secondary: 204 85 0; /* burnt orange */
+  --color-secondary-light: 232 119 34; /* lighter variant */
+  --color-secondary-dark: 162 67 0; /* darker burnt orange */
+  --color-secondary-700: 130 54 0; /* dark burnt orange */
+  --color-secondary-800: 97 40 0; /* very dark burnt orange */
 
   /* Surface palette - Dark gray */
   --color-surface: 34 34 34; /* very dark gray */

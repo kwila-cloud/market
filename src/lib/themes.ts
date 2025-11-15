@@ -2,7 +2,15 @@
  * Theme definitions and types for the application
  */
 
-export type ThemeName = 'dusk' | 'ember' | 'ocean' | 'forest';
+export type ThemeName =
+  | 'dusk'
+  | 'ember1'
+  | 'ember2'
+  | 'ember3'
+  | 'ember4'
+  | 'ember5'
+  | 'ocean'
+  | 'forest';
 
 export interface Theme {
   name: ThemeName;
@@ -28,13 +36,49 @@ export const themes: Record<ThemeName, Theme> = {
       secondary: '251 146 60',
     },
   },
-  ember: {
-    name: 'ember',
-    displayName: 'Ember',
+  ember1: {
+    name: 'ember1',
+    displayName: 'Ember 1: Copper',
     preview: {
       surface: '34 34 34',
       primary: '230 126 34',
       secondary: '184 115 51',
+    },
+  },
+  ember2: {
+    name: 'ember2',
+    displayName: 'Ember 2: Amber Gold',
+    preview: {
+      surface: '34 34 34',
+      primary: '230 126 34',
+      secondary: '217 119 6',
+    },
+  },
+  ember3: {
+    name: 'ember3',
+    displayName: 'Ember 3: Coral',
+    preview: {
+      surface: '34 34 34',
+      primary: '230 126 34',
+      secondary: '255 127 80',
+    },
+  },
+  ember4: {
+    name: 'ember4',
+    displayName: 'Ember 4: Burgundy',
+    preview: {
+      surface: '34 34 34',
+      primary: '230 126 34',
+      secondary: '165 42 42',
+    },
+  },
+  ember5: {
+    name: 'ember5',
+    displayName: 'Ember 5: Burnt Orange',
+    preview: {
+      surface: '34 34 34',
+      primary: '230 126 34',
+      secondary: '204 85 0',
     },
   },
   ocean: {
