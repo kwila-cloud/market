@@ -1,238 +1,213 @@
 ---
-import '../styles/global.css';
-import ThemeInitializer from '../components/astro/ThemeInitializer.astro';
-import NavBar from '../components/astro/NavBar.astro';
-
-const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
+import Layout from '../layouts/Layout.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{platformName} — UI Preview</title>
-    <ThemeInitializer />
-  </head>
+<Layout title="UI Preview">
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold text-primary mb-2">UI Preview</h1>
+  </header>
 
-  <body class="min-h-screen bg-surface text-neutral-50 transition-colors">
-    <NavBar />
-
-    <main class="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-6xl mx-auto">
-        <header class="mb-8">
-          <h1 class="text-3xl font-bold text-primary mb-2">UI Preview</h1>
-        </header>
-
-        <section class="mb-10">
-          <h2 class="text-xl font-semibold text-primary mb-4">
-            Primary Palette
-          </h2>
-          <div class="flex flex-wrap gap-4 items-center">
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-primary-50"
-              title="bg-primary-50"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-primary-100"
-              title="bg-primary-100"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-primary-200"
-              title="bg-primary-200"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-primary-300"
-              title="bg-primary-300"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-primary-400"
-              title="bg-primary-400"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-primary-500"
-              title="bg-primary-500"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-primary-600"
-              title="bg-primary-600"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-primary-700"
-              title="bg-primary-700"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-primary-800"
-              title="bg-primary-800"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-primary-900"
-              title="bg-primary-900"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-primary-950"
-              title="bg-primary-950"
-            >
-            </div>
-          </div>
-        </section>
-
-        <section class="mb-10">
-          <h2 class="text-xl font-semibold text-primary mb-4">
-            Secondary Palette
-          </h2>
-          <div class="flex flex-wrap gap-4 items-center">
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-secondary-50"
-              title="bg-secondary-50"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-secondary-100"
-              title="bg-secondary-100"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-secondary-200"
-              title="bg-secondary-200"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-secondary-300"
-              title="bg-secondary-300"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-secondary-400"
-              title="bg-secondary-400"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-secondary-500"
-              title="bg-secondary-500"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-secondary-600"
-              title="bg-secondary-600"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-secondary-700"
-              title="bg-secondary-700"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-secondary-800"
-              title="bg-secondary-800"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-secondary-900"
-              title="bg-secondary-900"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-secondary-950"
-              title="bg-secondary-950"
-            >
-            </div>
-          </div>
-        </section>
-
-        <section class="mb-10">
-          <h2 class="text-xl font-semibold text-primary mb-4">
-            Neutral Palette
-          </h2>
-          <div class="flex flex-wrap gap-4 items-center">
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-neutral-50"
-              title="bg-neutral-50"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-neutral-100"
-              title="bg-neutral-100"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-neutral-200"
-              title="bg-neutral-200"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-neutral-300"
-              title="bg-neutral-300"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-neutral-400"
-              title="bg-neutral-400"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-neutral-500"
-              title="bg-neutral-500"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-neutral-600"
-              title="bg-neutral-600"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-neutral-700"
-              title="bg-neutral-700"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-neutral-800"
-              title="bg-neutral-800"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-neutral-900"
-              title="bg-neutral-900"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-neutral-950"
-              title="bg-neutral-950"
-            >
-            </div>
-          </div>
-        </section>
-
-        <section class="mb-10">
-          <h2 class="text-xl font-semibold text-primary mb-4">Surface</h2>
-          <div class="flex flex-wrap gap-4 items-center">
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-surface"
-              title="bg-surface"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-surface-elevated"
-              title="bg-surface-elevated"
-            >
-            </div>
-            <div
-              class="size-16 rounded-lg border border-surface-border bg-surface-border"
-              title="bg-surface-border"
-            >
-            </div>
-          </div>
-        </section>
+  <section class="mb-10">
+    <h2 class="text-xl font-semibold text-primary mb-4">Primary Palette</h2>
+    <div class="flex flex-wrap gap-4 items-center">
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-primary-50"
+        title="bg-primary-50"
+      >
       </div>
-    </main>
-  </body>
-</html>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-primary-100"
+        title="bg-primary-100"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-primary-200"
+        title="bg-primary-200"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-primary-300"
+        title="bg-primary-300"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-primary-400"
+        title="bg-primary-400"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-primary-500"
+        title="bg-primary-500"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-primary-600"
+        title="bg-primary-600"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-primary-700"
+        title="bg-primary-700"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-primary-800"
+        title="bg-primary-800"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-primary-900"
+        title="bg-primary-900"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-primary-950"
+        title="bg-primary-950"
+      >
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-semibold text-primary mb-4">Secondary Palette</h2>
+    <div class="flex flex-wrap gap-4 items-center">
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-secondary-50"
+        title="bg-secondary-50"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-secondary-100"
+        title="bg-secondary-100"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-secondary-200"
+        title="bg-secondary-200"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-secondary-300"
+        title="bg-secondary-300"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-secondary-400"
+        title="bg-secondary-400"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-secondary-500"
+        title="bg-secondary-500"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-secondary-600"
+        title="bg-secondary-600"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-secondary-700"
+        title="bg-secondary-700"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-secondary-800"
+        title="bg-secondary-800"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-secondary-900"
+        title="bg-secondary-900"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-secondary-950"
+        title="bg-secondary-950"
+      >
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-semibold text-primary mb-4">Neutral Palette</h2>
+    <div class="flex flex-wrap gap-4 items-center">
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-neutral-50"
+        title="bg-neutral-50"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-neutral-100"
+        title="bg-neutral-100"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-neutral-200"
+        title="bg-neutral-200"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-neutral-300"
+        title="bg-neutral-300"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-neutral-400"
+        title="bg-neutral-400"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-neutral-500"
+        title="bg-neutral-500"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-neutral-600"
+        title="bg-neutral-600"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-neutral-700"
+        title="bg-neutral-700"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-neutral-800"
+        title="bg-neutral-800"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-neutral-900"
+        title="bg-neutral-900"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-neutral-950"
+        title="bg-neutral-950"
+      >
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-semibold text-primary mb-4">Surface</h2>
+    <div class="flex flex-wrap gap-4 items-center">
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-surface"
+        title="bg-surface"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-surface-elevated"
+        title="bg-surface-elevated"
+      >
+      </div>
+      <div
+        class="size-16 rounded-lg border border-surface-border bg-surface-border"
+        title="bg-surface-border"
+      >
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,224 +1,174 @@
 ---
-import '../styles/global.css';
-import ThemeInitializer from '../components/astro/ThemeInitializer.astro';
-import NavBar from '../components/astro/NavBar.astro';
-
-const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
+import Layout from '../layouts/Layout.astro';
+import { platformName } from '../lib/globals';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{platformName}</title>
-    <ThemeInitializer />
-  </head>
-  <body class="min-h-screen bg-surface text-neutral-50 transition-colors">
-    <noscript>
+<Layout>
+  <!-- Hero Section -->
+  <div class="text-center mb-20">
+    <h1
+      class="text-6xl sm:text-7xl font-bold mb-6 bg-gradient-to-r from-primary-300 to-primary-800 bg-clip-text text-transparent"
+    >
+      {platformName}
+    </h1>
+    <p class="text-xl sm:text-2xl text-neutral-300 mb-4 leading-relaxed">
+      Find what you need through people you trust
+    </p>
+    <p class="text-sm text-neutral-400 italic">
+      "A Market" is a working name. The final name will be determined based on
+      beta tester feedback.
+    </p>
+  </div>
+
+  <!-- Problems to Solve Section -->
+  <section class="mb-20">
+    <h2 class="text-4xl font-bold text-center mb-12 text-primary">
+      Problems to Solve
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-12">
       <div
-        style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #1f2937; color: #f3f4f6; display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 2rem; text-align: center;"
+        class="bg-surface-elevated/50 backdrop-blur-sm p-8 rounded-3xl border border-surface-border"
       >
-        <div style="max-width: 500px;">
-          <h1 style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">
-            JavaScript Required
-          </h1>
-          <p style="font-size: 1.125rem; margin-bottom: 1rem;">
-            This application requires JavaScript to function properly.
-          </p>
-          <p style="font-size: 0.875rem; color: #9ca3af;">
-            Please enable JavaScript in your browser settings and reload the
-            page.
-          </p>
-        </div>
+        <h3 class="text-2xl font-semibold text-secondary mb-4">Used Market</h3>
+        <p class="text-neutral-300 leading-relaxed">
+          If you are looking for a good deal on something on the used market, it
+          takes way too much time and effort to research and find what you need.
+        </p>
+        <p class="text-neutral-300 leading-relaxed mt-4">
+          What if you could simply post what you're looking for - "need a used
+          stove, $200 budget" or "need a house cleaner" - and your community
+          could help you find what you are looking for?
+        </p>
       </div>
-    </noscript>
-    <NavBar />
-    <main class="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-6xl mx-auto">
-        <!-- Hero Section -->
-        <div class="text-center mb-20">
-          <h1
-            class="text-6xl sm:text-7xl font-bold mb-6 bg-gradient-to-r from-primary-300 to-primary-800 bg-clip-text text-transparent"
-          >
-            {platformName}
-          </h1>
-          <p class="text-xl sm:text-2xl text-neutral-300 mb-4 leading-relaxed">
-            Find what you need through people you trust
-          </p>
-          <p class="text-sm text-neutral-400 italic">
-            "A Market" is a working name. The final name will be determined
-            based on beta tester feedback.
-          </p>
-        </div>
 
-        <!-- Problems to Solve Section -->
-        <section class="mb-20">
-          <h2 class="text-4xl font-bold text-center mb-12 text-primary">
-            Problems to Solve
-          </h2>
+      <div
+        class="bg-surface-elevated/50 backdrop-blur-sm p-8 rounded-3xl border border-surface-border"
+      >
+        <h3 class="text-2xl font-semibold text-secondary mb-4">
+          Small Businesses
+        </h3>
+        <p class="text-neutral-300 leading-relaxed">
+          If you are looking to have a digital presence for your small business
+          without breaking the bank investing in a dedicated website, what do
+          you do?
+        </p>
+        <p class="text-neutral-300 leading-relaxed mt-4">
+          What if you could quickly and easily set up a vendor page to list your
+          inventory and portfolio?
+        </p>
+      </div>
+    </div>
+  </section>
 
-          <div class="grid md:grid-cols-2 gap-12">
-            <div
-              class="bg-surface-elevated/50 backdrop-blur-sm p-8 rounded-3xl border border-surface-border"
-            >
-              <h3 class="text-2xl font-semibold text-secondary mb-4">
-                Used Market
-              </h3>
-              <p class="text-neutral-300 leading-relaxed">
-                If you are looking for a good deal on something on the used
-                market, it takes way too much time and effort to research and
-                find what you need.
-              </p>
-              <p class="text-neutral-300 leading-relaxed mt-4">
-                What if you could simply post what you're looking for - "need a
-                used stove, $200 budget" or "need a house cleaner" - and your
-                community could help you find what you are looking for?
-              </p>
-            </div>
+  <!-- Our Solution Section -->
+  <section class="mb-20">
+    <h2 class="text-4xl font-bold text-center mb-12 text-primary">
+      Our Solution
+    </h2>
 
-            <div
-              class="bg-surface-elevated/50 backdrop-blur-sm p-8 rounded-3xl border border-surface-border"
-            >
-              <h3 class="text-2xl font-semibold text-secondary mb-4">
-                Small Businesses
-              </h3>
-              <p class="text-neutral-300 leading-relaxed">
-                If you are looking to have a digital presence for your small
-                business without breaking the bank investing in a dedicated
-                website, what do you do?
-              </p>
-              <p class="text-neutral-300 leading-relaxed mt-4">
-                What if you could quickly and easily set up a vendor page to
-                list your inventory and portfolio?
-              </p>
-            </div>
-          </div>
-        </section>
+    <div
+      class="bg-surface-elevated/50 backdrop-blur-sm p-12 rounded-3xl border border-surface-border text-center"
+    >
+      <p class="text-xl text-neutral-300 leading-relaxed mb-6">
+        An online marketplace designed to foster authentic interactions and
+        high-quality transactions within trusted communities. Built for local
+        artisans, small businesses, and individuals who value relationships over
+        profit margins.
+      </p>
+      <p class="text-lg text-neutral-300 leading-relaxed">
+        This market exists to serve people and communities, not investors or
+        growth metrics. We're building a platform for small-scale, high-trust
+        commerce that keeps the focus on authentic human relationships.
+      </p>
+    </div>
+  </section>
 
-        <!-- Our Solution Section -->
-        <section class="mb-20">
-          <h2 class="text-4xl font-bold text-center mb-12 text-primary">
-            Our Solution
-          </h2>
+  <!-- How It Works Section -->
+  <section class="mb-20">
+    <h2 class="text-4xl font-bold text-center mb-12 text-primary">
+      How It Works
+    </h2>
 
-          <div
-            class="bg-surface-elevated/50 backdrop-blur-sm p-12 rounded-3xl border border-surface-border text-center"
-          >
-            <p class="text-xl text-neutral-300 leading-relaxed mb-6">
-              An online marketplace designed to foster authentic interactions
-              and high-quality transactions within trusted communities. Built
-              for local artisans, small businesses, and individuals who value
-              relationships over profit margins.
-            </p>
-            <p class="text-lg text-neutral-300 leading-relaxed">
-              This market exists to serve people and communities, not investors
-              or growth metrics. We're building a platform for small-scale,
-              high-trust commerce that keeps the focus on authentic human
-              relationships.
-            </p>
-          </div>
-        </section>
-
-        <!-- How It Works Section -->
-        <section class="mb-20">
-          <h2 class="text-4xl font-bold text-center mb-12 text-primary">
-            How It Works
-          </h2>
-
-          <div class="grid md:grid-cols-4 gap-6">
-            <div class="text-center">
-              <div
-                class="w-10 h-10 bg-secondary rounded-md flex items-center justify-center mx-auto mb-4 text-base font-bold text-white"
-              >
-                1
-              </div>
-              <h3 class="font-semibold text-secondary mb-2">
-                Join through invitation
-              </h3>
-              <p class="text-sm text-neutral-300">
-                Receive an invite link from a member of the market
-              </p>
-            </div>
-
-            <div class="text-center">
-              <div
-                class="w-10 h-10 bg-secondary rounded-md flex items-center justify-center mx-auto mb-4 text-base font-bold text-white"
-              >
-                2
-              </div>
-              <h3 class="font-semibold text-secondary mb-2">
-                Browse or request
-              </h3>
-              <p class="text-sm text-neutral-300">
-                Search existing offerings or post what you're looking for
-              </p>
-            </div>
-
-            <div class="text-center">
-              <div
-                class="w-10 h-10 bg-secondary rounded-md flex items-center justify-center mx-auto mb-4 text-base font-bold text-white"
-              >
-                3
-              </div>
-              <h3 class="font-semibold text-secondary mb-2">
-                Connect privately
-              </h3>
-              <p class="text-sm text-neutral-300">
-                Accept offers that interest you and start direct conversations
-              </p>
-            </div>
-
-            <div class="text-center">
-              <div
-                class="w-10 h-10 bg-secondary rounded-md flex items-center justify-center mx-auto mb-4 text-base font-bold text-white"
-              >
-                4
-              </div>
-              <h3 class="font-semibold text-secondary mb-2">
-                Transact your way
-              </h3>
-              <p class="text-sm text-neutral-300">
-                Handle payments outside the platform (in person, Venmo, Cash,
-                etc.)
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Core Values Section -->
+    <div class="grid md:grid-cols-4 gap-6">
+      <div class="text-center">
         <div
-          class="bg-surface-elevated/50 backdrop-blur-sm p-12 rounded-3xl border border-surface-border"
+          class="w-10 h-10 bg-secondary rounded-md flex items-center justify-center mx-auto mb-4 text-base font-bold text-white"
         >
-          <h2 class="text-3xl font-semibold mb-8 text-primary text-center">
-            Our Core Values
-          </h2>
-          <div class="space-y-6">
-            <div class="flex items-center justify-center">
-              <div class="w-3 h-3 bg-primary rounded-full mr-4 flex-shrink-0">
-              </div>
-              <p class="text-lg text-neutral-300 text-center leading-relaxed">
-                Humans are eternal, the things we buy and sell are not.
-              </p>
-            </div>
-            <div class="flex items-center justify-center">
-              <div class="w-3 h-3 bg-primary rounded-full mr-4 flex-shrink-0">
-              </div>
-              <p class="text-lg text-neutral-300 text-center leading-relaxed">
-                Relationships have lasting value, profit margins do not.
-              </p>
-            </div>
-            <div class="flex items-center justify-center">
-              <div class="w-3 h-3 bg-primary rounded-full mr-4 flex-shrink-0">
-              </div>
-              <p class="text-lg text-neutral-300 text-center leading-relaxed">
-                Quality is worth far more than quantity.
-              </p>
-            </div>
-          </div>
+          1
         </div>
+        <h3 class="font-semibold text-secondary mb-2">
+          Join through invitation
+        </h3>
+        <p class="text-sm text-neutral-300">
+          Receive an invite link from a member of the market
+        </p>
       </div>
-    </main>
-  </body>
-</html>
+
+      <div class="text-center">
+        <div
+          class="w-10 h-10 bg-secondary rounded-md flex items-center justify-center mx-auto mb-4 text-base font-bold text-white"
+        >
+          2
+        </div>
+        <h3 class="font-semibold text-secondary mb-2">Browse or request</h3>
+        <p class="text-sm text-neutral-300">
+          Search existing offerings or post what you're looking for
+        </p>
+      </div>
+
+      <div class="text-center">
+        <div
+          class="w-10 h-10 bg-secondary rounded-md flex items-center justify-center mx-auto mb-4 text-base font-bold text-white"
+        >
+          3
+        </div>
+        <h3 class="font-semibold text-secondary mb-2">Connect privately</h3>
+        <p class="text-sm text-neutral-300">
+          Accept offers that interest you and start direct conversations
+        </p>
+      </div>
+
+      <div class="text-center">
+        <div
+          class="w-10 h-10 bg-secondary rounded-md flex items-center justify-center mx-auto mb-4 text-base font-bold text-white"
+        >
+          4
+        </div>
+        <h3 class="font-semibold text-secondary mb-2">Transact your way</h3>
+        <p class="text-sm text-neutral-300">
+          Handle payments outside the platform (in person, Venmo, Cash, etc.)
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Values Section -->
+  <div
+    class="bg-surface-elevated/50 backdrop-blur-sm p-12 rounded-3xl border border-surface-border"
+  >
+    <h2 class="text-3xl font-semibold mb-8 text-primary text-center">
+      Our Core Values
+    </h2>
+    <div class="space-y-6">
+      <div class="flex items-center justify-center">
+        <div class="w-3 h-3 bg-primary rounded-full mr-4 flex-shrink-0"></div>
+        <p class="text-lg text-neutral-300 text-center leading-relaxed">
+          Humans are eternal, the things we buy and sell are not.
+        </p>
+      </div>
+      <div class="flex items-center justify-center">
+        <div class="w-3 h-3 bg-primary rounded-full mr-4 flex-shrink-0"></div>
+        <p class="text-lg text-neutral-300 text-center leading-relaxed">
+          Relationships have lasting value, profit margins do not.
+        </p>
+      </div>
+      <div class="flex items-center justify-center">
+        <div class="w-3 h-3 bg-primary rounded-full mr-4 flex-shrink-0"></div>
+        <p class="text-lg text-neutral-300 text-center leading-relaxed">
+          Quality is worth far more than quantity.
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>
