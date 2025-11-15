@@ -35,7 +35,8 @@ BEGIN
         )
     );
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER
+SET search_path = public;
 
 -- Check if user is participant in a thread
 CREATE OR REPLACE FUNCTION is_thread_participant(user_id UUID, thread_id UUID)
@@ -47,7 +48,8 @@ BEGIN
         AND (creator_id = user_id OR responder_id = user_id)
     );
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER
+SET search_path = public;
 
 -- ===========================================
 -- USER POLICIES

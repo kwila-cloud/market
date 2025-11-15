@@ -1,5 +1,12 @@
 -- Setup Supabase database users, roles, and schemas
 -- This must run before other migrations
+--
+-- WARNING: LOCAL DEVELOPMENT ONLY
+-- This migration creates database users with hard-coded passwords for local development.
+-- DO NOT use this migration in production. For production:
+-- 1. Create users via your infrastructure/IaC tool with proper secret management
+-- 2. Use least-privilege roles (avoid SUPERUSER)
+-- 3. Store passwords in CI/secret manager, never in code
 
 DO $$
 BEGIN
