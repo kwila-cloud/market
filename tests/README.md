@@ -17,15 +17,17 @@ tests/
 
 ## Running Tests
 
-### All Tests
+### Quick Test (Unit Tests)
 
 ```bash
 npm test
 ```
 
-This runs both unit tests and E2E tests sequentially.
+Runs unit tests with Vitest. This is the fastest way to get feedback during development.
 
-### Unit Tests Only
+**Note**: To run all tests (unit + E2E), run both `npm run test:unit` and `npm run test:e2e` separately. CI runs these independently to ensure both test suites execute even if one fails.
+
+### Unit Tests
 
 ```bash
 npm run test:unit
@@ -91,12 +93,9 @@ test('should display homepage', async ({ page }) => {
 
 ## CI/CD Integration
 
-Tests run automatically in GitHub Actions on:
+Tests run automatically in GitHub Actions on every pull request.
 
-- Every push to any branch
-- Every pull request
-
-The CI pipeline includes:
+The CI pipeline runs unit tests and E2E tests in **separate jobs** to ensure both test suites execute even if one fails:
 
 1. **Unit Tests**: Run on ubuntu-latest with Node 20
 2. **E2E Tests**: Run on ubuntu-latest with Chromium browser

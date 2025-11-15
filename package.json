@@ -12,9 +12,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "astro check",
-    "test": "vitest run && playwright test",
+    "test": "vitest run",
     "test:unit": "vitest run",
-    "test:e2e": "playwright test",
+    "test:e2e": "npx playwright test",
     "test:watch": "vitest"
   },
   "dependencies": {

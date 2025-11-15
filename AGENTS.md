@@ -40,10 +40,11 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 - **Local development**: `npm run dev` (Astro dev server on localhost:4321)
 - **Docker Compose**: Planned for full stack including Supabase (not yet implemented)
 - **Testing**:
-  - `npm test` - Run all tests (unit + E2E)
+  - `npm test` - Run unit tests (quick feedback)
   - `npm run test:unit` - Run unit tests with Vitest
   - `npm run test:e2e` - Run E2E tests with Playwright
   - `npm run test:watch` - Run unit tests in watch mode
+  - Note: CI runs unit and E2E tests separately
 - **Build**: `npm run build`
 - **Preview**: `npm run preview`
 - **Linting**: `npm run lint` or `npm run lint:fix`
