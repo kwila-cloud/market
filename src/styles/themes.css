@@ -6,25 +6,33 @@
 
 /* Dusk Theme - Blue and dusk orange on dark surface (Default, Dark) */
 .theme-dusk {
-  /* Primary palette - Blue */
-  --color-primary-100: 219 234 254; /* light blue */
-  --color-primary-200: 191 219 254; /* lighter blue */
-  --color-primary-300: 147 197 253; /* mid-light blue */
-  --color-primary: 59 130 246; /* blue */
-  --color-primary-light: 147 197 253; /* lighter variant */
-  --color-primary-dark: 29 78 216; /* darker blue */
-  --color-primary-700: 30 64 175; /* dark blue */
-  --color-primary-800: 30 58 138; /* very dark blue */
+  /* Primary palette - Blue (OKLCH) */
+  --color-primary-50: 0.965 0.015 273.9;
+  --color-primary-100: 0.924 0.033 272.8;
+  --color-primary-200: 0.847 0.071 271.55;
+  --color-primary-300: 0.771 0.108 268.07;
+  --color-primary-400: 0.701 0.144 265.29;
+  --color-primary-500: 0.623 0.188 259.81;
+  --color-primary-600: 0.532 0.171 258.32;
+  --color-primary-700: 0.426 0.139 258.76;
+  --color-primary-800: 0.33 0.107 258.44;
+  --color-primary-900: 0.234 0.077 258.58;
+  --color-primary-950: 0.189 0.063 258.86;
+  --color-primary: var(--color-primary-500);
 
-  /* Secondary palette - Dusk orange/peach */
-  --color-secondary-100: 254 235 215; /* light peach */
-  --color-secondary-200: 253 206 161; /* lighter peach */
-  --color-secondary-300: 253 176 110; /* mid-light peach */
-  --color-secondary: 251 146 60; /* dusk orange */
-  --color-secondary-light: 253 176 110; /* lighter variant */
-  --color-secondary-dark: 234 116 38; /* darker orange */
-  --color-secondary-700: 194 96 31; /* dark orange */
-  --color-secondary-800: 154 76 24; /* very dark orange */
+  /* Secondary palette - Dusk orange/peach (OKLCH) */
+  --color-secondary-50: 0.974 0.012 37.53;
+  --color-secondary-100: 0.951 0.024 43.21;
+  --color-secondary-200: 0.9 0.052 43.77;
+  --color-secondary-300: 0.851 0.082 46.19;
+  --color-secondary-400: 0.802 0.117 50.96;
+  --color-secondary-500: 0.758 0.159 55.93;
+  --color-secondary-600: 0.632 0.141 56.86;
+  --color-secondary-700: 0.508 0.113 56.89;
+  --color-secondary-800: 0.385 0.085 57.11;
+  --color-secondary-900: 0.262 0.058 57.63;
+  --color-secondary-950: 0.201 0.044 55.71;
+  --color-secondary: var(--color-secondary-500);
 
   /* Surface palette - Darker blue-gray */
   --color-surface: 26 32 44; /* very dark blue-gray */
@@ -39,25 +47,33 @@
 
 /* Ember Theme - Orange and burnt orange on dark gray (Dark) */
 .theme-ember {
-  /* Primary palette - Orange */
-  --color-primary-100: 254 237 224; /* light orange */
-  --color-primary-200: 253 190 153; /* lighter orange */
-  --color-primary-300: 242 158 94; /* mid-light orange */
-  --color-primary: 230 126 34; /* orange */
-  --color-primary-light: 242 158 94; /* lighter variant */
-  --color-primary-dark: 184 101 27; /* darker orange */
-  --color-primary-700: 153 84 23; /* dark orange */
-  --color-primary-800: 115 63 17; /* very dark orange */
+  /* Primary palette - Orange (OKLCH) */
+  --color-primary-50: 0.967 0.016 42.45;
+  --color-primary-100: 0.942 0.029 39.38;
+  --color-primary-200: 0.876 0.066 43.09;
+  --color-primary-300: 0.819 0.104 47.09;
+  --color-primary-400: 0.764 0.152 53.19;
+  --color-primary-500: 0.696 0.16 55.54;
+  --color-primary-600: 0.589 0.135 55.79;
+  --color-primary-700: 0.475 0.108 55.78;
+  --color-primary-800: 0.359 0.083 55.19;
+  --color-primary-900: 0.254 0.057 55.82;
+  --color-primary-950: 0.192 0.044 55.57;
+  --color-primary: var(--color-primary-500);
 
-  /* Secondary palette - Burnt Orange */
-  --color-secondary-100: 255 216 191; /* light burnt orange */
-  --color-secondary-200: 255 165 107; /* lighter burnt orange */
-  --color-secondary-300: 232 119 34; /* mid burnt orange */
-  --color-secondary: 204 85 0; /* burnt orange */
-  --color-secondary-light: 232 119 34; /* lighter variant */
-  --color-secondary-dark: 162 67 0; /* darker burnt orange */
-  --color-secondary-700: 130 54 0; /* dark burnt orange */
-  --color-secondary-800: 97 40 0; /* very dark burnt orange */
+  /* Secondary palette - Burnt Orange (OKLCH) */
+  --color-secondary-50: 0.959 0.02 32.59;
+  --color-secondary-100: 0.917 0.043 30.54;
+  --color-secondary-200: 0.836 0.092 34.01;
+  --color-secondary-300: 0.765 0.143 38.67;
+  --color-secondary-400: 0.683 0.193 45.61;
+  --color-secondary-500: 0.595 0.169 45.48;
+  --color-secondary-600: 0.506 0.143 45.57;
+  --color-secondary-700: 0.417 0.119 45.11;
+  --color-secondary-800: 0.318 0.091 45.12;
+  --color-secondary-900: 0.231 0.066 44.92;
+  --color-secondary-950: 0.184 0.052 45.98;
+  --color-secondary: var(--color-secondary-500);
 
   /* Surface palette - Dark gray */
   --color-surface: 34 34 34; /* very dark gray */
@@ -72,25 +88,33 @@
 
 /* Ocean Theme - Blue and teal on white (Light) */
 .theme-ocean {
-  /* Primary palette - Blue */
-  --color-primary-100: 212 230 241; /* light blue */
-  --color-primary-200: 169 204 227; /* lighter blue */
-  --color-primary-300: 105 179 216; /* mid-light blue */
-  --color-primary: 41 128 185; /* blue */
-  --color-primary-light: 105 179 216; /* lighter variant */
-  --color-primary-dark: 33 102 148; /* darker blue */
-  --color-primary-700: 27 85 123; /* dark blue */
-  --color-primary-800: 20 64 92; /* very dark blue */
+  /* Primary palette - Blue (OKLCH) */
+  --color-primary-50: 0.957 0.019 252.87;
+  --color-primary-100: 0.912 0.039 254.29;
+  --color-primary-200: 0.826 0.082 249.39;
+  --color-primary-300: 0.748 0.128 244.51;
+  --color-primary-400: 0.659 0.137 242.48;
+  --color-primary-500: 0.576 0.119 242.27;
+  --color-primary-600: 0.49 0.101 241.97;
+  --color-primary-700: 0.403 0.083 241.82;
+  --color-primary-800: 0.308 0.064 242.11;
+  --color-primary-900: 0.222 0.047 243.2;
+  --color-primary-950: 0.175 0.036 242.48;
+  --color-primary: var(--color-primary-500);
 
-  /* Secondary palette - Teal */
-  --color-secondary-100: 209 242 235; /* light teal */
-  --color-secondary-200: 163 228 215; /* lighter teal */
-  --color-secondary-300: 95 211 186; /* mid-light teal */
-  --color-secondary: 26 188 156; /* teal */
-  --color-secondary-light: 95 211 186; /* lighter variant */
-  --color-secondary-dark: 21 150 125; /* darker teal */
-  --color-secondary-700: 17 125 104; /* dark teal */
-  --color-secondary-800: 13 94 78; /* very dark teal */
+  /* Secondary palette - Teal (OKLCH) */
+  --color-secondary-50: 0.969 0.044 173.16;
+  --color-secondary-100: 0.938 0.092 173.41;
+  --color-secondary-200: 0.868 0.16 174.21;
+  --color-secondary-300: 0.817 0.15 174.19;
+  --color-secondary-400: 0.767 0.141 174.27;
+  --color-secondary-500: 0.712 0.131 174.19;
+  --color-secondary-600: 0.599 0.111 174.07;
+  --color-secondary-700: 0.481 0.089 173.89;
+  --color-secondary-800: 0.363 0.067 173.96;
+  --color-secondary-900: 0.252 0.045 175.55;
+  --color-secondary-950: 0.195 0.036 172.14;
+  --color-secondary: var(--color-secondary-500);
 
   /* Surface palette - White/Light gray */
   --color-surface: 255 255 255; /* white */
@@ -105,25 +129,33 @@
 
 /* Forest Theme - Green and tree bark brown on white (Light) */
 .theme-forest {
-  /* Primary palette - Green */
-  --color-primary-100: 212 237 218; /* light green */
-  --color-primary-200: 169 219 181; /* lighter green */
-  --color-primary-300: 104 196 139; /* mid-light green */
-  --color-primary: 39 174 96; /* green */
-  --color-primary-light: 104 196 139; /* lighter variant */
-  --color-primary-dark: 31 139 77; /* darker green */
-  --color-primary-700: 26 116 64; /* dark green */
-  --color-primary-800: 20 87 48; /* very dark green */
+  /* Primary palette - Green (OKLCH) */
+  --color-primary-50: 0.958 0.062 153.51;
+  --color-primary-100: 0.927 0.116 152.95;
+  --color-primary-200: 0.849 0.205 152.42;
+  --color-primary-300: 0.79 0.191 152.39;
+  --color-primary-400: 0.721 0.175 152.29;
+  --color-primary-500: 0.663 0.16 152.37;
+  --color-primary-600: 0.553 0.134 152.48;
+  --color-primary-700: 0.454 0.11 152.16;
+  --color-primary-800: 0.344 0.084 152.08;
+  --color-primary-900: 0.244 0.06 151.97;
+  --color-primary-950: 0.184 0.046 152.37;
+  --color-primary: var(--color-primary-500);
 
-  /* Secondary palette - Tree bark brown */
-  --color-secondary-100: 222 199 176; /* light tan */
-  --color-secondary-200: 205 175 149; /* lighter tan */
-  --color-secondary-300: 188 151 122; /* mid-light brown */
-  --color-secondary: 160 120 80; /* tree bark brown */
-  --color-secondary-light: 188 151 122; /* lighter variant */
-  --color-secondary-dark: 128 96 64; /* darker brown */
-  --color-secondary-700: 101 67 33; /* dark brown */
-  --color-secondary-800: 75 50 25; /* very dark brown */
+  /* Secondary palette - Tree bark brown (OKLCH) */
+  --color-secondary-50: 0.958 0.014 57.62;
+  --color-secondary-100: 0.924 0.028 58.83;
+  --color-secondary-200: 0.84 0.07 62.36;
+  --color-secondary-300: 0.764 0.095 65.59;
+  --color-secondary-400: 0.684 0.085 65.6;
+  --color-secondary-500: 0.603 0.075 65.61;
+  --color-secondary-600: 0.512 0.063 64.75;
+  --color-secondary-700: 0.416 0.052 64.46;
+  --color-secondary-800: 0.321 0.039 65.65;
+  --color-secondary-900: 0.234 0.028 65.67;
+  --color-secondary-950: 0.178 0.022 63.4;
+  --color-secondary: var(--color-secondary-500);
 
   /* Surface palette - White/Light gray */
   --color-surface: 255 255 255; /* white */

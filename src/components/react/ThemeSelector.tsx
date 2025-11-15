@@ -26,7 +26,7 @@ export default function ThemeSelector() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-10 h-10 rounded-lg transition-all bg-[rgb(var(--color-surface-elevated))] hover:bg-[rgb(var(--color-surface-border))] hover:ring-2 hover:ring-[rgb(var(--color-secondary))] text-[rgb(var(--color-text))] border border-[rgb(var(--color-surface-border))]"
+        className="flex items-center justify-center w-10 h-10 rounded-lg transition-all bg-[rgb(var(--color-surface-elevated))] hover:bg-[rgb(var(--color-surface-border))] hover:ring-2 hover:ring-[oklch(var(--color-secondary))] text-[rgb(var(--color-text))] border border-[rgb(var(--color-surface-border))]"
         aria-label="Select theme"
         aria-expanded={isOpen}
       >
@@ -69,7 +69,7 @@ export default function ThemeSelector() {
                   type="button"
                   onClick={() => handleThemeChange(theme.name)}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all text-[rgb(var(--color-text))] ${currentTheme === theme.name
-                      ? 'ring-2 ring-[rgb(var(--color-primary))] bg-[rgb(var(--color-surface-border))]'
+                      ? 'ring-2 ring-[oklch(var(--color-primary))] bg-[rgb(var(--color-surface-border))]'
                       : 'hover:bg-[rgb(var(--color-surface-border))]'
                     }`}
                   role="menuitem"
@@ -81,10 +81,10 @@ export default function ThemeSelector() {
                       aria-hidden="true"
                     >
                       <div
-                        className="w-2 h-2 rounded-full border border-black/10 bg-[rgb(var(--color-primary))]"
+                        className="w-2 h-2 rounded-full border border-black/10 bg-[oklch(var(--color-primary))]"
                       />
                       <div
-                        className="w-2 h-2 rounded-full border border-black/10 bg-[rgb(var(--color-secondary))]"
+                        className="w-2 h-2 rounded-full border border-black/10 bg-[oklch(var(--color-secondary))]"
                       />
                     </div>
                   </div>

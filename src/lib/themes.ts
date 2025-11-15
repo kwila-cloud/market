@@ -9,10 +9,6 @@ export interface Theme {
   displayName: string;
 }
 
-/**
- * Available themes in the application
- * Ordered with dark themes first
- */
 export const themes: Record<ThemeName, Theme> = {
   dusk: {
     name: 'dusk',
@@ -32,23 +28,10 @@ export const themes: Record<ThemeName, Theme> = {
   },
 };
 
-/**
- * Default theme
- */
 export const DEFAULT_THEME: ThemeName = 'dusk';
 
-/**
- * Get all available themes as an array
- */
 export function getThemes(): Theme[] {
   return Object.values(themes);
-}
-
-/**
- * Get theme by name
- */
-export function getTheme(name: ThemeName): Theme {
-  return themes[name];
 }
 
 /**
