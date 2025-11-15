@@ -3,9 +3,8 @@
  * Navigation bar component
  * Contains platform branding and theme selector
  */
+import { platformName } from '../../lib/globals';
 import ThemeSelector from '../react/ThemeSelector';
-
-const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
 ---
 
 <nav

@@ -1,4 +1,4 @@
-# A Market - High Level Architecture
+# Market - High Level Architecture
 
 ## Overview
 

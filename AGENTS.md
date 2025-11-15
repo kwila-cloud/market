@@ -1,6 +1,6 @@
 # Agent Guidelines
 
-**Project**: A Market - trust-based, invite-only marketplace for local artisans and small businesses
+**Project**: Market - trust-based, invite-only marketplace for local artisans and small businesses
 **License**: MIT
 **Status**: Early development phase
 

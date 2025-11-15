@@ -1,9 +1,9 @@
-# A Market
+# Market
 
 _Find what you need through people you trust_
 
 > [!NOTE]
-> "A Market" is a working name. The final name will be determined based on beta tester feedback.
+> We are still determining a final name for the market. Let us know if you have ideas - market@kwila.cloud.
 
 ## Problems to Solve
 
