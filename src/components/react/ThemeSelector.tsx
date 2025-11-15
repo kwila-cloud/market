@@ -68,10 +68,11 @@ export default function ThemeSelector() {
                   key={theme.name}
                   type="button"
                   onClick={() => handleThemeChange(theme.name)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all text-neutral-50 ${currentTheme === theme.name
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all text-neutral-50 ${
+                    currentTheme === theme.name
                       ? 'ring-2 ring-primary bg-surface-border'
                       : 'hover:bg-surface-border'
-                    }`}
+                  }`}
                   role="menuitem"
                 >
                   {/* Color preview - surface rectangle with primary and secondary dots */}

@@ -4,7 +4,7 @@
  * Colors are defined using an indirection layer for dynamic theming
  */
 
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /**
  * Theme color definitions
@@ -91,10 +91,10 @@
   --theme-neutral-50: 0.984 0.005 250; /* lightest text */
   --theme-neutral-100: 0.967 0.008 250;
   --theme-neutral-200: 0.918 0.015 250;
-  --theme-neutral-300: 0.856 0.020 250; /* secondary text */
+  --theme-neutral-300: 0.856 0.02 250; /* secondary text */
   --theme-neutral-400: 0.682 0.025 250; /* muted text */
   --theme-neutral-500: 0.503 0.028 250;
-  --theme-neutral-600: 0.378 0.030 250;
+  --theme-neutral-600: 0.378 0.03 250;
   --theme-neutral-700: 0.292 0.032 250;
   --theme-neutral-800: 0.202 0.028 250;
   --theme-neutral-900: 0.127 0.022 250;
@@ -139,8 +139,8 @@
   --theme-neutral-100: 0.968 0.001 0;
   --theme-neutral-200: 0.913 0.002 0;
   --theme-neutral-300: 0.856 0.003 0; /* secondary text */
-  --theme-neutral-400: 0.680 0.004 0; /* muted text */
-  --theme-neutral-500: 0.500 0.004 0;
+  --theme-neutral-400: 0.68 0.004 0; /* muted text */
+  --theme-neutral-500: 0.5 0.004 0;
   --theme-neutral-600: 0.368 0.003 0;
   --theme-neutral-700: 0.292 0.002 0;
   --theme-neutral-800: 0.216 0.002 0;
