@@ -24,6 +24,7 @@ export default function ThemeSelector() {
   return (
     <div className="relative">
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-center w-10 h-10 rounded-lg transition-all bg-[rgb(var(--color-surface-elevated))] hover:bg-[rgb(var(--color-surface-border))] hover:ring-2 hover:ring-[rgb(var(--color-secondary))] text-[rgb(var(--color-text))] border border-[rgb(var(--color-surface-border))]"
         aria-label="Select theme"
@@ -35,6 +36,8 @@ export default function ThemeSelector() {
           stroke="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          focusable="false"
         >
           <path
             strokeLinecap="round"
@@ -55,17 +58,22 @@ export default function ThemeSelector() {
           />
 
           {/* Dropdown menu */}
-          <div className="absolute right-0 mt-2 w-48 rounded-lg border border-[rgb(var(--color-surface-border))] bg-[rgb(var(--color-surface-elevated))] z-20 overflow-hidden">
+          <div
+            className="absolute right-0 mt-2 w-48 rounded-lg border border-[rgb(var(--color-surface-border))] bg-[rgb(var(--color-surface-elevated))] z-20 overflow-hidden"
+            role="menu"
+          >
             <div className="p-2">
               {themes.map((theme) => (
                 <button
                   key={theme.name}
+                  type="button"
                   onClick={() => handleThemeChange(theme.name)}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all text-[rgb(var(--color-text))] ${
                     currentTheme === theme.name
                       ? 'ring-2 ring-[rgb(var(--color-primary))] bg-[rgb(var(--color-surface-border))]'
                       : 'hover:bg-[rgb(var(--color-surface-border))]'
                   }`}
+                  role="menuitem"
                 >
                   {/* Color preview - surface rectangle with primary and secondary dots */}
                   <div

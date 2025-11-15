@@ -27,7 +27,9 @@ const VALID_THEMES = Object.keys(themes);
       const raw = localStorage.getItem(THEME_STORAGE_KEY);
       const stored = typeof raw === 'string' ? raw : null;
       const theme =
-        stored && VALID_THEMES.includes(stored) ? stored : DEFAULT_THEME;
+        stored && Array.isArray(VALID_THEMES) && VALID_THEMES.includes(stored)
+          ? stored
+          : DEFAULT_THEME;
 
       // Remove all theme classes
       const classList = document.documentElement.classList;
