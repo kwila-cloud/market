@@ -1,0 +1,49 @@
+---
+/**
+ * Theme Initializer
+ * Initializes the theme before the page renders to prevent FOUC (Flash of Unstyled Content)
+ *
+ * IMPORTANT: Theme configuration is imported from themes.ts at build time.
+ * All theme names and defaults are centralized in src/lib/themes.ts
+ */
+import { DEFAULT_THEME, themes } from '../../lib/themes';
+
+// Extract theme names from the centralized configuration
+const VALID_THEMES = Object.keys(themes);
+---
+
+<script is:inline define:vars={{ DEFAULT_THEME, VALID_THEMES }}>
+  // Inline theme initialization to run synchronously before page renders
+  (function () {
+    // SSR safety check - only run in browser environment
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return;
+    }
+
+    const THEME_STORAGE_KEY = 'app-theme';
+
+    try {
+      // Get stored theme with defensive checks
+      const raw = localStorage.getItem(THEME_STORAGE_KEY);
+      const stored = typeof raw === 'string' ? raw : null;
+      const theme =
+        stored && Array.isArray(VALID_THEMES) && VALID_THEMES.includes(stored)
+          ? stored
+          : DEFAULT_THEME;
+
+      // Remove all theme classes
+      const classList = document.documentElement.classList;
+      Array.from(classList)
+        .filter((className) => className.startsWith('theme-'))
+        .forEach((className) => {
+          classList.remove(className);
+        });
+
+      // Apply theme immediately
+      document.documentElement.classList.add(`theme-${theme}`);
+    } catch (error) {
+      console.warn('Failed to initialize theme:', error);
+      document.documentElement.classList.add(`theme-${DEFAULT_THEME}`);
+    }
+  })();
+</script>

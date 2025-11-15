@@ -1,0 +1,35 @@
+---
+/**
+ * Navigation bar component
+ * Contains platform branding and theme selector
+ */
+import ThemeSelector from '../react/ThemeSelector';
+
+const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
+---
+
+<nav
+  class="fixed top-0 left-0 right-0 z-50 bg-surface border-b border-surface-border"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Platform Name -->
+      <div class="flex-shrink-0">
+        <a
+          href="/"
+          class="group text-xl font-bold bg-gradient-to-r from-primary to-primary-700 bg-clip-text text-transparent relative"
+        >
+          {platformName}
+        </a>
+      </div>
+
+      <!-- Theme Selector -->
+      <div class="flex items-center gap-4">
+        <ThemeSelector client:load />
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Spacer to prevent content from hiding under fixed nav -->
+<div class="h-16"></div>

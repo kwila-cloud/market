@@ -37,9 +37,14 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 
 ### Development Workflow
 
-- **Local development**: `docker-compose up` (full stack including Supabase)
-- **Testing**: Unit tests (Vitest) + E2E tests (Playwright)
-- **Key commands**: Check for package.json, README, or ask user for local dev commands
+- **Local development**: `npm run dev` (Astro dev server on localhost:4321)
+- **Docker Compose**: Planned for full stack including Supabase (not yet implemented)
+- **Testing**: Planned (Vitest + Playwright) but not yet implemented
+- **Build**: `npm run build`
+- **Preview**: `npm run preview`
+- **Linting**: `npm run lint` or `npm run lint:fix`
+- **Formatting**: `npm run format` or `npm run format:check`
+- **Type checking**: `npm run type-check`
 
 ### Security & Best Practices
 
@@ -47,6 +52,7 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 - **Validate user input** and enforce RLS policies
 - **Use TypeScript strict mode**
 - **Don't modify git config**
+- **Always use pre-existing layouts** from `src/layouts/` for page structure consistency
 
 ### Contribution Process
 
@@ -57,9 +63,11 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 ### Files You Should NOT Touch
 
 - `.github/workflows/` (CI/CD configuration)
-- `docker-compose.yml` (dev environment setup)
-- `wrangler.toml` (Cloudflare Workers config)
-- Supabase configuration files
+- `docker-compose.yml` (dev environment setup - when implemented)
+- `wrangler.jsonc` (Cloudflare Workers config)
+- `astro.config.mjs` (Astro configuration - coordinate with team)
+- `package.json` (dependencies - coordinate changes)
+- Supabase configuration files (when implemented)
 
 ## Where to Find More Info
 

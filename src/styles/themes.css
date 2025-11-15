@@ -1,0 +1,248 @@
+/**
+ * Theme Definitions
+ * Integrates with Tailwind v4 to generate utilities like bg-primary, text-secondary-500
+ * Colors are defined using an indirection layer for dynamic theming
+ */
+
+@import 'tailwindcss';
+
+/**
+ * Theme color definitions
+ * These reference --theme-* variables that are set by theme classes
+ * This generates Tailwind utilities: bg-primary, text-primary-500, etc.
+ */
+@theme inline {
+  /* Primary color scale (OKLCH) */
+  --color-primary-50: oklch(var(--theme-primary-50));
+  --color-primary-100: oklch(var(--theme-primary-100));
+  --color-primary-200: oklch(var(--theme-primary-200));
+  --color-primary-300: oklch(var(--theme-primary-300));
+  --color-primary-400: oklch(var(--theme-primary-400));
+  --color-primary-500: oklch(var(--theme-primary-500));
+  --color-primary-600: oklch(var(--theme-primary-600));
+  --color-primary-700: oklch(var(--theme-primary-700));
+  --color-primary-800: oklch(var(--theme-primary-800));
+  --color-primary-900: oklch(var(--theme-primary-900));
+  --color-primary-950: oklch(var(--theme-primary-950));
+  --color-primary: oklch(var(--theme-primary-500));
+
+  /* Secondary color scale (OKLCH) */
+  --color-secondary-50: oklch(var(--theme-secondary-50));
+  --color-secondary-100: oklch(var(--theme-secondary-100));
+  --color-secondary-200: oklch(var(--theme-secondary-200));
+  --color-secondary-300: oklch(var(--theme-secondary-300));
+  --color-secondary-400: oklch(var(--theme-secondary-400));
+  --color-secondary-500: oklch(var(--theme-secondary-500));
+  --color-secondary-600: oklch(var(--theme-secondary-600));
+  --color-secondary-700: oklch(var(--theme-secondary-700));
+  --color-secondary-800: oklch(var(--theme-secondary-800));
+  --color-secondary-900: oklch(var(--theme-secondary-900));
+  --color-secondary-950: oklch(var(--theme-secondary-950));
+  --color-secondary: oklch(var(--theme-secondary-500));
+
+  /* Neutral/Gray color scale (OKLCH) */
+  --color-neutral-50: oklch(var(--theme-neutral-50));
+  --color-neutral-100: oklch(var(--theme-neutral-100));
+  --color-neutral-200: oklch(var(--theme-neutral-200));
+  --color-neutral-300: oklch(var(--theme-neutral-300));
+  --color-neutral-400: oklch(var(--theme-neutral-400));
+  --color-neutral-500: oklch(var(--theme-neutral-500));
+  --color-neutral-600: oklch(var(--theme-neutral-600));
+  --color-neutral-700: oklch(var(--theme-neutral-700));
+  --color-neutral-800: oklch(var(--theme-neutral-800));
+  --color-neutral-900: oklch(var(--theme-neutral-900));
+  --color-neutral-950: oklch(var(--theme-neutral-950));
+
+  /* Surface colors (OKLCH) */
+  --color-surface: oklch(var(--theme-surface));
+  --color-surface-elevated: oklch(var(--theme-surface-elevated));
+  --color-surface-border: oklch(var(--theme-surface-border));
+}
+
+/* Dusk Theme - Blue and dusk orange on dark surface (Default, Dark) */
+.theme-dusk {
+  /* Primary palette - Blue (OKLCH) */
+  --theme-primary-50: 0.965 0.015 273.9;
+  --theme-primary-100: 0.924 0.033 272.8;
+  --theme-primary-200: 0.847 0.071 271.55;
+  --theme-primary-300: 0.771 0.108 268.07;
+  --theme-primary-400: 0.701 0.144 265.29;
+  --theme-primary-500: 0.623 0.188 259.81;
+  --theme-primary-600: 0.532 0.171 258.32;
+  --theme-primary-700: 0.426 0.139 258.76;
+  --theme-primary-800: 0.33 0.107 258.44;
+  --theme-primary-900: 0.234 0.077 258.58;
+  --theme-primary-950: 0.189 0.063 258.86;
+
+  /* Secondary palette - Dusk orange/peach (OKLCH) */
+  --theme-secondary-50: 0.974 0.012 37.53;
+  --theme-secondary-100: 0.951 0.024 43.21;
+  --theme-secondary-200: 0.9 0.052 43.77;
+  --theme-secondary-300: 0.851 0.082 46.19;
+  --theme-secondary-400: 0.802 0.117 50.96;
+  --theme-secondary-500: 0.758 0.159 55.93;
+  --theme-secondary-600: 0.632 0.141 56.86;
+  --theme-secondary-700: 0.508 0.113 56.89;
+  --theme-secondary-800: 0.385 0.085 57.11;
+  --theme-secondary-900: 0.262 0.058 57.63;
+  --theme-secondary-950: 0.201 0.044 55.71;
+
+  /* Neutral palette - Light grays for dark theme (OKLCH) */
+  --theme-neutral-50: 0.984 0.005 250; /* lightest text */
+  --theme-neutral-100: 0.967 0.008 250;
+  --theme-neutral-200: 0.918 0.015 250;
+  --theme-neutral-300: 0.856 0.02 250; /* secondary text */
+  --theme-neutral-400: 0.682 0.025 250; /* muted text */
+  --theme-neutral-500: 0.503 0.028 250;
+  --theme-neutral-600: 0.378 0.03 250;
+  --theme-neutral-700: 0.292 0.032 250;
+  --theme-neutral-800: 0.202 0.028 250;
+  --theme-neutral-900: 0.127 0.022 250;
+  --theme-neutral-950: 0.058 0.015 250;
+
+  /* Surface palette - Darker blue-gray (OKLCH) */
+  --theme-surface: 0.158 0.025 250; /* very dark blue-gray */
+  --theme-surface-elevated: 0.219 0.028 250; /* elevated surface */
+  --theme-surface-border: 0.292 0.032 250; /* border */
+}
+
+/* Ember Theme - Orange and burnt orange on dark gray (Dark) */
+.theme-ember {
+  /* Primary palette - Orange (OKLCH) */
+  --theme-primary-50: 0.967 0.016 42.45;
+  --theme-primary-100: 0.942 0.029 39.38;
+  --theme-primary-200: 0.876 0.066 43.09;
+  --theme-primary-300: 0.819 0.104 47.09;
+  --theme-primary-400: 0.764 0.152 53.19;
+  --theme-primary-500: 0.696 0.16 55.54;
+  --theme-primary-600: 0.589 0.135 55.79;
+  --theme-primary-700: 0.475 0.108 55.78;
+  --theme-primary-800: 0.359 0.083 55.19;
+  --theme-primary-900: 0.254 0.057 55.82;
+  --theme-primary-950: 0.192 0.044 55.57;
+
+  /* Secondary palette - Burnt Orange (OKLCH) */
+  --theme-secondary-50: 0.959 0.02 32.59;
+  --theme-secondary-100: 0.917 0.043 30.54;
+  --theme-secondary-200: 0.836 0.092 34.01;
+  --theme-secondary-300: 0.765 0.143 38.67;
+  --theme-secondary-400: 0.683 0.193 45.61;
+  --theme-secondary-500: 0.595 0.169 45.48;
+  --theme-secondary-600: 0.506 0.143 45.57;
+  --theme-secondary-700: 0.417 0.119 45.11;
+  --theme-secondary-800: 0.318 0.091 45.12;
+  --theme-secondary-900: 0.231 0.066 44.92;
+  --theme-secondary-950: 0.184 0.052 45.98;
+
+  /* Neutral palette - Light grays for dark theme (OKLCH) */
+  --theme-neutral-50: 0.985 0.001 0; /* lightest text */
+  --theme-neutral-100: 0.968 0.001 0;
+  --theme-neutral-200: 0.913 0.002 0;
+  --theme-neutral-300: 0.856 0.003 0; /* secondary text */
+  --theme-neutral-400: 0.68 0.004 0; /* muted text */
+  --theme-neutral-500: 0.5 0.004 0;
+  --theme-neutral-600: 0.368 0.003 0;
+  --theme-neutral-700: 0.292 0.002 0;
+  --theme-neutral-800: 0.216 0.002 0;
+  --theme-neutral-900: 0.125 0.001 0;
+  --theme-neutral-950: 0.075 0.001 0;
+
+  /* Surface palette - Dark gray (OKLCH) */
+  --theme-surface: 0.168 0.002 0; /* very dark gray */
+  --theme-surface-elevated: 0.216 0.002 0; /* elevated surface */
+  --theme-surface-border: 0.292 0.002 0; /* border */
+}
+
+/* Ocean Theme - Blue and teal on white (Light) */
+.theme-ocean {
+  /* Primary palette - Blue (OKLCH) */
+  --theme-primary-50: 0.957 0.019 252.87;
+  --theme-primary-100: 0.912 0.039 254.29;
+  --theme-primary-200: 0.826 0.082 249.39;
+  --theme-primary-300: 0.748 0.128 244.51;
+  --theme-primary-400: 0.659 0.137 242.48;
+  --theme-primary-500: 0.576 0.119 242.27;
+  --theme-primary-600: 0.49 0.101 241.97;
+  --theme-primary-700: 0.403 0.083 241.82;
+  --theme-primary-800: 0.308 0.064 242.11;
+  --theme-primary-900: 0.222 0.047 243.2;
+  --theme-primary-950: 0.175 0.036 242.48;
+
+  /* Secondary palette - Teal (OKLCH) */
+  --theme-secondary-50: 0.969 0.044 173.16;
+  --theme-secondary-100: 0.938 0.092 173.41;
+  --theme-secondary-200: 0.868 0.16 174.21;
+  --theme-secondary-300: 0.817 0.15 174.19;
+  --theme-secondary-400: 0.767 0.141 174.27;
+  --theme-secondary-500: 0.712 0.131 174.19;
+  --theme-secondary-600: 0.599 0.111 174.07;
+  --theme-secondary-700: 0.481 0.089 173.89;
+  --theme-secondary-800: 0.363 0.067 173.96;
+  --theme-secondary-900: 0.252 0.045 175.55;
+  --theme-secondary-950: 0.195 0.036 172.14;
+
+  /* Neutral palette - Dark grays for light theme (OKLCH) - inverted scale */
+  --theme-neutral-50: 0.135 0.012 250; /* darkest text */
+  --theme-neutral-100: 0.205 0.015 250;
+  --theme-neutral-200: 0.306 0.019 250;
+  --theme-neutral-300: 0.396 0.018 250; /* secondary text */
+  --theme-neutral-400: 0.503 0.015 250; /* muted text */
+  --theme-neutral-500: 0.682 0.012 250;
+  --theme-neutral-600: 0.854 0.007 250;
+  --theme-neutral-700: 0.916 0.005 250;
+  --theme-neutral-800: 0.967 0.003 247.8;
+  --theme-neutral-900: 0.985 0.002 247.8; /* lightest */
+  --theme-neutral-950: 0.066 0.008 250;
+
+  /* Surface palette - White/Light gray (OKLCH) */
+  --theme-surface: 1 0 0; /* pure white */
+  --theme-surface-elevated: 0.985 0.002 247.8; /* very light gray */
+  --theme-surface-border: 0.916 0.005 250; /* light gray border */
+}
+
+/* Forest Theme - Green and tree bark brown on white (Light) */
+.theme-forest {
+  /* Primary palette - Green (OKLCH) */
+  --theme-primary-50: 0.958 0.062 153.51;
+  --theme-primary-100: 0.927 0.116 152.95;
+  --theme-primary-200: 0.849 0.205 152.42;
+  --theme-primary-300: 0.79 0.191 152.39;
+  --theme-primary-400: 0.721 0.175 152.29;
+  --theme-primary-500: 0.663 0.16 152.37;
+  --theme-primary-600: 0.553 0.134 152.48;
+  --theme-primary-700: 0.454 0.11 152.16;
+  --theme-primary-800: 0.344 0.084 152.08;
+  --theme-primary-900: 0.244 0.06 151.97;
+  --theme-primary-950: 0.184 0.046 152.37;
+
+  /* Secondary palette - Tree bark brown (OKLCH) */
+  --theme-secondary-50: 0.958 0.014 57.62;
+  --theme-secondary-100: 0.924 0.028 58.83;
+  --theme-secondary-200: 0.84 0.07 62.36;
+  --theme-secondary-300: 0.764 0.095 65.59;
+  --theme-secondary-400: 0.684 0.085 65.6;
+  --theme-secondary-500: 0.603 0.075 65.61;
+  --theme-secondary-600: 0.512 0.063 64.75;
+  --theme-secondary-700: 0.416 0.052 64.46;
+  --theme-secondary-800: 0.321 0.039 65.65;
+  --theme-secondary-900: 0.234 0.028 65.67;
+  --theme-secondary-950: 0.178 0.022 63.4;
+
+  /* Neutral palette - Dark grays for light theme (OKLCH) - inverted scale */
+  --theme-neutral-50: 0.135 0.012 250; /* darkest text */
+  --theme-neutral-100: 0.205 0.015 250;
+  --theme-neutral-200: 0.306 0.019 250;
+  --theme-neutral-300: 0.396 0.018 250; /* secondary text */
+  --theme-neutral-400: 0.503 0.015 250; /* muted text */
+  --theme-neutral-500: 0.682 0.012 250;
+  --theme-neutral-600: 0.854 0.007 250;
+  --theme-neutral-700: 0.916 0.005 250;
+  --theme-neutral-800: 0.967 0.003 247.8;
+  --theme-neutral-900: 0.985 0.002 247.8; /* lightest */
+  --theme-neutral-950: 0.066 0.008 250;
+
+  /* Surface palette - White/Light gray (OKLCH) */
+  --theme-surface: 1 0 0; /* pure white */
+  --theme-surface-elevated: 0.985 0.002 247.8; /* very light gray */
+  --theme-surface-border: 0.916 0.005 250; /* light gray border */
+}
