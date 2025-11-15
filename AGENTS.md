@@ -39,7 +39,11 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 
 - **Local development**: `npm run dev` (Astro dev server on localhost:4321)
 - **Docker Compose**: Planned for full stack including Supabase (not yet implemented)
-- **Testing**: Planned (Vitest + Playwright) but not yet implemented
+- **Testing**:
+  - `npm test` - Run all tests (unit + E2E)
+  - `npm run test:unit` - Run unit tests with Vitest
+  - `npm run test:e2e` - Run E2E tests with Playwright
+  - `npm run test:watch` - Run unit tests in watch mode
 - **Build**: `npm run build`
 - **Preview**: `npm run preview`
 - **Linting**: `npm run lint` or `npm run lint:fix`
@@ -60,13 +64,15 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 - **Issues**: Bug reports only in GitHub
 - **Code style**: See CONTRIBUTING.md for full guidelines
 
-### Files You Should NOT Touch
+### Files You Should NOT Touch Without Coordination
 
-- `.github/workflows/` (CI/CD configuration)
+- `.github/workflows/` (CI/CD configuration - coordinate changes)
 - `docker-compose.yml` (dev environment setup - when implemented)
 - `wrangler.jsonc` (Cloudflare Workers config)
 - `astro.config.mjs` (Astro configuration - coordinate with team)
 - `package.json` (dependencies - coordinate changes)
+- `vitest.config.ts` (test configuration - coordinate changes)
+- `playwright.config.ts` (E2E test configuration - coordinate changes)
 - Supabase configuration files (when implemented)
 
 ## Where to Find More Info
@@ -81,7 +87,11 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 1. **Reading code**: Start with `src/lib/` for utilities, `src/pages/` for routes
 2. **Adding features**: Check existing specs, create new spec if needed
 3. **Bug fixes**: Check if related spec exists, verify with tests
-4. **Tests**: Run existing test suite before/after changes
+4. **Tests**:
+   - Run `npm test` before committing changes
+   - Write unit tests for utilities in `tests/unit/`
+   - Write E2E tests for user flows in `tests/e2e/`
+   - See `tests/README.md` for testing guidelines
 5. **Dependencies**: Check package.json before using new libraries
 6. **Pull Requests**: Use short, descriptive PR titles (3-7 words). See CONTRIBUTING.md for examples
 
