@@ -22,9 +22,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB:-postgres}
     volumes:
-      - ./supabase/migrations:/docker-entrypoint-initdb.d:ro
-      - ./supabase/seed.sql:/docker-entrypoint-initdb.d/seed.sql:ro
-      - ./supabase/run-migrations.sh:/docker-entrypoint-initdb.d/run-migrations.sh:ro
+      - ./supabase:/docker-entrypoint-initdb.d:ro
       - db-data:/var/lib/postgresql/data
 
   # Supabase Studio - Admin UI
@@ -44,7 +42,7 @@ services:
       interval: 5s
       retries: 3
     depends_on:
-      analytics:
+      db:
         condition: service_healthy
     environment:
       STUDIO_PG_META_URL: http://meta:8080
@@ -68,7 +66,7 @@ services:
       - '${KONG_HTTP_PORT:-8000}:8000/tcp'
       - '${KONG_HTTPS_PORT:-8443}:8443/tcp'
     depends_on:
-      analytics:
+      db:
         condition: service_healthy
     environment:
       KONG_DATABASE: 'off'
@@ -90,8 +88,6 @@ services:
     image: supabase/gotrue:v2.99.0
     depends_on:
       db:
-        condition: service_healthy
-      analytics:
         condition: service_healthy
     healthcheck:
       test:
@@ -143,8 +139,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      analytics:
-        condition: service_healthy
     restart: unless-stopped
     environment:
       PGRST_DB_URI: postgres://authenticator:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
@@ -162,8 +156,6 @@ services:
     image: supabase/realtime:v2.25.35
     depends_on:
       db:
-        condition: service_healthy
-      analytics:
         condition: service_healthy
     healthcheck:
       test:
@@ -262,8 +254,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      analytics:
-        condition: service_healthy
     restart: unless-stopped
     environment:
       PG_META_PORT: 8080
@@ -273,10 +263,12 @@ services:
       PG_META_DB_USER: supabase
       PG_META_DB_PASSWORD: ${POSTGRES_PASSWORD}
 
-  # Analytics (required by other services)
+  # Analytics (optional - enable with --profile analytics)
   analytics:
     container_name: supabase-analytics
     image: supabase/logflare:1.4.0
+    profiles:
+      - analytics
     healthcheck:
       test: ['CMD', 'curl', 'http://localhost:4000/health']
       timeout: 5s

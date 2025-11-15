@@ -4,7 +4,7 @@
 
 set -e
 
-MIGRATIONS_DIR="/docker-entrypoint-initdb.d"
+MIGRATIONS_DIR="/docker-entrypoint-initdb.d/migrations"
 POSTGRES_USER="${POSTGRES_USER:-postgres}"
 POSTGRES_DB="${POSTGRES_DB:-postgres}"
 
