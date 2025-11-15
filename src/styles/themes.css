@@ -35,9 +35,6 @@
   --color-text: 248 250 252; /* light text */
   --color-text-secondary: 203 213 225; /* secondary text */
   --color-text-muted: 148 163 184; /* muted text */
-
-  /* Accent */
-  --color-accent: 147 197 253; /* light blue */
 }
 
 /* Ember Theme - Orange and burnt orange on dark gray (Dark) */
@@ -71,9 +68,6 @@
   --color-text: 250 250 250; /* light text */
   --color-text-secondary: 212 212 212; /* secondary text */
   --color-text-muted: 163 163 163; /* muted text */
-
-  /* Accent */
-  --color-accent: 242 158 94; /* light orange */
 }
 
 /* Ocean Theme - Blue and teal on white (Light) */
@@ -107,9 +101,6 @@
   --color-text: 17 24 39; /* very dark text */
   --color-text-secondary: 55 65 81; /* dark gray text */
   --color-text-muted: 107 114 128; /* medium gray text */
-
-  /* Accent */
-  --color-accent: 41 128 185; /* blue */
 }
 
 /* Forest Theme - Green and tree bark brown on white (Light) */
@@ -143,7 +134,4 @@
   --color-text: 17 24 39; /* very dark text */
   --color-text-secondary: 55 65 81; /* dark gray text */
   --color-text-muted: 107 114 128; /* medium gray text */
-
-  /* Accent */
-  --color-accent: 39 174 96; /* green */
 }

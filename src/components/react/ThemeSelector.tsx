@@ -68,33 +68,25 @@ export default function ThemeSelector() {
                   key={theme.name}
                   type="button"
                   onClick={() => handleThemeChange(theme.name)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all text-[rgb(var(--color-text))] ${
-                    currentTheme === theme.name
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all text-[rgb(var(--color-text))] ${currentTheme === theme.name
                       ? 'ring-2 ring-[rgb(var(--color-primary))] bg-[rgb(var(--color-surface-border))]'
                       : 'hover:bg-[rgb(var(--color-surface-border))]'
-                  }`}
+                    }`}
                   role="menuitem"
                 >
                   {/* Color preview - surface rectangle with primary and secondary dots */}
-                  <div
-                    className="flex items-center justify-center gap-1 px-2 py-1.5 rounded border border-black/10"
-                    style={{
-                      backgroundColor: `rgb(${theme.preview.surface})`,
-                    }}
-                    aria-hidden="true"
-                  >
+                  <div className={`theme-${theme.name}`}>
                     <div
-                      className="w-2 h-2 rounded-full border border-black/10"
-                      style={{
-                        backgroundColor: `rgb(${theme.preview.primary})`,
-                      }}
-                    />
-                    <div
-                      className="w-2 h-2 rounded-full border border-black/10"
-                      style={{
-                        backgroundColor: `rgb(${theme.preview.secondary})`,
-                      }}
-                    />
+                      className={`flex items-center justify-center gap-1 px-2 py-1.5 rounded border border-black/10  bg-[rgb(var(--color-surface))]`}
+                      aria-hidden="true"
+                    >
+                      <div
+                        className="w-2 h-2 rounded-full border border-black/10 bg-[rgb(var(--color-primary))]"
+                      />
+                      <div
+                        className="w-2 h-2 rounded-full border border-black/10 bg-[rgb(var(--color-secondary))]"
+                      />
+                    </div>
                   </div>
                   <span className="font-medium">{theme.displayName}</span>
                 </button>
