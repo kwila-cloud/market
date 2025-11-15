@@ -1,1 +1,1 @@
-export const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
+export const platformName = import.meta.env.PLATFORM_NAME || 'A Market';
