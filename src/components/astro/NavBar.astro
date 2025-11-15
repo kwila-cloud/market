@@ -9,7 +9,7 @@ const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
 ---
 
 <nav
-  class="fixed top-0 left-0 right-0 z-50 bg-[rgb(var(--color-surface))] border-b border-[rgb(var(--color-surface-border))]"
+  class="fixed top-0 left-0 right-0 z-50 bg-surface border-b border-surface-border"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
@@ -17,13 +17,9 @@ const platformName = import.meta.env.PUBLIC_PLATFORM_NAME || 'A Market';
       <div class="flex-shrink-0">
         <a
           href="/"
-          class="group text-xl font-bold bg-gradient-to-r from-[oklch(var(--color-primary))] to-[oklch(var(--color-primary-700))] bg-clip-text text-transparent hover:opacity-80 transition-opacity relative"
+          class="group text-xl font-bold bg-gradient-to-r from-primary to-primary-700 bg-clip-text text-transparent relative"
         >
           {platformName}
-          <!-- Secondary color underline accent on hover -->
-          <span
-            class="absolute bottom-0 left-0 w-0 h-0.5 bg-[oklch(var(--color-secondary))] transition-all duration-300 group-hover:w-full"
-          ></span>
         </a>
       </div>
 
