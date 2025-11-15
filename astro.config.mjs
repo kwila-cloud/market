@@ -4,6 +4,7 @@ import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import cloudflare from '@astrojs/cloudflare';
 import AstroPWA from '@vite-pwa/astro';
+import { platformName } from './src/lib/globals';
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,9 +15,9 @@ export default defineConfig({
     AstroPWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'Kwila Market',
-        short_name: 'Market',
-        description: 'Community marketplace for local connections',
+        name: platformName,
+        short_name: platformName,
+        description: 'Find what you need through people you trust.',
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',

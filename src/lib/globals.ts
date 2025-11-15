@@ -1,2 +1,2 @@
-export const platformName = import.meta.env.PLATFORM_NAME || 'A Market';
-console.log('platform name:', platformName);
+// This is a global variable so we can easily update it in the future.
+export const platformName = 'The Good Folk Market';
