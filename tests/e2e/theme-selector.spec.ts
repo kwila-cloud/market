@@ -39,8 +39,8 @@ test.describe('Theme Selector', () => {
     const dropdown = page.getByRole('menu');
     await expect(dropdown).toBeVisible();
 
-    // Click outside the dropdown (on the page heading)
-    await page.getByRole('heading', { level: 1 }).click();
+    // Click outside the dropdown (on the backdrop)
+    await page.getByTestId('theme-selector-backdrop').click();
 
     // Verify dropdown is closed
     await expect(dropdown).not.toBeVisible();

@@ -50,11 +50,12 @@ export default function ThemeSelector() {
 
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop - click outside to close */}
           <div
             className="fixed inset-0 z-10"
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
+            data-testid="theme-selector-backdrop"
           />
 
           {/* Dropdown menu */}
