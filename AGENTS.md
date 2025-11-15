@@ -52,6 +52,7 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 - **Validate user input** and enforce RLS policies
 - **Use TypeScript strict mode**
 - **Don't modify git config**
+- **Always use pre-existing layouts** from `src/layouts/` for page structure consistency
 
 ### Contribution Process
 
