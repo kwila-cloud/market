@@ -11,7 +11,11 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "type-check": "astro check"
+    "type-check": "astro check",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:e2e": "npx playwright test",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.5",
@@ -25,11 +29,16 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4.1.17",
     "@tailwindcss/typography": "^0.5.19",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@typescript-eslint/eslint-plugin": "^8.46.4",
     "@typescript-eslint/parser": "^8.46.4",
     "@vite-pwa/astro": "^1.1.1",
+    "@vitejs/plugin-react": "^5.1.1",
+    "@vitest/ui": "^4.0.9",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
@@ -37,10 +46,14 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
+    "happy-dom": "^20.0.10",
+    "jsdom": "^27.2.0",
+    "playwright": "^1.56.1",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "tailwindcss": "^4.1.17",
+    "vitest": "^4.0.9",
     "wrangler": "^4.46.0"
   }
 }
