@@ -46,7 +46,9 @@ test.describe('Theme Selector', () => {
     await expect(dropdown).not.toBeVisible();
   });
 
-  test('should switch to Ocean theme and persist to localStorage', async ({ page }) => {
+  test('should switch to Ocean theme and persist to localStorage', async ({
+    page,
+  }) => {
     // Open the theme selector
     const themeButton = page.getByRole('button', { name: 'Select theme' });
     await themeButton.click();
@@ -107,7 +109,9 @@ test.describe('Theme Selector', () => {
     expect(storedTheme).toBe('forest');
   });
 
-  test('should persist theme selection across page reloads', async ({ page }) => {
+  test('should persist theme selection across page reloads', async ({
+    page,
+  }) => {
     // Select Ocean theme
     const themeButton = page.getByRole('button', { name: 'Select theme' });
     await themeButton.click();
@@ -177,12 +181,16 @@ test.describe('Theme Selector', () => {
 
     // Verify it has the selected styling (ring-2 ring-primary)
     const hasRingClass = await oceanTheme.evaluate((el) => {
-      return el.classList.contains('ring-2') && el.classList.contains('ring-primary');
+      return (
+        el.classList.contains('ring-2') && el.classList.contains('ring-primary')
+      );
     });
     expect(hasRingClass).toBe(true);
   });
 
-  test('should load default theme (Dusk) on first visit', async ({ page, context }) => {
+  test('should load default theme (Dusk) on first visit', async ({
+    context,
+  }) => {
     // Create a new context to simulate first visit
     const newPage = await context.newPage();
 
@@ -200,10 +208,6 @@ test.describe('Theme Selector', () => {
     const htmlElement = newPage.locator('html');
     await expect(htmlElement).toHaveClass(/theme-dusk/);
 
-    // Verify localStorage has the default theme
-    const storedTheme = await newPage.evaluate(() => {
-      return localStorage.getItem('app-theme');
-    });
     // Note: The theme might not be set in localStorage until user interacts,
     // but the default theme should be applied via ThemeInitializer
 

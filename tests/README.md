@@ -32,6 +32,7 @@ npm run test:unit
 ```
 
 Run unit tests with Vitest. These tests validate:
+
 - Utility functions
 - Business logic
 - Data transformations
@@ -44,6 +45,7 @@ npm run test:e2e
 ```
 
 Run end-to-end tests with Playwright. These tests validate:
+
 - User flows
 - Component interactions
 - Browser behavior
@@ -90,10 +92,12 @@ test('should display homepage', async ({ page }) => {
 ## CI/CD Integration
 
 Tests run automatically in GitHub Actions on:
+
 - Every push to any branch
 - Every pull request
 
 The CI pipeline includes:
+
 1. **Unit Tests**: Run on ubuntu-latest with Node 20
 2. **E2E Tests**: Run on ubuntu-latest with Chromium browser
 
@@ -102,6 +106,7 @@ Failed tests will block the merge.
 ## Test Coverage
 
 Priority test flows (as per ARCHITECTURE.md):
+
 - [x] Theme selection and persistence
 - [ ] Authentication (signup flow)
 - [ ] Item CRUD operations with RLS

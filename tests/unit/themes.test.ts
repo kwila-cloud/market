@@ -4,7 +4,6 @@ import {
   DEFAULT_THEME,
   getThemes,
   isValidTheme,
-  type ThemeName,
 } from '../../src/lib/themes';
 
 describe('themes', () => {
@@ -87,9 +86,13 @@ describe('themes', () => {
     });
 
     it('should return false for non-string values', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(isValidTheme(null as any)).toBe(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(isValidTheme(undefined as any)).toBe(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(isValidTheme(123 as any)).toBe(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(isValidTheme({} as any)).toBe(false);
     });
 

@@ -57,7 +57,9 @@ describe('themeManager', () => {
     });
 
     it('should handle localStorage errors gracefully', () => {
-      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const consoleWarnSpy = vi
+        .spyOn(console, 'warn')
+        .mockImplementation(() => {});
 
       // Mock getItem to throw an error
       const originalGetItem = localStorageMock.getItem;
@@ -89,7 +91,9 @@ describe('themeManager', () => {
     });
 
     it('should handle localStorage errors gracefully', () => {
-      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const consoleWarnSpy = vi
+        .spyOn(console, 'warn')
+        .mockImplementation(() => {});
 
       // Mock setItem to throw an error
       const originalSetItem = localStorageMock.setItem;
@@ -110,16 +114,24 @@ describe('themeManager', () => {
   describe('applyTheme', () => {
     it('should add theme class to document element', () => {
       applyTheme('ocean');
-      expect(document.documentElement.classList.contains('theme-ocean')).toBe(true);
+      expect(document.documentElement.classList.contains('theme-ocean')).toBe(
+        true
+      );
     });
 
     it('should remove previous theme class when applying new theme', () => {
       applyTheme('ocean');
-      expect(document.documentElement.classList.contains('theme-ocean')).toBe(true);
+      expect(document.documentElement.classList.contains('theme-ocean')).toBe(
+        true
+      );
 
       applyTheme('ember');
-      expect(document.documentElement.classList.contains('theme-ocean')).toBe(false);
-      expect(document.documentElement.classList.contains('theme-ember')).toBe(true);
+      expect(document.documentElement.classList.contains('theme-ocean')).toBe(
+        false
+      );
+      expect(document.documentElement.classList.contains('theme-ember')).toBe(
+        true
+      );
     });
 
     it('should remove multiple theme classes', () => {
@@ -127,17 +139,27 @@ describe('themeManager', () => {
       document.documentElement.classList.add('theme-ocean', 'theme-ember');
 
       applyTheme('forest');
-      expect(document.documentElement.classList.contains('theme-ocean')).toBe(false);
-      expect(document.documentElement.classList.contains('theme-ember')).toBe(false);
-      expect(document.documentElement.classList.contains('theme-forest')).toBe(true);
+      expect(document.documentElement.classList.contains('theme-ocean')).toBe(
+        false
+      );
+      expect(document.documentElement.classList.contains('theme-ember')).toBe(
+        false
+      );
+      expect(document.documentElement.classList.contains('theme-forest')).toBe(
+        true
+      );
     });
 
     it('should preserve non-theme classes', () => {
       document.documentElement.classList.add('some-other-class');
 
       applyTheme('ocean');
-      expect(document.documentElement.classList.contains('some-other-class')).toBe(true);
-      expect(document.documentElement.classList.contains('theme-ocean')).toBe(true);
+      expect(
+        document.documentElement.classList.contains('some-other-class')
+      ).toBe(true);
+      expect(document.documentElement.classList.contains('theme-ocean')).toBe(
+        true
+      );
     });
   });
 
@@ -146,16 +168,23 @@ describe('themeManager', () => {
       setTheme('ocean');
 
       expect(localStorageMock.getItem('app-theme')).toBe('ocean');
-      expect(document.documentElement.classList.contains('theme-ocean')).toBe(true);
+      expect(document.documentElement.classList.contains('theme-ocean')).toBe(
+        true
+      );
     });
 
     it('should handle invalid theme by falling back to default', () => {
-      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const consoleWarnSpy = vi
+        .spyOn(console, 'warn')
+        .mockImplementation(() => {});
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setTheme('invalid-theme' as any);
 
       expect(localStorageMock.getItem('app-theme')).toBe(DEFAULT_THEME);
-      expect(document.documentElement.classList.contains(`theme-${DEFAULT_THEME}`)).toBe(true);
+      expect(
+        document.documentElement.classList.contains(`theme-${DEFAULT_THEME}`)
+      ).toBe(true);
       expect(consoleWarnSpy).toHaveBeenCalled();
 
       consoleWarnSpy.mockRestore();
@@ -163,11 +192,17 @@ describe('themeManager', () => {
 
     it('should switch between themes correctly', () => {
       setTheme('ocean');
-      expect(document.documentElement.classList.contains('theme-ocean')).toBe(true);
+      expect(document.documentElement.classList.contains('theme-ocean')).toBe(
+        true
+      );
 
       setTheme('ember');
-      expect(document.documentElement.classList.contains('theme-ocean')).toBe(false);
-      expect(document.documentElement.classList.contains('theme-ember')).toBe(true);
+      expect(document.documentElement.classList.contains('theme-ocean')).toBe(
+        false
+      );
+      expect(document.documentElement.classList.contains('theme-ember')).toBe(
+        true
+      );
     });
   });
 
@@ -178,14 +213,18 @@ describe('themeManager', () => {
       const theme = initializeTheme();
 
       expect(theme).toBe('forest');
-      expect(document.documentElement.classList.contains('theme-forest')).toBe(true);
+      expect(document.documentElement.classList.contains('theme-forest')).toBe(
+        true
+      );
     });
 
     it('should apply default theme when no theme is stored', () => {
       const theme = initializeTheme();
 
       expect(theme).toBe(DEFAULT_THEME);
-      expect(document.documentElement.classList.contains(`theme-${DEFAULT_THEME}`)).toBe(true);
+      expect(
+        document.documentElement.classList.contains(`theme-${DEFAULT_THEME}`)
+      ).toBe(true);
     });
 
     it('should return the applied theme', () => {
