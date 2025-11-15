@@ -117,8 +117,8 @@ BEGIN
 
     -- Emma's items (sustainable fashion)
     INSERT INTO item (id, user_id, type, category_id, title, description, price_string, visibility, status, created_at) VALUES
-        ('10000000-0000-0000-0000-000000000011', '00000000-0000-0000-0000-000000000005', 'sell', cat_resale, 'Vintage Levi\'s Jeans', 'Authentic vintage Levi\'s 501 jeans from the 90s. Size 32x32. Excellent condition.', '$85', 'public', 'active', NOW() - INTERVAL '9 days'),
-        ('10000000-0000-0000-0000-000000000012', '00000000-0000-0000-0000-000000000005', 'sell', cat_resale, 'Patagonia Fleece Jacket', 'Gently used Patagonia Better Sweater fleece. Women\'s size medium. Navy blue.', '$60', 'public', 'active', NOW() - INTERVAL '4 days'),
+        ('10000000-0000-0000-0000-000000000011', '00000000-0000-0000-0000-000000000005', 'sell', cat_resale, 'Vintage Levi''s Jeans', 'Authentic vintage Levi''s 501 jeans from the 90s. Size 32x32. Excellent condition.', '$85', 'public', 'active', NOW() - INTERVAL '9 days'),
+        ('10000000-0000-0000-0000-000000000012', '00000000-0000-0000-0000-000000000005', 'sell', cat_resale, 'Patagonia Fleece Jacket', 'Gently used Patagonia Better Sweater fleece. Women''s size medium. Navy blue.', '$60', 'public', 'active', NOW() - INTERVAL '4 days'),
         ('10000000-0000-0000-0000-000000000013', '00000000-0000-0000-0000-000000000005', 'sell', cat_resale, 'Designer Handbag Collection', 'Various pre-loved designer handbags. Kate Spade, Michael Kors, Coach. See photos for details.', '$50-200', 'public', 'active', NOW() - INTERVAL '2 days');
 END $$;
 

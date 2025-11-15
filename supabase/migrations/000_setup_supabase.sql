@@ -78,6 +78,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON ROUTINES TO postgres, sup
 ALTER ROLE supabase_auth_admin SET search_path TO auth;
 
 -- Create auth.uid() function (Supabase helper function)
+-- Note: GoTrue will try to create this, so we create it with the right owner
 CREATE OR REPLACE FUNCTION auth.uid()
 RETURNS uuid
 LANGUAGE sql STABLE
@@ -98,3 +99,7 @@ AS $$
     (current_setting('request.jwt.claims', true)::jsonb ->> 'role')
   )::text
 $$;
+
+-- Grant ownership of auth functions to supabase_auth_admin so GoTrue can manage them
+ALTER FUNCTION auth.uid() OWNER TO supabase_auth_admin;
+ALTER FUNCTION auth.role() OWNER TO supabase_auth_admin;
