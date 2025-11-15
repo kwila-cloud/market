@@ -26,7 +26,7 @@ export default function ThemeSelector() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-10 h-10 rounded-lg transition-all bg-surface-elevated hover:bg-surface-border hover:ring-2 hover:ring-secondary text-text border border-surface-border"
+        className="flex items-center justify-center w-10 h-10 rounded-lg transition-all bg-surface-elevated hover:bg-surface-border hover:ring-2 hover:ring-secondary text-neutral-50 border border-surface-border"
         aria-label="Select theme"
         aria-expanded={isOpen}
       >
@@ -68,7 +68,7 @@ export default function ThemeSelector() {
                   key={theme.name}
                   type="button"
                   onClick={() => handleThemeChange(theme.name)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all text-text ${currentTheme === theme.name
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all text-neutral-50 ${currentTheme === theme.name
                       ? 'ring-2 ring-primary bg-surface-border'
                       : 'hover:bg-surface-border'
                     }`}

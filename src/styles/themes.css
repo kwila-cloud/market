@@ -40,15 +40,23 @@
   --color-secondary-950: oklch(var(--theme-secondary-950));
   --color-secondary: oklch(var(--theme-secondary-500));
 
-  /* Surface colors (RGB) */
-  --color-surface: rgb(var(--theme-surface));
-  --color-surface-elevated: rgb(var(--theme-surface-elevated));
-  --color-surface-border: rgb(var(--theme-surface-border));
+  /* Neutral/Gray color scale (OKLCH) */
+  --color-neutral-50: oklch(var(--theme-neutral-50));
+  --color-neutral-100: oklch(var(--theme-neutral-100));
+  --color-neutral-200: oklch(var(--theme-neutral-200));
+  --color-neutral-300: oklch(var(--theme-neutral-300));
+  --color-neutral-400: oklch(var(--theme-neutral-400));
+  --color-neutral-500: oklch(var(--theme-neutral-500));
+  --color-neutral-600: oklch(var(--theme-neutral-600));
+  --color-neutral-700: oklch(var(--theme-neutral-700));
+  --color-neutral-800: oklch(var(--theme-neutral-800));
+  --color-neutral-900: oklch(var(--theme-neutral-900));
+  --color-neutral-950: oklch(var(--theme-neutral-950));
 
-  /* Text colors (RGB) */
-  --color-text: rgb(var(--theme-text));
-  --color-text-secondary: rgb(var(--theme-text-secondary));
-  --color-text-muted: rgb(var(--theme-text-muted));
+  /* Surface colors (OKLCH) */
+  --color-surface: oklch(var(--theme-surface));
+  --color-surface-elevated: oklch(var(--theme-surface-elevated));
+  --color-surface-border: oklch(var(--theme-surface-border));
 }
 
 /* Dusk Theme - Blue and dusk orange on dark surface (Default, Dark) */
@@ -79,15 +87,23 @@
   --theme-secondary-900: 0.262 0.058 57.63;
   --theme-secondary-950: 0.201 0.044 55.71;
 
-  /* Surface palette - Darker blue-gray (RGB) */
-  --theme-surface: 26 32 44; /* very dark blue-gray */
-  --theme-surface-elevated: 37 46 62; /* elevated surface */
-  --theme-surface-border: 51 65 85; /* border */
+  /* Neutral palette - Light grays for dark theme (OKLCH) */
+  --theme-neutral-50: 0.984 0.005 250; /* lightest text */
+  --theme-neutral-100: 0.967 0.008 250;
+  --theme-neutral-200: 0.918 0.015 250;
+  --theme-neutral-300: 0.856 0.020 250; /* secondary text */
+  --theme-neutral-400: 0.682 0.025 250; /* muted text */
+  --theme-neutral-500: 0.503 0.028 250;
+  --theme-neutral-600: 0.378 0.030 250;
+  --theme-neutral-700: 0.292 0.032 250;
+  --theme-neutral-800: 0.202 0.028 250;
+  --theme-neutral-900: 0.127 0.022 250;
+  --theme-neutral-950: 0.058 0.015 250;
 
-  /* Text palette (RGB) */
-  --theme-text: 248 250 252; /* light text */
-  --theme-text-secondary: 203 213 225; /* secondary text */
-  --theme-text-muted: 148 163 184; /* muted text */
+  /* Surface palette - Darker blue-gray (OKLCH) */
+  --theme-surface: 0.158 0.025 250; /* very dark blue-gray */
+  --theme-surface-elevated: 0.219 0.028 250; /* elevated surface */
+  --theme-surface-border: 0.292 0.032 250; /* border */
 }
 
 /* Ember Theme - Orange and burnt orange on dark gray (Dark) */
@@ -118,15 +134,23 @@
   --theme-secondary-900: 0.231 0.066 44.92;
   --theme-secondary-950: 0.184 0.052 45.98;
 
-  /* Surface palette - Dark gray (RGB) */
-  --theme-surface: 34 34 34; /* very dark gray */
-  --theme-surface-elevated: 45 45 45; /* elevated surface */
-  --theme-surface-border: 64 64 64; /* border */
+  /* Neutral palette - Light grays for dark theme (OKLCH) */
+  --theme-neutral-50: 0.985 0.001 0; /* lightest text */
+  --theme-neutral-100: 0.968 0.001 0;
+  --theme-neutral-200: 0.913 0.002 0;
+  --theme-neutral-300: 0.856 0.003 0; /* secondary text */
+  --theme-neutral-400: 0.680 0.004 0; /* muted text */
+  --theme-neutral-500: 0.500 0.004 0;
+  --theme-neutral-600: 0.368 0.003 0;
+  --theme-neutral-700: 0.292 0.002 0;
+  --theme-neutral-800: 0.216 0.002 0;
+  --theme-neutral-900: 0.125 0.001 0;
+  --theme-neutral-950: 0.075 0.001 0;
 
-  /* Text palette (RGB) */
-  --theme-text: 250 250 250; /* light text */
-  --theme-text-secondary: 212 212 212; /* secondary text */
-  --theme-text-muted: 163 163 163; /* muted text */
+  /* Surface palette - Dark gray (OKLCH) */
+  --theme-surface: 0.168 0.002 0; /* very dark gray */
+  --theme-surface-elevated: 0.216 0.002 0; /* elevated surface */
+  --theme-surface-border: 0.292 0.002 0; /* border */
 }
 
 /* Ocean Theme - Blue and teal on white (Light) */
@@ -157,15 +181,23 @@
   --theme-secondary-900: 0.252 0.045 175.55;
   --theme-secondary-950: 0.195 0.036 172.14;
 
-  /* Surface palette - White/Light gray (RGB) */
-  --theme-surface: 255 255 255; /* white */
-  --theme-surface-elevated: 249 250 251; /* very light gray */
-  --theme-surface-border: 229 231 235; /* light gray border */
+  /* Neutral palette - Dark grays for light theme (OKLCH) - inverted scale */
+  --theme-neutral-50: 0.135 0.012 250; /* darkest text */
+  --theme-neutral-100: 0.205 0.015 250;
+  --theme-neutral-200: 0.306 0.019 250;
+  --theme-neutral-300: 0.396 0.018 250; /* secondary text */
+  --theme-neutral-400: 0.503 0.015 250; /* muted text */
+  --theme-neutral-500: 0.682 0.012 250;
+  --theme-neutral-600: 0.854 0.007 250;
+  --theme-neutral-700: 0.916 0.005 250;
+  --theme-neutral-800: 0.967 0.003 247.8;
+  --theme-neutral-900: 0.985 0.002 247.8; /* lightest */
+  --theme-neutral-950: 0.066 0.008 250;
 
-  /* Text palette (RGB) */
-  --theme-text: 17 24 39; /* very dark text */
-  --theme-text-secondary: 55 65 81; /* dark gray text */
-  --theme-text-muted: 107 114 128; /* medium gray text */
+  /* Surface palette - White/Light gray (OKLCH) */
+  --theme-surface: 1 0 0; /* pure white */
+  --theme-surface-elevated: 0.985 0.002 247.8; /* very light gray */
+  --theme-surface-border: 0.916 0.005 250; /* light gray border */
 }
 
 /* Forest Theme - Green and tree bark brown on white (Light) */
@@ -196,13 +228,21 @@
   --theme-secondary-900: 0.234 0.028 65.67;
   --theme-secondary-950: 0.178 0.022 63.4;
 
-  /* Surface palette - White/Light gray (RGB) */
-  --theme-surface: 255 255 255; /* white */
-  --theme-surface-elevated: 249 250 251; /* very light gray */
-  --theme-surface-border: 229 231 235; /* light gray border */
+  /* Neutral palette - Dark grays for light theme (OKLCH) - inverted scale */
+  --theme-neutral-50: 0.135 0.012 250; /* darkest text */
+  --theme-neutral-100: 0.205 0.015 250;
+  --theme-neutral-200: 0.306 0.019 250;
+  --theme-neutral-300: 0.396 0.018 250; /* secondary text */
+  --theme-neutral-400: 0.503 0.015 250; /* muted text */
+  --theme-neutral-500: 0.682 0.012 250;
+  --theme-neutral-600: 0.854 0.007 250;
+  --theme-neutral-700: 0.916 0.005 250;
+  --theme-neutral-800: 0.967 0.003 247.8;
+  --theme-neutral-900: 0.985 0.002 247.8; /* lightest */
+  --theme-neutral-950: 0.066 0.008 250;
 
-  /* Text palette (RGB) */
-  --theme-text: 17 24 39; /* very dark text */
-  --theme-text-secondary: 55 65 81; /* dark gray text */
-  --theme-text-muted: 107 114 128; /* medium gray text */
+  /* Surface palette - White/Light gray (OKLCH) */
+  --theme-surface: 1 0 0; /* pure white */
+  --theme-surface-elevated: 0.985 0.002 247.8; /* very light gray */
+  --theme-surface-border: 0.916 0.005 250; /* light gray border */
 }
