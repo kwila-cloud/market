@@ -10,7 +10,206 @@ Refer to the [infrastructure document](/INFRASTRUCTURE.md)
 
 ## Getting Started
 
-TODO: add basic list of commands useful in a local dev environment (using docker compose).
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) and Docker Compose
+- [Node.js](https://nodejs.org/) 18+ and npm (for local development scripts)
+- Git
+
+### Local Development Setup
+
+This project uses Docker Compose to run the full stack locally, including Supabase (PostgreSQL, Auth, Storage, API) and supporting services.
+
+#### First Time Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd market
+   ```
+
+2. **Create environment file**
+   ```bash
+   cp .env.example .env
+   ```
+
+   The default values in `.env.example` work for local development. You only need to customize:
+   - SMTP settings if you want to test email notifications
+   - Twilio settings if you want to test phone authentication
+   - JWT_SECRET and POSTGRES_PASSWORD for better security (optional for local dev)
+
+3. **Install npm dependencies**
+   ```bash
+   npm install
+   ```
+
+4. **Start Docker services**
+   ```bash
+   npm run docker:up
+   ```
+
+   This starts all services in the background:
+   - PostgreSQL database (port 5432)
+   - Supabase Studio admin UI (port 3000)
+   - Kong API gateway (port 8000)
+   - Auth, Storage, Realtime, and other Supabase services
+
+5. **Wait for services to be ready** (about 30 seconds)
+   ```bash
+   # Watch logs to see when services are ready
+   npm run docker:logs
+   # Press Ctrl+C to exit logs
+   ```
+
+6. **Run database migrations**
+   ```bash
+   npm run docker:db:migrate
+   ```
+
+   This creates all database tables, indexes, and RLS policies.
+
+7. **Seed test data** (optional but recommended)
+   ```bash
+   npm run docker:db:seed
+   ```
+
+   This creates 5 test users, sample items, connections, and messages for local testing.
+
+8. **Start the Astro dev server**
+   ```bash
+   npm run dev
+   ```
+
+9. **Access the application**
+   - Application: http://localhost:4321
+   - Supabase Studio: http://localhost:3000
+   - Supabase API: http://localhost:8000
+
+#### Daily Development
+
+```bash
+# Start all Docker services
+npm run docker:up
+
+# Start Astro dev server
+npm run dev
+
+# View logs from all services
+npm run docker:logs
+
+# Stop all services (keeps data)
+npm run docker:down
+
+# Restart all services
+npm run docker:restart
+```
+
+#### Database Management
+
+```bash
+# Run migrations manually
+npm run docker:db:migrate
+
+# Seed test data
+npm run docker:db:seed
+
+# Reset database (WARNING: deletes all data!)
+npm run docker:db:reset
+
+# Access PostgreSQL directly
+docker compose exec db psql -U postgres -d postgres
+```
+
+#### Useful Docker Commands
+
+```bash
+# View running containers
+docker compose ps
+
+# View logs for specific service
+docker compose logs -f db          # Database logs
+docker compose logs -f kong        # API gateway logs
+docker compose logs -f auth        # Auth service logs
+docker compose logs -f storage     # Storage service logs
+
+# Stop and remove all containers + volumes (full reset)
+docker compose down -v
+
+# Rebuild containers (after docker-compose.yml changes)
+docker compose up -d --build
+```
+
+#### Supabase Studio
+
+Access the Supabase Studio admin UI at http://localhost:3000 to:
+- Browse database tables and data
+- Test SQL queries
+- View and test RLS policies
+- Manage authentication users
+- Browse storage buckets
+- View API documentation
+
+#### Testing
+
+```bash
+# Run unit tests
+npm run test:unit
+
+# Run unit tests in watch mode
+npm run test:watch
+
+# Run E2E tests
+npm run test:e2e
+
+# Run all tests
+npm test
+```
+
+#### Code Quality
+
+```bash
+# Lint code
+npm run lint
+
+# Fix linting issues
+npm run lint:fix
+
+# Format code
+npm run format
+
+# Check formatting
+npm run format:check
+
+# Type check
+npm run type-check
+```
+
+#### Troubleshooting
+
+**Services won't start:**
+- Ensure Docker is running: `docker info`
+- Check for port conflicts: `lsof -i :5432,3000,8000` (macOS/Linux)
+- Remove old containers: `docker compose down -v`
+
+**Database connection errors:**
+- Wait longer for services to initialize (30-60 seconds)
+- Check database logs: `docker compose logs db`
+- Verify migrations ran: `docker compose exec db psql -U postgres -d postgres -c "\dt"`
+
+**Migrations fail:**
+- Reset database: `npm run docker:db:reset`
+- Ensure `.env` file exists with correct values
+- Check migration files in `supabase/migrations/`
+
+**Can't access Supabase Studio:**
+- Verify Studio is running: `docker compose ps studio`
+- Check Studio logs: `docker compose logs studio`
+- Try restarting: `docker compose restart studio`
+
+**Environment variables not loading:**
+- Ensure `.env` file exists in project root
+- Restart Docker services: `npm run docker:restart`
+- Verify variables are exported: `docker compose config`
 
 ## GitHub Issues
 
