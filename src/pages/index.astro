@@ -1,15 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { platformName } from '../lib/globals';
+import { platformDescriptor, platformName } from '../lib/globals';
 ---
 
 <Layout>
   <!-- Hero Section -->
   <div class="text-center mb-20">
-    <h1
-      class="text-6xl sm:text-7xl font-bold mb-6 bg-gradient-to-r from-primary-300 to-primary-800 bg-clip-text text-transparent"
-    >
-      {platformName}
+    <h1 class="text-5xl font-bold mb-6 text-primary lowercase font-cursive">
+      <span class="relative right-16 top-10">the</span>
+      <div class="text-8xl">
+        {platformDescriptor}
+      </div>
+      <span class="relative left-22 bottom-4">market</span>
     </h1>
     <p class="text-xl sm:text-2xl text-neutral-300 mb-4 leading-relaxed">
       Find what you need through people you trust
