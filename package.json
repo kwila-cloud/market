@@ -15,7 +15,10 @@
     "test": "vitest run",
     "test:unit": "vitest run",
     "test:e2e": "npx playwright test",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "db:psql": "docker compose exec -it db psql -U postgres -d postgres",
+    "db:migrate": "docker compose exec -it db psql -U postgres -d postgres -c '\\i /docker-entrypoint-initdb.d/migrations/custom/*.sql'",
+    "db:logs": "docker compose logs -f db"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.5",
