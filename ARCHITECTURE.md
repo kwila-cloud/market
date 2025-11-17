@@ -456,8 +456,8 @@ Everything runs in containers, no local setup required:
 
 ```bash
 # First time setup
-git clone [repo]
-docker-compose up -d
+git clone https://github.com/kwila-cloud/market.git
+docker compose up -d
 
 # Access services
 - Astro dev server: http://localhost:4321
@@ -465,23 +465,23 @@ docker-compose up -d
 - Supabase API: http://localhost:54321
 
 # Run migrations
-docker-compose exec supabase supabase migration up
+docker compose exec supabase supabase migration up
 
 # Optional: Seed test data
-docker-compose exec supabase psql -f /docker-entrypoint-initdb.d/seed.sql
+docker compose exec supabase psql -f /docker-entrypoint-initdb.d/seed.sql
 
 # Run tests
-docker-compose exec app npm run test
-docker-compose exec app npm run test:e2e
+docker compose exec app npm run test
+docker compose exec app npm run test:e2e
 
 # Stop services
-docker-compose down
+docker compose down
 ```
 
 **docker-compose.yml includes**:
 
 - Supabase (postgres, auth, storage, API)
-- Astro dev server with Workers
+- Astro dev server with hot reload
 - Test runner container
 
 ### Environment Variables
