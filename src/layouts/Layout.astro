@@ -18,6 +18,27 @@ const pageTitle = title ? `${title} — ${platformName}` : platformName;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans/OpenSans-Variable.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Montserrat/Montserrat-Variable.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Allura/Allura-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
+    />
     <title>{pageTitle}</title>
     <ThemeInitializer />
   </head>
