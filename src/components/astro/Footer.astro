@@ -1,0 +1,56 @@
+---
+/**
+ * Footer component
+ * Contains links to static pages and platform info
+ */
+import { platformName, contactEmail } from '../../lib/globals';
+---
+
+<footer class="bg-surface border-t border-surface-border mt-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+      <!-- Platform Name -->
+      <div class="text-center md:text-left">
+        <a
+          href="/"
+          class="text-primary font-bold text-4xl lowercase font-cursive hover:text-secondary transition-colors"
+        >
+          {platformName}
+        </a>
+        <p class="text-neutral-400 text-sm mt-2">
+          Find what you need through people you trust
+        </p>
+      </div>
+
+      <!-- Links -->
+      <nav class="flex flex-wrap justify-center gap-6">
+        <a
+          href="/content-policy"
+          class="text-neutral-300 hover:text-primary transition-colors"
+        >
+          Content Policy
+        </a>
+        <a
+          href={`mailto:${contactEmail}`}
+          class="text-neutral-300 hover:text-primary transition-colors"
+        >
+          Contact
+        </a>
+      </nav>
+    </div>
+
+    <!-- Copyright -->
+    <div class="mt-8 pt-8 border-t border-surface-border text-center">
+      <p class="text-neutral-400 text-sm">
+        Built by <a
+          href="https://kwila.cloud"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-primary hover:text-secondary transition-colors"
+        >
+          kwila.cloud
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>

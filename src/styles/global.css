@@ -1,37 +1,74 @@
 @import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 @import './themes.css';
 
 @font-face {
-  font-family: "Open Sans";
-  src: url("/fonts/OpenSans/OpenSans-Variable.ttf") format("truetype");
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans/OpenSans-Variable.ttf') format('truetype');
   font-weight: 300 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Montserrat";
-  src: url("/fonts/Montserrat/Montserrat-Variable.ttf") format("truetype");
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat/Montserrat-Variable.ttf') format('truetype');
   font-weight: 300 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Allura";
-  src: url("/fonts/Allura/Allura-Regular.ttf") format("truetype");
+  font-family: 'Allura';
+  src: url('/fonts/Allura/Allura-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @theme {
-  --default-font-family: "Open Sans";
-  --font-sans: "Open Sans";
-  --font-title: "Montserrat";
-  --font-cursive: "Allura";
+  --default-font-family: 'Open Sans';
+  --font-sans: 'Open Sans';
+  --font-title: 'Montserrat';
+  --font-cursive: 'Allura';
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-title);
+}
+
+h1,
+h3,
+h5 {
+  color: var(--color-primary);
+}
+
+h2,
+h4,
+h6 {
+  color: var(--color-secondary);
+}
+
+.prose {
+  --tw-prose-body: inherit;
+  --tw-prose-headings: inherit;
+  --tw-prose-lead: inherit;
+  --tw-prose-links: inherit;
+  --tw-prose-bold: inherit;
+  --tw-prose-counters: inherit;
+  --tw-prose-bullets: inherit;
+  --tw-prose-hr: inherit;
+  --tw-prose-quotes: inherit;
+  --tw-prose-quote-borders: inherit;
+  --tw-prose-captions: inherit;
+  --tw-prose-code: inherit;
+  --tw-prose-pre-code: inherit;
+  --tw-prose-pre-bg: inherit;
+  --tw-prose-th-borders: inherit;
+  --tw-prose-td-borders: inherit;
 }
