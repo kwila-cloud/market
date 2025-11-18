@@ -3,7 +3,12 @@ layout: ../layouts/ProseLayout.astro
 title: About
 ---
 
-import { contactEmail, contactPhone, contactPhoneTel, platformName } from '../lib/globals';
+import {
+  contactEmail,
+  contactPhone,
+  contactPhoneTel,
+  platformName,
+} from '../lib/globals';
 import CoreValues from '../components/astro/CoreValues.astro';
 
 # About
@@ -13,7 +18,7 @@ import CoreValues from '../components/astro/CoreValues.astro';
 {platformName} was started in late 2025 with the goal of reducing the time, pain, and friction experienced every time we go to make a large purchase on the used market. We want to use the benefits of modern technology to optimize the experience of connecting local buyers and sellers. We also want to help find new homes for used items that still have plenty of life in them.
 
 <div class="my-20">
-	<CoreValues />
+  <CoreValues />
 </div>
 
 ## What Makes Us Different
@@ -37,4 +42,3 @@ This platform is built by **Kwila Cloud**. We'd love to hear from you!
 - **Email:** <a href={`mailto:${contactEmail}`} aria-label={`Email ${contactEmail}`}>{contactEmail}</a>
 - **Phone:** <a href={contactPhoneTel} aria-label={`Call ${contactPhone}`}>{contactPhone}</a>
 - **Website:** <a href="https://kwila.cloud" aria-label="Visit Kwila Cloud's website">kwila.cloud</a>
-
