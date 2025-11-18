@@ -1,9 +1,5 @@
 ---
-/**
- * Footer component
- * Contains links to static pages and platform info
- */
-import { platformName, contactEmail } from '../../lib/globals';
+import { platformName } from '../../lib/globals';
 ---
 
 <footer class="bg-surface border-t border-surface-border mt-20">
@@ -25,13 +21,19 @@ import { platformName, contactEmail } from '../../lib/globals';
       <!-- Links -->
       <nav class="flex flex-wrap justify-center gap-6">
         <a
+          href="/about"
+          class="text-neutral-300 hover:text-primary transition-colors"
+        >
+          About
+        </a>
+        <a
           href="/content-policy"
           class="text-neutral-300 hover:text-primary transition-colors"
         >
           Content Policy
         </a>
         <a
-          href={`mailto:${contactEmail}`}
+          href="/about#contact"
           class="text-neutral-300 hover:text-primary transition-colors"
         >
           Contact
@@ -39,7 +41,6 @@ import { platformName, contactEmail } from '../../lib/globals';
       </nav>
     </div>
 
-    <!-- Copyright -->
     <div class="mt-8 pt-8 border-t border-surface-border text-center">
       <p class="text-neutral-400 text-sm">
         Built by <a
@@ -48,7 +49,7 @@ import { platformName, contactEmail } from '../../lib/globals';
           rel="noopener noreferrer"
           class="text-primary hover:text-secondary transition-colors"
         >
-          kwila.cloud
+          Kwila Cloud
         </a>
       </p>
     </div>
