@@ -171,15 +171,15 @@
   /* Secondary palette - Light blue (OKLCH) */
   --theme-secondary-50: 0.974 0.007 247.86;
   --theme-secondary-100: 0.948 0.014 244.69;
-  --theme-secondary-200: 0.895 0.030 246.60;
+  --theme-secondary-200: 0.895 0.03 246.6;
   --theme-secondary-300: 0.852 0.044 245.16;
-  --theme-secondary-400: 0.800 0.061 242.47;
+  --theme-secondary-400: 0.8 0.061 242.47;
   --theme-secondary-500: 0.747 0.079 241.01;
   --theme-secondary-600: 0.627 0.067 240.47;
-  --theme-secondary-700: 0.506 0.053 241.50;
-  --theme-secondary-800: 0.378 0.040 239.49;
+  --theme-secondary-700: 0.506 0.053 241.5;
+  --theme-secondary-800: 0.378 0.04 239.49;
   --theme-secondary-900: 0.257 0.028 242.82;
-  --theme-secondary-950: 0.198 0.020 239.60;
+  --theme-secondary-950: 0.198 0.02 239.6;
 
   /* Neutral palette - Dark grays for light theme (OKLCH) - inverted scale */
   --theme-neutral-50: 0.135 0.012 250; /* darkest text */

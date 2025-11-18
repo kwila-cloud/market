@@ -37,19 +37,18 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 
 ### Development Workflow
 
-- **Local development**: `npm run dev` (Astro dev server on localhost:4321)
-- **Docker Compose**: Planned for full stack including Supabase (not yet implemented)
+- **Local development**: `npm run dev` - Start Astro dev server (localhost:4321)
+- **Build**: `npm run build` - Build for production
+- **Preview**: `npm run preview` - Preview production build
+- **Type checking**: `npm run type-check` - Run Astro type checker
+- **Linting**: `npm run lint` or `npm run lint:fix` - ESLint checks
+- **Formatting**: `npm run format` or `npm run format:check` - Prettier formatting
 - **Testing**:
-  - `npm test` - Run unit tests (quick feedback)
+  - `npm test` - Run unit tests with Vitest
   - `npm run test:unit` - Run unit tests with Vitest
   - `npm run test:e2e` - Run E2E tests with Playwright
   - `npm run test:watch` - Run unit tests in watch mode
   - Note: CI runs unit and E2E tests separately
-- **Build**: `npm run build`
-- **Preview**: `npm run preview`
-- **Linting**: `npm run lint` or `npm run lint:fix`
-- **Formatting**: `npm run format` or `npm run format:check`
-- **Type checking**: `npm run type-check`
 
 ### Security & Best Practices
 

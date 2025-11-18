@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="max-w-2xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">Supabase Connection Test</h1>
+
+    <div id="test-results" class="space-y-4">
+      <div
+        class="bg-surface-elevated/50 p-6 rounded-xl border border-surface-border"
+      >
+        <h2 class="text-xl font-semibold mb-4">Connection Status</h2>
+        <div id="connection-status" class="text-neutral-300">
+          Testing connection...
+        </div>
+      </div>
+
+      <div
+        class="bg-surface-elevated/50 p-6 rounded-xl border border-surface-border"
+      >
+        <h2 class="text-xl font-semibold mb-4">Environment Variables</h2>
+        <div id="env-status" class="text-neutral-300 font-mono text-sm">
+          Checking...
+        </div>
+      </div>
+
+      <div
+        class="bg-surface-elevated/50 p-6 rounded-xl border border-surface-border"
+      >
+        <h2 class="text-xl font-semibold mb-4">Auth Status</h2>
+        <div id="auth-status" class="text-neutral-300">Checking...</div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { supabase } from '../lib/supabase';
+
+  async function runTests() {
+    const connectionStatus = document.getElementById('connection-status');
+    const envStatus = document.getElementById('env-status');
+    const authStatus = document.getElementById('auth-status');
+
+    // Check environment variables
+    const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+
+    if (envStatus) {
+      if (supabaseUrl && supabaseAnonKey) {
+        envStatus.innerHTML = `
+          <div class="text-green-400">Environment variables loaded</div>
+          <div class="mt-2 text-xs break-all">
+            <div>URL: ${supabaseUrl}</div>
+            <div>Anon Key: ${supabaseAnonKey.substring(0, 20)}...</div>
+          </div>
+        `;
+      } else {
+        envStatus.innerHTML = `<div class="text-red-400">Missing environment variables</div>`;
+      }
+    }
+
+    // Test connection by getting session
+    try {
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+
+      if (connectionStatus) {
+        if (sessionError) {
+          connectionStatus.innerHTML = `<div class="text-red-400">Connection error: ${sessionError.message}</div>`;
+        } else {
+          connectionStatus.innerHTML = `<div class="text-green-400">Connected to Supabase successfully</div>`;
+        }
+      }
+
+      if (authStatus) {
+        if (session) {
+          authStatus.innerHTML = `
+            <div class="text-green-400">Logged in</div>
+            <div class="mt-2 text-sm">User: ${session.user.email || session.user.id}</div>
+          `;
+        } else {
+          authStatus.innerHTML = `<div class="text-yellow-400">No active session (not logged in)</div>`;
+        }
+      }
+    } catch (error) {
+      if (connectionStatus) {
+        connectionStatus.innerHTML = `<div class="text-red-400">Error: ${error instanceof Error ? error.message : 'Unknown error'}</div>`;
+      }
+    }
+  }
+
+  // Run tests when the page loads
+  runTests();
+</script>

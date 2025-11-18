@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import CoreValues from '../components/astro/CoreValues.astro';
 import { platformDescriptor, platformName } from '../lib/globals';
+
+console.log('Supabase URL:', import.meta.env.PUBLIC_SUPABASE_URL);
 ---
 
 <Layout>

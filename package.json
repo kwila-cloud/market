@@ -6,7 +6,6 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -15,13 +14,16 @@
     "test": "vitest run",
     "test:unit": "vitest run",
     "test:e2e": "npx playwright test",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "astro": "astro",
+    "supabase": "supabase"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.5",
     "@astrojs/cloudflare": "^12.6.10",
     "@astrojs/mdx": "^4.3.11",
     "@astrojs/react": "^4.4.2",
+    "@supabase/supabase-js": "^2.83.0",
     "@tailwindcss/vite": "^4.1.17",
     "astro": "^5.15.4",
     "react": "^19.2.0",
@@ -53,6 +55,7 @@
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
+    "supabase": "^2.58.5",
     "tailwindcss": "^4.1.17",
     "vitest": "^4.0.9",
     "wrangler": "^4.46.0"
