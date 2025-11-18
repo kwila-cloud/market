@@ -3,7 +3,7 @@
  * Footer component
  * Contains links to static pages and platform info
  */
-import { platformName } from '../../lib/globals';
+import { platformName, contactEmail } from '../../lib/globals';
 ---
 
 <footer class="bg-surface border-t border-surface-border mt-20">
@@ -31,7 +31,7 @@ import { platformName } from '../../lib/globals';
           Content Policy
         </a>
         <a
-          href="mailto:market@kwila.cloud"
+          href={`mailto:${contactEmail}`}
           class="text-neutral-300 hover:text-primary transition-colors"
         >
           Contact
