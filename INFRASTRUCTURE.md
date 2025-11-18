@@ -11,6 +11,7 @@ Deployments were set up in the Cloudflare dashboard with the GitHub integration.
 Supabase for database hosting.
 
 Preview branches are set up with the GitHub integration, using the following settings:
+
 - Supabase directory: supabase
 - Deploy to production: enabled
 - Production branch name: main

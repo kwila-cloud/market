@@ -7,25 +7,29 @@ import Layout from '../layouts/Layout.astro';
     <h1 class="text-3xl font-bold mb-8">Supabase Connection Test</h1>
 
     <div id="test-results" class="space-y-4">
-      <div class="bg-surface-elevated/50 p-6 rounded-xl border border-surface-border">
+      <div
+        class="bg-surface-elevated/50 p-6 rounded-xl border border-surface-border"
+      >
         <h2 class="text-xl font-semibold mb-4">Connection Status</h2>
         <div id="connection-status" class="text-neutral-300">
           Testing connection...
         </div>
       </div>
 
-      <div class="bg-surface-elevated/50 p-6 rounded-xl border border-surface-border">
+      <div
+        class="bg-surface-elevated/50 p-6 rounded-xl border border-surface-border"
+      >
         <h2 class="text-xl font-semibold mb-4">Environment Variables</h2>
         <div id="env-status" class="text-neutral-300 font-mono text-sm">
           Checking...
         </div>
       </div>
 
-      <div class="bg-surface-elevated/50 p-6 rounded-xl border border-surface-border">
+      <div
+        class="bg-surface-elevated/50 p-6 rounded-xl border border-surface-border"
+      >
         <h2 class="text-xl font-semibold mb-4">Auth Status</h2>
-        <div id="auth-status" class="text-neutral-300">
-          Checking...
-        </div>
+        <div id="auth-status" class="text-neutral-300">Checking...</div>
       </div>
     </div>
   </div>
@@ -59,7 +63,10 @@ import Layout from '../layouts/Layout.astro';
 
     // Test connection by getting session
     try {
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
 
       if (connectionStatus) {
         if (sessionError) {
