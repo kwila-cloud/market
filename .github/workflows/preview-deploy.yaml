@@ -30,9 +30,15 @@ jobs:
       - name: Get Supabase Branch Credentials
         run: |
           supabase --experimental branches get "${{ github.head_ref }}" -o env > .env.branch
-          cat .env.branch | wc -l
-          cat .env.branch | tail -n 1
-          cat .env.branch >> $GITHUB_ENV
+
+          # Parse each line, strip quotes, add to GITHUB_ENV
+          while IFS='=' read -r key value; do
+            [[ -z "$key" || "$key" =~ ^# ]] && continue
+            # Remove surrounding quotes
+            value="${value%\"}"
+            value="${value#\"}"
+            echo "$key=$value" >> $GITHUB_ENV
+          done < .env.branch
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
