@@ -1,0 +1,53 @@
+name: Preview Deployment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    steps:
+      - uses: actions/checkout@v4
+      
+      # Install Supabase CLI
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      
+      # Wait for Supabase branch to be ready
+      - name: Wait for Supabase Preview Branch
+        uses: fountainhead/action-wait-for-check@v1.2.0
+        id: wait-for-supabase
+        with:
+          checkName: Supabase Preview
+          ref: ${{ github.event.pull_request.head.sha }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          timeoutSeconds: 300
+      
+      # Get Supabase preview branch credentials
+      - name: Get Supabase Branch Credentials
+        run: |
+          supabase --experimental branches get "${{ github.head_ref }}" -o env >> $GITHUB_ENV
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+      
+      # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+      
+      # Build with preview Supabase credentials
+      - name: Build
+        run: npm run build
+        env:
+          PUBLIC_SUPABASE_URL: ${{ env.SUPABASE_API_URL }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ env.SUPABASE_ANON_KEY }}
+      
+      # Upload version with branch alias
+      - name: Deploy Preview
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: versions upload --preview-alias ${{ github.head_ref }}
