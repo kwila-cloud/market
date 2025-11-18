@@ -29,7 +29,10 @@ jobs:
       # Get Supabase preview branch credentials
       - name: Get Supabase Branch Credentials
         run: |
-          supabase --experimental branches get "${{ github.head_ref }}" -o env >> $GITHUB_ENV
+          supabase --experimental branches get "${{ github.head_ref }}" -o env > .env.branch
+          cat .env.branch | wc -l
+          cat .env.branch | tail -n 1
+          cat .env.branch >> $GITHUB_ENV
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
