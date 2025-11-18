@@ -70,17 +70,16 @@ jobs:
         run: |
           PREVIEW_URL="https://${{ github.head_ref }}-market.kwila-cloud.workers.dev"
 
-          # Get current PR body
-          CURRENT_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body -q .body)
+          # Get current PR body to file (avoids quoting issues)
+          gh pr view ${{ github.event.pull_request.number }} --json body -q .body > pr_body.txt
 
           # Remove existing preview URL section if present
-          CLEANED_BODY=$(echo "$CURRENT_BODY" | sed '/^---$/,/^🚀 \*\*Preview URL:\*\*/d')
+          sed -i '/^---$/,/^🚀 \*\*Preview URL:\*\*/d' pr_body.txt
 
           # Append new preview URL section
-          NEW_BODY="${CLEANED_BODY}
-
----
-🚀 **Preview URL:** ${PREVIEW_URL}"
+          echo "" >> pr_body.txt
+          echo "---" >> pr_body.txt
+          echo "🚀 **Preview URL:** ${PREVIEW_URL}" >> pr_body.txt
 
           # Update PR description
-          gh pr edit ${{ github.event.pull_request.number }} --body "$NEW_BODY"
+          gh pr edit ${{ github.event.pull_request.number }} --body-file pr_body.txt
