@@ -51,7 +51,30 @@ jobs:
       # Upload version with branch alias
       - name: Deploy Preview
         uses: cloudflare/wrangler-action@v3
+        id: deploy
         with:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           command: versions upload --preview-alias ${{ github.head_ref }}
+
+      # Update PR description with preview URL
+      - name: Update PR Description
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PREVIEW_URL="https://${{ github.head_ref }}-market.kwila-cloud.workers.dev"
+
+          # Get current PR body
+          CURRENT_BODY=$(gh pr view ${{ github.event.pull_request.number }} --json body -q .body)
+
+          # Remove existing preview URL section if present
+          CLEANED_BODY=$(echo "$CURRENT_BODY" | sed '/^---$/,/^🚀 \*\*Preview URL:\*\*/d')
+
+          # Append new preview URL section
+          NEW_BODY="${CLEANED_BODY}
+
+---
+🚀 **Preview URL:** ${PREVIEW_URL}"
+
+          # Update PR description
+          gh pr edit ${{ github.event.pull_request.number }} --body "$NEW_BODY"
