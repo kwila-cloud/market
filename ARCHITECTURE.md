@@ -16,7 +16,7 @@ All infrastructure defined as code:
 
 ### 2. Local Development Parity
 
-Full stack runs locally via Docker Compose with single command setup:
+Full stack runs locally via `npm run` commands:
 
 - Supabase stack (database, auth, storage, API)
 - Astro dev server
@@ -346,7 +346,6 @@ Content:
 
 ```
 project-root/
-├── docker-compose.yml           # Local development services
 ├── wrangler.toml               # Cloudflare Workers config
 ├── supabase/
 │   ├── config.toml            # Supabase configuration
@@ -447,73 +446,6 @@ project-root/
 - Manual admin review in Supabase (no admin UI in MVP)
 - Account deletion: Self-service or admin, anonymizes content
 - Ban/delete accounts via Supabase
-
-## Development Workflow
-
-### Local Development (Docker Compose)
-
-Everything runs in containers, no local setup required:
-
-```bash
-# First time setup
-git clone [repo]
-docker-compose up -d
-
-# Access services
-- Astro dev server: http://localhost:4321
-- Supabase Studio: http://localhost:54323
-- Supabase API: http://localhost:54321
-
-# Run migrations
-docker-compose exec supabase supabase migration up
-
-# Optional: Seed test data
-docker-compose exec supabase psql -f /docker-entrypoint-initdb.d/seed.sql
-
-# Run tests
-docker-compose exec app npm run test
-docker-compose exec app npm run test:e2e
-
-# Stop services
-docker-compose down
-```
-
-**docker-compose.yml includes**:
-
-- Supabase (postgres, auth, storage, API)
-- Astro dev server with Workers
-- Test runner container
-
-### Environment Variables
-
-```
-# .env (in docker-compose)
-PUBLIC_SUPABASE_URL=http://localhost:54321
-PUBLIC_SUPABASE_ANON_KEY=<local-key>
-SUPABASE_SERVICE_ROLE_KEY=<local-key>
-TWILIO_ACCOUNT_SID=<test-sid>
-TWILIO_AUTH_TOKEN=<test-token>
-TWILIO_PHONE_NUMBER=<test-number>
-```
-
-## CI Pipelines (GitHub Actions)
-
-### Merge Request Checks
-
-1. Checkout code
-1. Start Docker services
-1. Run migrations
-1. Run unit tests
-1. Run integration tests
-1. Report coverage
-1. Block merge if tests fail
-
-### Push to Main
-
-1. Run tests & build
-1. Deploy to Cloudflare Workers
-1. Run Supabase migrations
-1. Production live
 
 ## MVP Scope
 
