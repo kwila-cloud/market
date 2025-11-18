@@ -264,7 +264,7 @@ Every feature should support both power users and those who rank low on the "tec
 1. Creates contact_info (visibility=hidden)
 1. Creates connection (user_a=inviter, user_b=invitee, status='accepted')
 1. Marks invite as used
-1. Mandatory 4-step wizard: account type, contact visibility, about/avatar, tutorial
+1. Mandatory 3-step wizard: account type, contact visibility, about/avatar
 1. Redirects to dashboard
 
 ### Item Creation
