@@ -53,23 +53,6 @@ create policy "Users can view public items"
     to authenticated
     using (visibility = 'public' and status != 'deleted');
 
--- Users can view connections-only items from connections
-create policy "Users can view connections-only items from connections"
-    on item for select
-    to authenticated
-    using (
-        visibility = 'connections-only'
-        and status != 'deleted'
-        and exists (
-            select 1 from connection
-            where status = 'accepted'
-            and (
-                (user_a = auth.uid() and user_b = item.user_id)
-                or (user_b = auth.uid() and user_a = item.user_id)
-            )
-        )
-    );
-
 -- Users can create items
 create policy "Users can create items"
     on item for insert
@@ -111,26 +94,6 @@ create policy "Users can view public item images"
             where item.id = item_image.item_id
             and item.visibility = 'public'
             and item.status != 'deleted'
-        )
-    );
-
-create policy "Users can view connections-only item images from connections"
-    on item_image for select
-    to authenticated
-    using (
-        exists (
-            select 1 from item
-            where item.id = item_image.item_id
-            and item.visibility = 'connections-only'
-            and item.status != 'deleted'
-            and exists (
-                select 1 from connection
-                where status = 'accepted'
-                and (
-                    (user_a = auth.uid() and user_b = item.user_id)
-                    or (user_b = auth.uid() and user_a = item.user_id)
-                )
-            )
         )
     );
 

@@ -76,22 +76,6 @@ create policy "Anyone can view public contact info"
     to anon, authenticated
     using (visibility = 'public');
 
--- Users can view connections-only contact info of their connections
-create policy "Users can view connections-only contact info of connections"
-    on contact_info for select
-    to authenticated
-    using (
-        visibility = 'connections-only'
-        and exists (
-            select 1 from connection
-            where status = 'accepted'
-            and (
-                (user_a = auth.uid() and user_b = contact_info.user_id)
-                or (user_b = auth.uid() and user_a = contact_info.user_id)
-            )
-        )
-    );
-
 -- Users can manage their own contact info
 create policy "Users can insert own contact info"
     on contact_info for insert
