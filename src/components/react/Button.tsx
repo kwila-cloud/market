@@ -43,7 +43,7 @@ export default function Button(props: ButtonProps) {
     ...rest
   } = props;
 
-  const baseClassName = `cursor-pointer px-4 py-2 text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${fullWidth ? 'w-full' : ''} ${className}`;
+  const baseClassName = `cursor-pointer px-4 py-2 text-sm font-bold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${fullWidth ? 'w-full' : ''} ${className}`;
 
   if ('href' in props && props.href) {
     const { href, ...linkProps } = rest as Omit<ButtonAsLink, keyof BaseProps>;

@@ -57,9 +57,10 @@ export default function OTPForm() {
   const handleCodeChange = (index: number, value: string) => {
     if (!/^\d*$/.test(value)) return;
 
-    const newCode = codeValue.split('');
-    newCode[index] = value.slice(-1);
-    const updatedCode = newCode.join('').slice(0, 6);
+    const arr = codeValue.split('');
+    while (arr.length < 6) arr.push('');
+    arr[index] = value.slice(-1);
+    const updatedCode = arr.join('').slice(0, 6);
     setValue('code', updatedCode);
 
     // Auto-focus next input

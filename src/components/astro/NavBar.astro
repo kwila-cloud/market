@@ -34,7 +34,12 @@ const { user } = Astro.props;
       <div class="flex items-center gap-4">
         {
           !user && (
-            <Button href="/auth/login" variant="primary" className="py-2">
+            <Button
+              href="/auth/login"
+              variant="primary"
+              className="py-2"
+              client:idle
+            >
               Sign in
             </Button>
           )
