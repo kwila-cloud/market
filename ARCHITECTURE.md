@@ -99,7 +99,7 @@ Every feature should support both power users and those who rank low on the "tec
 - user_id (uuid, fk -> user.id)
 - contact_type (enum: email|phone)
 - value (text)
-- visibility (enum: hidden|private|public)
+- visibility (enum: hidden|connections-only|public)
 - created_at (timestamp)
 
 ### user_settings
@@ -127,7 +127,7 @@ Every feature should support both power users and those who rank low on the "tec
 - title (text)
 - description (text)
 - price_string (text) -- price or budget
-- visibility (enum: hidden|private|public)
+- visibility (enum: hidden|connections-only|public)
 - status (enum: active|archived|deleted)
 - created_at (timestamp)
 - updated_at (timestamp)
@@ -203,7 +203,7 @@ Every feature should support both power users and those who rank low on the "tec
 ### contact_info
 
 - Hidden: System only
-- Private: Direct connections only (status='accepted')
+- Connections Only: Direct connections only (status='accepted')
 - Public: Anyone can view, even if not authenticated
 
 ### user_settings
@@ -217,7 +217,7 @@ Every feature should support both power users and those who rank low on the "tec
 ### item
 
 - Hidden: Creator only
-- Private: Creator + direct connections (status='accepted')
+- Connections Only: Creator + direct connections (status='accepted')
 - Public: All authenticated users
 - Buy items: Creator shown as "Anonymous" to non-connections
 
@@ -291,7 +291,7 @@ Every feature should support both power users and those who rank low on the "tec
 1. Creates connection record (user_a=requester, user_b=recipient, status='pending')
 1. Recipient sees pending request (manual check, no notifications in MVP)
 1. Recipient accepts/declines (updates status)
-1. If accepted: unlocks private contact info, private items, prioritization, direct messaging
+1. If accepted: unlocks contact info and items that are set as "Connections Only", prioritization, direct messaging
 
 ### Invite Generation
 
@@ -456,7 +456,7 @@ project-root/
 - Mandatory onboarding wizard
 - Unified items (buy/sell)
 - Categories (new/resale/service)
-- Visibility controls (hidden/private/public)
+- Visibility controls (hidden/connections-only/public)
 - Messaging threads (2 users)
 - Connection system (invite + manual requests)
 - Vendor profiles (/{vendor_id})
