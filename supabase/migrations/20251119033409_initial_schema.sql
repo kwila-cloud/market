@@ -977,35 +977,6 @@ using (((user_id = ( SELECT auth.uid() AS uid)) OR (visibility = 'public'::publi
 
 
 
-  create policy "Inviters can update own invites"
-  on "public"."invite"
-  as permissive
-  for update
-  to authenticated
-using ((inviter_id = ( SELECT auth.uid() AS uid)))
-with check ((inviter_id = ( SELECT auth.uid() AS uid)));
-
-
-
-  create policy "Inviters can view own invites"
-  on "public"."invite"
-  as permissive
-  for select
-  to authenticated
-using ((inviter_id = ( SELECT auth.uid() AS uid)));
-
-
-
-  create policy "Users can claim unused invites"
-  on "public"."invite"
-  as permissive
-  for update
-  to authenticated
-using (((used_by IS NULL) AND (revoked_at IS NULL)))
-with check ((used_by = ( SELECT auth.uid() AS uid)));
-
-
-
   create policy "Users can create invites"
   on "public"."invite"
   as permissive
@@ -1015,12 +986,22 @@ with check ((inviter_id = ( SELECT auth.uid() AS uid)));
 
 
 
-  create policy "Users can view invites they claimed"
+  create policy "Users can update invites"
+  on "public"."invite"
+  as permissive
+  for update
+  to authenticated
+using (((inviter_id = ( SELECT auth.uid() AS uid)) OR ((used_by IS NULL) AND (revoked_at IS NULL))))
+with check (((inviter_id = ( SELECT auth.uid() AS uid)) OR (used_by = ( SELECT auth.uid() AS uid))));
+
+
+
+  create policy "Users can view invites"
   on "public"."invite"
   as permissive
   for select
   to authenticated
-using ((used_by = ( SELECT auth.uid() AS uid)));
+using (((inviter_id = ( SELECT auth.uid() AS uid)) OR (used_by = ( SELECT auth.uid() AS uid))));
 
 
 

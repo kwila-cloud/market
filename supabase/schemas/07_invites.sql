@@ -14,17 +14,14 @@ create table invite (
 alter table invite enable row level security;
 
 -- Invite policies
--- Inviters can view their own invites
-create policy "Inviters can view own invites"
+-- Users can view invites they created or claimed
+create policy "Users can view invites"
     on invite for select
     to authenticated
-    using (inviter_id = (select auth.uid()));
-
--- Users can view invites they claimed (to see who invited them)
-create policy "Users can view invites they claimed"
-    on invite for select
-    to authenticated
-    using (used_by = (select auth.uid()));
+    using (
+        inviter_id = (select auth.uid())
+        or used_by = (select auth.uid())
+    );
 
 -- Users can create invites
 create policy "Users can create invites"
@@ -32,20 +29,15 @@ create policy "Users can create invites"
     to authenticated
     with check (inviter_id = (select auth.uid()));
 
--- Inviters can update their invites (revoke)
-create policy "Inviters can update own invites"
-    on invite for update
-    to authenticated
-    using (inviter_id = (select auth.uid()))
-    with check (inviter_id = (select auth.uid()));
-
--- Allows authenticated users to claim an unused invite during signup
--- They can only set used_by to their own user ID
-create policy "Users can claim unused invites"
+-- Inviters can update (revoke) or users can claim unused invites
+create policy "Users can update invites"
     on invite for update
     to authenticated
     using (
-        used_by is null
-        and revoked_at is null
+        inviter_id = (select auth.uid())
+        or (used_by is null and revoked_at is null)
     )
-    with check (used_by = (select auth.uid()));
+    with check (
+        inviter_id = (select auth.uid())
+        or used_by = (select auth.uid())
+    );
