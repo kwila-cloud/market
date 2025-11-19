@@ -21,5 +21,3 @@ CREATE INDEX idx_item_category_id ON public.item USING btree (category_id);
 -- Recreate foreign key constraint
 alter table "public"."item" add constraint "item_category_id_fkey"
   foreign key ("category_id") references "public"."category"("id") on delete set null;
-
-
