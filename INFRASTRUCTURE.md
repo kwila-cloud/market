@@ -35,4 +35,44 @@ Storage utilities available in `src/lib/storage.ts`.
 
 ## Authentication
 
-TODO: add info about Supabase auth infra here
+Supabase Auth with email OTP (one-time password) verification.
+
+### Configuration
+
+- **Auth method**: Email OTP (6-digit codes)
+- **OTP expiry**: 3600 seconds (1 hour)
+- **User signups**: Disabled for direct signup (invite-only)
+- **Email confirmation**: Disabled (users verified through OTP)
+
+### Flow
+
+1. User enters email on `/auth/login`
+2. Supabase sends 6-digit OTP to email
+3. User enters code on `/auth/verify`
+4. Session cookie set on successful verification
+5. User redirected to `/dashboard`
+
+### Local Development
+
+Emails are caught by **Inbucket** (port 54324) during local development. Visit `http://localhost:54324` to view sent emails and OTP codes.
+
+### Route Protection
+
+Middleware (`src/middleware.ts`) protects all routes by default. Public routes are defined in `src/lib/auth.ts`:
+
+- **Public routes**: `/`, `/about`, `/content-policy`, `/auth/login`, `/auth/verify`
+- **Auth routes**: `/auth/login`, `/auth/verify` (redirects to `/dashboard` if authenticated)
+- **All other routes**: Require authentication (redirects to `/auth/login` if unauthenticated)
+
+### Session Management
+
+- Server-side: `createSupabaseServerClient()` with cookie handling
+- Client-side: `createSupabaseBrowserClient()` for browser operations
+- Utilities available in `src/lib/auth.ts`
+
+### Production Setup
+
+For production, configure custom SMTP in Supabase dashboard:
+
+- Project Settings → Authentication → SMTP Settings
+- Recommended providers: SendGrid, Postmark, AWS SES

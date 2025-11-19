@@ -1,4 +1,4 @@
-import { supabase } from './supabase';
+import { createSupabaseBrowserClient } from './auth';
 
 // Storage bucket name
 export const STORAGE_BUCKET = 'images';
@@ -61,6 +61,7 @@ export async function uploadFile(
   path: string,
   file: File | Blob
 ): Promise<StorageUploadResult> {
+  const supabase = createSupabaseBrowserClient();
   const { data, error } = await supabase.storage
     .from(STORAGE_BUCKET)
     .upload(path, file, {
@@ -120,6 +121,7 @@ export async function uploadMessageImage(
 
 // Delete a file from storage
 export async function deleteFile(path: string): Promise<{ error?: string }> {
+  const supabase = createSupabaseBrowserClient();
   const { error } = await supabase.storage.from(STORAGE_BUCKET).remove([path]);
 
   if (error) {
@@ -134,6 +136,7 @@ export async function getSignedUrl(
   path: string,
   expiresIn: number = 3600
 ): Promise<{ url: string; error?: string }> {
+  const supabase = createSupabaseBrowserClient();
   const { data, error } = await supabase.storage
     .from(STORAGE_BUCKET)
     .createSignedUrl(path, expiresIn);
@@ -147,6 +150,7 @@ export async function getSignedUrl(
 
 // Get the public URL for a file
 export function getPublicUrl(path: string): string {
+  const supabase = createSupabaseBrowserClient();
   const {
     data: { publicUrl },
   } = supabase.storage.from(STORAGE_BUCKET).getPublicUrl(path);

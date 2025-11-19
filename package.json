@@ -22,12 +22,16 @@
     "@astrojs/cloudflare": "^12.6.10",
     "@astrojs/mdx": "^4.3.11",
     "@astrojs/react": "^4.4.2",
+    "@hookform/resolvers": "^5.2.2",
+    "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.83.0",
     "@tailwindcss/vite": "^4.1.17",
     "astro": "^5.15.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "typescript": "^5.9.3"
+    "react-hook-form": "^7.66.1",
+    "typescript": "^5.9.3",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

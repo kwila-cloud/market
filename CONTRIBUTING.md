@@ -26,6 +26,9 @@ cd market
 # Install dependencies
 npm install
 
+# Set up environment variables
+cp .env.example .env
+
 # Start the backend (Supabase local)
 npm run start:backend
 
@@ -34,6 +37,27 @@ npm run start:frontend
 ```
 
 The frontend will be available at http://localhost:4321
+
+### Environment Variables
+
+Copy `.env.example` to `.env` and update the values:
+
+```bash
+cp .env.example .env
+```
+
+**Required variables:**
+
+- `PUBLIC_SUPABASE_URL` - Supabase API URL (default: `http://localhost:54321`)
+- `PUBLIC_SUPABASE_ANON_KEY` - Supabase publishable key
+
+To get the publishable key for local development:
+
+1. Run `npm run start:backend`
+2. Copy the `Publishable key` from the output
+3. Paste it as the value for `PUBLIC_SUPABASE_ANON_KEY` in your `.env` file
+
+For production, these will be set in your deployment environment (e.g., Cloudflare Workers).
 
 ### Common Commands
 

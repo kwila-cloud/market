@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LogoutButton from '../components/react/LogoutButton';
+
+// User is set by middleware for protected routes
+const user = Astro.locals.user;
+
+// Format the creation date
+const createdAt = user?.created_at
+  ? new Date(user.created_at).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : 'Unknown';
+---
+
+<Layout title="Dashboard">
+  <div class="max-w-2xl mx-auto">
+    <div class="flex items-center justify-between mb-8">
+      <h1 class="text-3xl font-bold text-neutral-50">Dashboard</h1>
+      <LogoutButton client:load />
+    </div>
+
+    <div
+      class="bg-surface-elevated border border-surface-border rounded-xl p-6 space-y-6"
+    >
+      <div>
+        <h2 class="text-lg font-semibold text-neutral-50 mb-4">
+          Account Information
+        </h2>
+        <dl class="space-y-4">
+          <div>
+            <dt class="text-sm text-neutral-400">Email</dt>
+            <dd class="text-neutral-100 mt-1">{user?.email || 'Not set'}</dd>
+          </div>
+          <div>
+            <dt class="text-sm text-neutral-400">User ID</dt>
+            <dd class="text-neutral-100 mt-1 font-mono text-sm">
+              {user?.id || 'Unknown'}
+            </dd>
+          </div>
+          <div>
+            <dt class="text-sm text-neutral-400">Account Created</dt>
+            <dd class="text-neutral-100 mt-1">{createdAt}</dd>
+          </div>
+          <div>
+            <dt class="text-sm text-neutral-400">Last Sign In</dt>
+            <dd class="text-neutral-100 mt-1">
+              {
+                user?.last_sign_in_at
+                  ? new Date(user.last_sign_in_at).toLocaleString('en-US', {
+                      dateStyle: 'medium',
+                      timeStyle: 'short',
+                    })
+                  : 'Unknown'
+              }
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <hr class="border-surface-border" />
+
+      <div>
+        <p class="text-sm text-neutral-400">
+          This is a basic dashboard for authenticated users. More features will
+          be added as development progresses.
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

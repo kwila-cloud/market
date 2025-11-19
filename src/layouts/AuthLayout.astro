@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+import ThemeInitializer from '../components/astro/ThemeInitializer.astro';
+import { platformName } from '../lib/globals';
+
+export interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+const pageTitle = title ? `${title} — ${platformName}` : platformName;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link
+      rel="preload"
+      href="/fonts/OpenSans/OpenSans-Variable.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Montserrat/Montserrat-Variable.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
+    />
+    <title>{pageTitle}</title>
+    <ThemeInitializer />
+  </head>
+  <body class="min-h-screen bg-surface text-neutral-50 transition-colors">
+    <noscript>
+      <div
+        style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #1f2937; color: #f3f4f6; display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 2rem; text-align: center;"
+      >
+        <div style="max-width: 500px;">
+          <h1 style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">
+            JavaScript Required
+          </h1>
+          <p style="font-size: 1.125rem; margin-bottom: 1rem;">
+            This application requires JavaScript to function properly.
+          </p>
+          <p style="font-size: 0.875rem; color: #9ca3af;">
+            Please enable JavaScript in your browser settings and reload the
+            page.
+          </p>
+        </div>
+      </div>
+    </noscript>
+
+    <main
+      class="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8"
+    >
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+          <a
+            href="/"
+            class="text-3xl font-display font-bold text-primary hover:text-primary-400 transition-colors"
+          >
+            {platformName}
+          </a>
+        </div>
+        <div
+          class="bg-surface-elevated border border-surface-border rounded-xl p-8 shadow-lg"
+        >
+          <slot />
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
