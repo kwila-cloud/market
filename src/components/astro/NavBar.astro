@@ -33,11 +33,7 @@ const { user } = Astro.props;
       <!-- Right side: Auth + Theme -->
       <div class="flex items-center gap-4">
         {
-          user ? (
-            <Button href="/dashboard" variant="neutral" className="py-2">
-              Dashboard
-            </Button>
-          ) : (
+          !user && (
             <Button href="/auth/login" variant="primary" className="py-2">
               Sign in
             </Button>
