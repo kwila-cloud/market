@@ -1299,6 +1299,3 @@ with check ((user_id = ( SELECT auth.uid() AS uid)));
   for select
   to authenticated
 using ((user_id = ( SELECT auth.uid() AS uid)));
-
-
-
