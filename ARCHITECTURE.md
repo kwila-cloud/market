@@ -56,7 +56,7 @@ Every feature should support both power users and those who rank low on the "tec
 - **Database**: Supabase (PostgreSQL)
 - **Authentication**: Supabase Auth (email/phone OTP via Twilio)
 - **Storage**: Supabase Storage (single bucket)
-- **Real-time**: Polling (5-10 second intervals)
+- **Real-time**: Supabase Realtime
 - **API**: Supabase REST + PostgREST with RLS
 
 ### Deployment
