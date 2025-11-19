@@ -20,20 +20,11 @@ create policy "Inviters can view own invites"
     to authenticated
     using (inviter_id = auth.uid());
 
--- Users can view invites they used (for validation)
-create policy "Users can view invites they used"
+-- Users can view invites they claimed (to see who invited them)
+create policy "Users can view invites they claimed"
     on invite for select
     to authenticated
     using (used_by = auth.uid());
-
--- Anonymous users can view invite details for signup validation
-create policy "Anonymous can validate invite codes"
-    on invite for select
-    to anon
-    using (
-        used_by is null
-        and revoked_at is null
-    );
 
 -- Users can create invites
 create policy "Users can create invites"
