@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createSupabaseBrowserClient } from '../../lib/auth';
+import Button from './Button';
 
 const otpSchema = z.object({
   code: z
@@ -207,13 +208,13 @@ export default function OTPForm() {
         )}
       </div>
 
-      <button
+      <Button
         type="submit"
+        fullWidth
         disabled={isLoading || codeValue.length !== 6}
-        className="w-full py-3 px-4 bg-primary hover:bg-primary-600 disabled:bg-primary/50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-elevated"
       >
         {isLoading ? 'Verifying...' : 'Verify code'}
-      </button>
+      </Button>
 
       <div className="text-center">
         <button

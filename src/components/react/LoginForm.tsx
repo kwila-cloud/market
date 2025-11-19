@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createSupabaseBrowserClient } from '../../lib/auth';
+import Button from './Button';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -96,13 +97,9 @@ export default function LoginForm() {
         )}
       </div>
 
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full py-3 px-4 bg-primary hover:bg-primary-600 disabled:bg-primary/50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-elevated"
-      >
+      <Button type="submit" fullWidth disabled={isLoading}>
         {isLoading ? 'Sending...' : 'Continue with email'}
-      </button>
+      </Button>
 
       <p className="text-center text-sm text-neutral-400">
         Don&apos;t have an account?

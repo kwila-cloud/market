@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createSupabaseBrowserClient } from '../../lib/auth';
+import Button from './Button';
 
 export default function LogoutButton() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,12 +19,8 @@ export default function LogoutButton() {
   };
 
   return (
-    <button
-      onClick={handleLogout}
-      disabled={isLoading}
-      className="px-4 py-2 bg-surface-border hover:bg-surface-elevated text-neutral-200 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-    >
+    <Button variant="neutral" onClick={handleLogout} disabled={isLoading}>
       {isLoading ? 'Signing out...' : 'Sign out'}
-    </button>
+    </Button>
   );
 }

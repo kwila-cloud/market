@@ -35,14 +35,14 @@ const { user } = Astro.props;
           user ? (
             <a
               href="/dashboard"
-              class="text-sm text-neutral-300 hover:text-neutral-50 transition-colors"
+              class="px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-surface-border hover:bg-surface-elevated text-neutral-200"
             >
               Dashboard
             </a>
           ) : (
             <a
               href="/auth/login"
-              class="text-sm px-4 py-2 bg-primary hover:bg-primary-600 text-white rounded-lg transition-colors"
+              class="px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-primary hover:bg-primary-600 text-white"
             >
               Sign in
             </a>
