@@ -11,6 +11,7 @@ export interface Props {
 
 const { title } = Astro.props;
 const pageTitle = title ? `${title} — ${platformName}` : platformName;
+const user = Astro.locals.user;
 ---
 
 <html lang="en">
@@ -63,7 +64,7 @@ const pageTitle = title ? `${title} — ${platformName}` : platformName;
       </div>
     </noscript>
 
-    <NavBar />
+    <NavBar user={user} />
 
     <main class="min-h-screen py-16 px-4 sm:px-6 lg:px-8">
       <div class="max-w-6xl mx-auto">
