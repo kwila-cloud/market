@@ -10,7 +10,63 @@ Refer to the [infrastructure document](/INFRASTRUCTURE.md)
 
 ## Getting Started
 
-TODO: add basic list of commands useful in a local dev environment (using npm run).
+### Prerequisites
+
+- Node.js 20+
+- Docker (for local Supabase)
+- Supabase CLI (`npm install -g supabase` or use `npx supabase`)
+
+### Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/kwila-cloud/market.git
+cd market
+
+# Install dependencies
+npm install
+
+# Start the backend (Supabase local)
+npm run start:backend
+
+# In a new terminal, start the frontend
+npm run start:frontend
+```
+
+The frontend will be available at http://localhost:4321
+
+### Common Commands
+
+```bash
+# Development
+npm run start:frontend    # Start Astro dev server
+npm run start:backend     # Start local Supabase
+npm run stop:backend      # Stop local Supabase
+
+# Code quality
+npm run lint              # Run ESLint
+npm run lint:fix          # Fix ESLint issues
+npm run format            # Format with Prettier
+npm run format:check      # Check formatting
+npm run type-check        # TypeScript type checking
+
+# Testing
+npm run test:unit         # Run unit tests with Vitest
+npm run test:e2e          # Run E2E tests with Playwright
+
+# Database
+npm run db:types          # Generate TypeScript types from schema
+npm run db:reset          # Reset DB - fresh schema and seed data
+```
+
+### Direct CLI Access
+
+For advanced operations, use `npx` to access the CLIs directly:
+
+```bash
+npx astro --help          # Astro CLI
+npx supabase --help       # Supabase CLI
+```
 
 ## GitHub Issues
 

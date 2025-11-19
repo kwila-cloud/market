@@ -23,32 +23,42 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 ```
 /src/
 ├── pages/              # Astro routes (.astro files)
-├── components/react/   # Interactive components (.tsx)
-├── components/astro/   # Static components (.astro)
+├── components/
+│   ├── react/          # Interactive components (.tsx)
+│   └── astro/          # Static components (.astro)
 ├── layouts/            # Page layouts
-└── lib/               # Utilities (supabase.ts, auth.ts)
+├── lib/                # Utilities (supabase.ts, auth.ts)
+└── styles/             # Global styles
 
-/specs/                # Feature specifications (see CONTRIBUTING.md)
-/supabase/migrations/  # Database schema
-/tests/               # Unit & E2E tests
+/specs/                 # Feature specifications (see CONTRIBUTING.md)
+/supabase/
+├── config.toml         # Supabase configuration
+├── schemas/            # Declarative SQL schemas
+├── migrations/         # Generated migrations
+├── seeds/              # Seed data
+└── storage/            # Seed storage files (images)
+/tests/                 # Unit & E2E tests
 ```
 
 ## What Agents Should Know
 
 ### Development Workflow
 
-- **Local development**: `npm run dev` - Start Astro dev server (localhost:4321)
-- **Build**: `npm run build` - Build for production
-- **Preview**: `npm run preview` - Preview production build
+- **Frontend**: `npm run start:frontend` - Start Astro dev server (localhost:4321)
+- **Backend**: `npm run start:backend` - Start local Supabase services
+- **Stop backend**: `npm run stop:backend` - Stop local Supabase services
+- **Build**: `npm run build:frontend` - Build for production
 - **Type checking**: `npm run type-check` - Run Astro type checker
 - **Linting**: `npm run lint` or `npm run lint:fix` - ESLint checks
 - **Formatting**: `npm run format` or `npm run format:check` - Prettier formatting
 - **Testing**:
-  - `npm test` - Run unit tests with Vitest
   - `npm run test:unit` - Run unit tests with Vitest
   - `npm run test:e2e` - Run E2E tests with Playwright
-  - `npm run test:watch` - Run unit tests in watch mode
   - Note: CI runs unit and E2E tests separately
+- **Database**:
+  - `npm run db:types` - Generate TypeScript types from schema
+  - `npm run db:diff` - Show pending schema changes
+- **Direct CLI access**: Use `npx astro` or `npx supabase` for advanced operations
 
 ### Security & Best Practices
 
@@ -67,13 +77,12 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 ### Files You Should NOT Touch Without Coordination
 
 - `.github/workflows/` (CI/CD configuration - coordinate changes)
-- `docker-compose.yml` (dev environment setup - when implemented)
 - `wrangler.jsonc` (Cloudflare Workers config)
 - `astro.config.mjs` (Astro configuration - coordinate with team)
 - `package.json` (dependencies - coordinate changes)
 - `vitest.config.ts` (test configuration - coordinate changes)
 - `playwright.config.ts` (E2E test configuration - coordinate changes)
-- Supabase configuration files (when implemented)
+- `supabase/config.toml` (Supabase configuration)
 
 ## Where to Find More Info
 
@@ -88,7 +97,7 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 2. **Adding features**: Check existing specs, create new spec if needed
 3. **Bug fixes**: Check if related spec exists, verify with tests
 4. **Tests**:
-   - Run `npm test` before committing changes
+   - Run `npm run test:unit` before committing changes
    - Write unit tests for utilities in `tests/unit/`
    - Write E2E tests for user flows in `tests/e2e/`
    - See `tests/README.md` for testing guidelines

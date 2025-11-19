@@ -3,20 +3,19 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
+    "start:frontend": "astro dev",
+    "start:backend": "supabase start",
+    "stop:backend": "supabase stop",
+    "build:frontend": "astro build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "type-check": "astro check",
-    "test": "vitest run",
     "test:unit": "vitest run",
-    "test:e2e": "npx playwright test",
-    "test:watch": "vitest",
-    "astro": "astro",
-    "supabase": "supabase"
+    "test:e2e": "playwright test",
+    "db:types": "supabase gen types typescript --local > src/lib/database.types.ts",
+    "db:reset": "supabase db reset"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.5",
