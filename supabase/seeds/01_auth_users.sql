@@ -20,7 +20,8 @@ insert into auth.users (
     role,
     confirmation_token,
     recovery_token,
-    email_change_token_new
+    email_change_token_new,
+    email_change
 ) values
     -- Alice
     (
@@ -35,6 +36,7 @@ insert into auth.users (
         '{"email_verified": true}',
         'authenticated',
         'authenticated',
+        '',
         '',
         '',
         ''
@@ -54,6 +56,7 @@ insert into auth.users (
         'authenticated',
         '',
         '',
+        '',
         ''
     ),
     -- Carol
@@ -69,6 +72,7 @@ insert into auth.users (
         '{"email_verified": true}',
         'authenticated',
         'authenticated',
+        '',
         '',
         '',
         ''
@@ -88,6 +92,7 @@ insert into auth.users (
         'authenticated',
         '',
         '',
+        '',
         ''
     ),
     -- Eve
@@ -103,6 +108,7 @@ insert into auth.users (
         '{"email_verified": true}',
         'authenticated',
         'authenticated',
+        '',
         '',
         '',
         ''
