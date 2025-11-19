@@ -60,7 +60,7 @@ Our platform is invite-only during the beta phase. New accounts can only be crea
 Contact information (email and phone) has three visibility levels:
 
 - **Hidden**: Only the system can see it
-- **Private**: Only visible to your direct connections
+- **Connections Only**: Only visible to your direct connections
 - **Public**: Visible to all users and visitors
 
 When someone responds to your request, you see their offer first—not their contact details. You choose whether to open a direct messaging channel or decline with no further contact.

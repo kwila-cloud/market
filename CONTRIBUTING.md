@@ -85,3 +85,11 @@ Keep PR titles **short and descriptive**, typically 3-7 words:
 ### What Went Wrong
 
 Remember: PR titles should quickly communicate the core change, not list every technical detail. Use the body of the PR for detailed explanations.
+
+## Database
+
+### Schema Migrations
+
+Database changes should be made to the schema files in `supabase/schemas`, then run `npx run supbase db -f <migration-name>` to generate migrations.
+
+Some schema changes are not compatible with automatic migration generation. See [here](https://supabase.com/docs/guides/local-development/declarative-database-schemas#known-caveats) for things that will require manual migration scripts.
