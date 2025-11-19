@@ -361,7 +361,4 @@ s3_secret_key = "env(S3_SECRET_KEY)"
 project_id = "nzytvglkzpjeikhjwqph"
 
 [remotes.main.storage.buckets.images]
-public = false
-file_size_limit = "5MiB"
-allowed_mime_types = ["image/jpeg", "image/png", "image/webp"]
-# No objects_path - bucket created empty in production
+objects_path = ""
