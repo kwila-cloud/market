@@ -154,7 +154,10 @@ export function getPublicUrl(path: string): string {
 }
 
 // Validate file before upload
-export function validateImageFile(file: File): { valid: boolean; error?: string } {
+export function validateImageFile(file: File): {
+  valid: boolean;
+  error?: string;
+} {
   if (file.size > IMAGE_CONSTRAINTS.MAX_SIZE_BYTES) {
     return {
       valid: false,
