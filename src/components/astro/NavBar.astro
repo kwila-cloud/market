@@ -5,6 +5,7 @@
  */
 import { platformName } from '../../lib/globals';
 import ThemeSelector from '../react/ThemeSelector';
+import Button from '../react/Button';
 import type { User } from '@supabase/supabase-js';
 
 export interface Props {
@@ -33,19 +34,13 @@ const { user } = Astro.props;
       <div class="flex items-center gap-4">
         {
           user ? (
-            <a
-              href="/dashboard"
-              class="px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-surface-border hover:bg-surface-elevated text-neutral-200"
-            >
+            <Button href="/dashboard" variant="neutral" className="py-2">
               Dashboard
-            </a>
+            </Button>
           ) : (
-            <a
-              href="/auth/login"
-              class="px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-primary hover:bg-primary-600 text-white"
-            >
+            <Button href="/auth/login" variant="primary" className="py-2">
               Sign in
-            </a>
+            </Button>
           )
         }
         <ThemeSelector client:load />
