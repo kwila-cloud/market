@@ -1,10 +1,17 @@
 ---
 /**
  * Navigation bar component
- * Contains platform branding and theme selector
+ * Contains platform branding, auth buttons, and theme selector
  */
 import { platformName } from '../../lib/globals';
 import ThemeSelector from '../react/ThemeSelector';
+import type { User } from '@supabase/supabase-js';
+
+export interface Props {
+  user?: User | null;
+}
+
+const { user } = Astro.props;
 ---
 
 <nav
@@ -22,8 +29,25 @@ import ThemeSelector from '../react/ThemeSelector';
         </a>
       </div>
 
-      <!-- Theme Selector -->
+      <!-- Right side: Auth + Theme -->
       <div class="flex items-center gap-4">
+        {
+          user ? (
+            <a
+              href="/dashboard"
+              class="text-sm text-neutral-300 hover:text-neutral-50 transition-colors"
+            >
+              Dashboard
+            </a>
+          ) : (
+            <a
+              href="/auth/login"
+              class="text-sm px-4 py-2 bg-primary hover:bg-primary-600 text-white rounded-lg transition-colors"
+            >
+              Sign in
+            </a>
+          )
+        }
         <ThemeSelector client:load />
       </div>
     </div>
