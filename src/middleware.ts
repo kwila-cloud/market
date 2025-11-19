@@ -34,5 +34,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect('/dashboard');
   }
 
+  // Redirect to dashboard if accessing home page while authenticated
+  if (pathname === '/' && user) {
+    return context.redirect('/dashboard');
+  }
+
   return next();
 });
