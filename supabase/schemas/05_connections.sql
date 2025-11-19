@@ -18,14 +18,14 @@ alter table connection enable row level security;
 create policy "Users can view own connections"
     on connection for select
     to authenticated
-    using (user_a = auth.uid() or user_b = auth.uid());
+    using (user_a = (select auth.uid()) or user_b = (select auth.uid()));
 
 -- Requester (user_a) can create connection requests
 create policy "Users can create connection requests"
     on connection for insert
     to authenticated
     with check (
-        user_a = auth.uid()
+        user_a = (select auth.uid())
         and status = 'pending'
     );
 
@@ -33,11 +33,11 @@ create policy "Users can create connection requests"
 create policy "Recipients can update connection status"
     on connection for update
     to authenticated
-    using (user_b = auth.uid())
-    with check (user_b = auth.uid());
+    using (user_b = (select auth.uid()))
+    with check (user_b = (select auth.uid()));
 
 -- Either party can delete the connection
 create policy "Users can delete own connections"
     on connection for delete
     to authenticated
-    using (user_a = auth.uid() or user_b = auth.uid());
+    using (user_a = (select auth.uid()) or user_b = (select auth.uid()));

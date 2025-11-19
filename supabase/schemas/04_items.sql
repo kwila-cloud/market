@@ -41,61 +41,29 @@ alter table item_image enable row level security;
 alter table watch enable row level security;
 
 -- Item policies
--- Users can always view their own items
-create policy "Users can view own items"
-    on item for select
-    to authenticated
-    using (user_id = auth.uid());
-
--- Users can view public items
-create policy "Users can view public items"
-    on item for select
-    to authenticated
-    using (visibility = 'public' and status != 'deleted');
+-- Authenticated user SELECT policy is in 08_cross_table_policies.sql
 
 -- Users can create items
 create policy "Users can create items"
     on item for insert
     to authenticated
-    with check (user_id = auth.uid());
+    with check (user_id = (select auth.uid()));
 
 -- Users can update their own items
 create policy "Users can update own items"
     on item for update
     to authenticated
-    using (user_id = auth.uid())
-    with check (user_id = auth.uid());
+    using (user_id = (select auth.uid()))
+    with check (user_id = (select auth.uid()));
 
 -- Users can delete their own items
 create policy "Users can delete own items"
     on item for delete
     to authenticated
-    using (user_id = auth.uid());
+    using (user_id = (select auth.uid()));
 
 -- Item image policies (inherit from parent item)
--- Users can view images for items they can see
-create policy "Users can view own item images"
-    on item_image for select
-    to authenticated
-    using (
-        exists (
-            select 1 from item
-            where item.id = item_image.item_id
-            and item.user_id = auth.uid()
-        )
-    );
-
-create policy "Users can view public item images"
-    on item_image for select
-    to authenticated
-    using (
-        exists (
-            select 1 from item
-            where item.id = item_image.item_id
-            and item.visibility = 'public'
-            and item.status != 'deleted'
-        )
-    );
+-- Authenticated user SELECT policy is in 08_cross_table_policies.sql
 
 -- Users can manage images for their own items
 create policy "Users can insert own item images"
@@ -105,7 +73,7 @@ create policy "Users can insert own item images"
         exists (
             select 1 from item
             where item.id = item_image.item_id
-            and item.user_id = auth.uid()
+            and item.user_id = (select auth.uid())
         )
     );
 
@@ -116,14 +84,14 @@ create policy "Users can update own item images"
         exists (
             select 1 from item
             where item.id = item_image.item_id
-            and item.user_id = auth.uid()
+            and item.user_id = (select auth.uid())
         )
     )
     with check (
         exists (
             select 1 from item
             where item.id = item_image.item_id
-            and item.user_id = auth.uid()
+            and item.user_id = (select auth.uid())
         )
     );
 
@@ -134,7 +102,7 @@ create policy "Users can delete own item images"
         exists (
             select 1 from item
             where item.id = item_image.item_id
-            and item.user_id = auth.uid()
+            and item.user_id = (select auth.uid())
         )
     );
 
@@ -142,20 +110,20 @@ create policy "Users can delete own item images"
 create policy "Users can view own watches"
     on watch for select
     to authenticated
-    using (user_id = auth.uid());
+    using (user_id = (select auth.uid()));
 
 create policy "Users can create watches"
     on watch for insert
     to authenticated
-    with check (user_id = auth.uid());
+    with check (user_id = (select auth.uid()));
 
 create policy "Users can update own watches"
     on watch for update
     to authenticated
-    using (user_id = auth.uid())
-    with check (user_id = auth.uid());
+    using (user_id = (select auth.uid()))
+    with check (user_id = (select auth.uid()));
 
 create policy "Users can delete own watches"
     on watch for delete
     to authenticated
-    using (user_id = auth.uid());
+    using (user_id = (select auth.uid()));

@@ -897,8 +897,8 @@ using (true);
   as permissive
   for update
   to authenticated
-using ((user_b = auth.uid()))
-with check ((user_b = auth.uid()));
+using ((user_b = ( SELECT auth.uid() AS uid)))
+with check ((user_b = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -907,7 +907,7 @@ with check ((user_b = auth.uid()));
   as permissive
   for insert
   to authenticated
-with check (((user_a = auth.uid()) AND (status = 'pending'::public.connection_status)));
+with check (((user_a = ( SELECT auth.uid() AS uid)) AND (status = 'pending'::public.connection_status)));
 
 
 
@@ -916,7 +916,7 @@ with check (((user_a = auth.uid()) AND (status = 'pending'::public.connection_st
   as permissive
   for delete
   to authenticated
-using (((user_a = auth.uid()) OR (user_b = auth.uid())));
+using (((user_a = ( SELECT auth.uid() AS uid)) OR (user_b = ( SELECT auth.uid() AS uid))));
 
 
 
@@ -925,7 +925,7 @@ using (((user_a = auth.uid()) OR (user_b = auth.uid())));
   as permissive
   for select
   to authenticated
-using (((user_a = auth.uid()) OR (user_b = auth.uid())));
+using (((user_a = ( SELECT auth.uid() AS uid)) OR (user_b = ( SELECT auth.uid() AS uid))));
 
 
 
@@ -933,7 +933,7 @@ using (((user_a = auth.uid()) OR (user_b = auth.uid())));
   on "public"."contact_info"
   as permissive
   for select
-  to anon, authenticated
+  to anon
 using ((visibility = 'public'::public.visibility));
 
 
@@ -943,7 +943,7 @@ using ((visibility = 'public'::public.visibility));
   as permissive
   for delete
   to authenticated
-using ((user_id = auth.uid()));
+using ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -952,7 +952,7 @@ using ((user_id = auth.uid()));
   as permissive
   for insert
   to authenticated
-with check ((user_id = auth.uid()));
+with check ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -961,28 +961,19 @@ with check ((user_id = auth.uid()));
   as permissive
   for update
   to authenticated
-using ((user_id = auth.uid()))
-with check ((user_id = auth.uid()));
+using ((user_id = ( SELECT auth.uid() AS uid)))
+with check ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
-  create policy "Users can view connections-only contact info of connections"
+  create policy "Users can view contact info"
   on "public"."contact_info"
   as permissive
   for select
   to authenticated
-using (((visibility = 'connections-only'::public.visibility) AND (EXISTS ( SELECT 1
+using (((user_id = ( SELECT auth.uid() AS uid)) OR (visibility = 'public'::public.visibility) OR ((visibility = 'connections-only'::public.visibility) AND (EXISTS ( SELECT 1
    FROM public.connection
-  WHERE ((connection.status = 'accepted'::public.connection_status) AND (((connection.user_a = auth.uid()) AND (connection.user_b = contact_info.user_id)) OR ((connection.user_b = auth.uid()) AND (connection.user_a = contact_info.user_id))))))));
-
-
-
-  create policy "Users can view own contact info"
-  on "public"."contact_info"
-  as permissive
-  for select
-  to authenticated
-using ((user_id = auth.uid()));
+  WHERE ((connection.status = 'accepted'::public.connection_status) AND (((connection.user_a = ( SELECT auth.uid() AS uid)) AND (connection.user_b = contact_info.user_id)) OR ((connection.user_b = ( SELECT auth.uid() AS uid)) AND (connection.user_a = contact_info.user_id)))))))));
 
 
 
@@ -991,8 +982,8 @@ using ((user_id = auth.uid()));
   as permissive
   for update
   to authenticated
-using ((inviter_id = auth.uid()))
-with check ((inviter_id = auth.uid()));
+using ((inviter_id = ( SELECT auth.uid() AS uid)))
+with check ((inviter_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1001,7 +992,7 @@ with check ((inviter_id = auth.uid()));
   as permissive
   for select
   to authenticated
-using ((inviter_id = auth.uid()));
+using ((inviter_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1011,7 +1002,7 @@ using ((inviter_id = auth.uid()));
   for update
   to authenticated
 using (((used_by IS NULL) AND (revoked_at IS NULL)))
-with check ((used_by = auth.uid()));
+with check ((used_by = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1020,7 +1011,7 @@ with check ((used_by = auth.uid()));
   as permissive
   for insert
   to authenticated
-with check ((inviter_id = auth.uid()));
+with check ((inviter_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1029,7 +1020,7 @@ with check ((inviter_id = auth.uid()));
   as permissive
   for select
   to authenticated
-using ((used_by = auth.uid()));
+using ((used_by = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1038,7 +1029,7 @@ using ((used_by = auth.uid()));
   as permissive
   for insert
   to authenticated
-with check ((user_id = auth.uid()));
+with check ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1047,7 +1038,7 @@ with check ((user_id = auth.uid()));
   as permissive
   for delete
   to authenticated
-using ((user_id = auth.uid()));
+using ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1056,37 +1047,19 @@ using ((user_id = auth.uid()));
   as permissive
   for update
   to authenticated
-using ((user_id = auth.uid()))
-with check ((user_id = auth.uid()));
+using ((user_id = ( SELECT auth.uid() AS uid)))
+with check ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
-  create policy "Users can view connections-only items from connections"
+  create policy "Users can view items"
   on "public"."item"
   as permissive
   for select
   to authenticated
-using (((visibility = 'connections-only'::public.visibility) AND (status <> 'deleted'::public.item_status) AND (EXISTS ( SELECT 1
+using (((user_id = ( SELECT auth.uid() AS uid)) OR ((visibility = 'public'::public.visibility) AND (status <> 'deleted'::public.item_status)) OR ((visibility = 'connections-only'::public.visibility) AND (status <> 'deleted'::public.item_status) AND (EXISTS ( SELECT 1
    FROM public.connection
-  WHERE ((connection.status = 'accepted'::public.connection_status) AND (((connection.user_a = auth.uid()) AND (connection.user_b = item.user_id)) OR ((connection.user_b = auth.uid()) AND (connection.user_a = item.user_id))))))));
-
-
-
-  create policy "Users can view own items"
-  on "public"."item"
-  as permissive
-  for select
-  to authenticated
-using ((user_id = auth.uid()));
-
-
-
-  create policy "Users can view public items"
-  on "public"."item"
-  as permissive
-  for select
-  to authenticated
-using (((visibility = 'public'::public.visibility) AND (status <> 'deleted'::public.item_status)));
+  WHERE ((connection.status = 'accepted'::public.connection_status) AND (((connection.user_a = ( SELECT auth.uid() AS uid)) AND (connection.user_b = item.user_id)) OR ((connection.user_b = ( SELECT auth.uid() AS uid)) AND (connection.user_a = item.user_id)))))))));
 
 
 
@@ -1097,7 +1070,7 @@ using (((visibility = 'public'::public.visibility) AND (status <> 'deleted'::pub
   to authenticated
 using ((EXISTS ( SELECT 1
    FROM public.item
-  WHERE ((item.id = item_image.item_id) AND (item.user_id = auth.uid())))));
+  WHERE ((item.id = item_image.item_id) AND (item.user_id = ( SELECT auth.uid() AS uid))))));
 
 
 
@@ -1108,7 +1081,7 @@ using ((EXISTS ( SELECT 1
   to authenticated
 with check ((EXISTS ( SELECT 1
    FROM public.item
-  WHERE ((item.id = item_image.item_id) AND (item.user_id = auth.uid())))));
+  WHERE ((item.id = item_image.item_id) AND (item.user_id = ( SELECT auth.uid() AS uid))))));
 
 
 
@@ -1119,45 +1092,23 @@ with check ((EXISTS ( SELECT 1
   to authenticated
 using ((EXISTS ( SELECT 1
    FROM public.item
-  WHERE ((item.id = item_image.item_id) AND (item.user_id = auth.uid())))))
+  WHERE ((item.id = item_image.item_id) AND (item.user_id = ( SELECT auth.uid() AS uid))))))
 with check ((EXISTS ( SELECT 1
    FROM public.item
-  WHERE ((item.id = item_image.item_id) AND (item.user_id = auth.uid())))));
+  WHERE ((item.id = item_image.item_id) AND (item.user_id = ( SELECT auth.uid() AS uid))))));
 
 
 
-  create policy "Users can view connections-only item images from connections"
+  create policy "Users can view item images"
   on "public"."item_image"
   as permissive
   for select
   to authenticated
 using ((EXISTS ( SELECT 1
    FROM public.item
-  WHERE ((item.id = item_image.item_id) AND (item.visibility = 'connections-only'::public.visibility) AND (item.status <> 'deleted'::public.item_status) AND (EXISTS ( SELECT 1
+  WHERE ((item.id = item_image.item_id) AND ((item.user_id = ( SELECT auth.uid() AS uid)) OR ((item.visibility = 'public'::public.visibility) AND (item.status <> 'deleted'::public.item_status)) OR ((item.visibility = 'connections-only'::public.visibility) AND (item.status <> 'deleted'::public.item_status) AND (EXISTS ( SELECT 1
            FROM public.connection
-          WHERE ((connection.status = 'accepted'::public.connection_status) AND (((connection.user_a = auth.uid()) AND (connection.user_b = item.user_id)) OR ((connection.user_b = auth.uid()) AND (connection.user_a = item.user_id))))))))));
-
-
-
-  create policy "Users can view own item images"
-  on "public"."item_image"
-  as permissive
-  for select
-  to authenticated
-using ((EXISTS ( SELECT 1
-   FROM public.item
-  WHERE ((item.id = item_image.item_id) AND (item.user_id = auth.uid())))));
-
-
-
-  create policy "Users can view public item images"
-  on "public"."item_image"
-  as permissive
-  for select
-  to authenticated
-using ((EXISTS ( SELECT 1
-   FROM public.item
-  WHERE ((item.id = item_image.item_id) AND (item.visibility = 'public'::public.visibility) AND (item.status <> 'deleted'::public.item_status)))));
+          WHERE ((connection.status = 'accepted'::public.connection_status) AND (((connection.user_a = ( SELECT auth.uid() AS uid)) AND (connection.user_b = item.user_id)) OR ((connection.user_b = ( SELECT auth.uid() AS uid)) AND (connection.user_a = item.user_id))))))))))));
 
 
 
@@ -1166,9 +1117,9 @@ using ((EXISTS ( SELECT 1
   as permissive
   for insert
   to authenticated
-with check (((sender_id = auth.uid()) AND (EXISTS ( SELECT 1
+with check (((sender_id = ( SELECT auth.uid() AS uid)) AND (EXISTS ( SELECT 1
    FROM public.thread
-  WHERE ((thread.id = message.thread_id) AND ((thread.creator_id = auth.uid()) OR (thread.responder_id = auth.uid())))))));
+  WHERE ((thread.id = message.thread_id) AND ((thread.creator_id = ( SELECT auth.uid() AS uid)) OR (thread.responder_id = ( SELECT auth.uid() AS uid))))))));
 
 
 
@@ -1179,7 +1130,7 @@ with check (((sender_id = auth.uid()) AND (EXISTS ( SELECT 1
   to authenticated
 using ((EXISTS ( SELECT 1
    FROM public.thread
-  WHERE ((thread.id = message.thread_id) AND ((thread.creator_id = auth.uid()) OR (thread.responder_id = auth.uid()))))));
+  WHERE ((thread.id = message.thread_id) AND ((thread.creator_id = ( SELECT auth.uid() AS uid)) OR (thread.responder_id = ( SELECT auth.uid() AS uid)))))));
 
 
 
@@ -1188,12 +1139,12 @@ using ((EXISTS ( SELECT 1
   as permissive
   for update
   to authenticated
-using (((sender_id <> auth.uid()) AND (EXISTS ( SELECT 1
+using (((sender_id <> ( SELECT auth.uid() AS uid)) AND (EXISTS ( SELECT 1
    FROM public.thread
-  WHERE ((thread.id = message.thread_id) AND ((thread.creator_id = auth.uid()) OR (thread.responder_id = auth.uid())))))))
-with check (((sender_id <> auth.uid()) AND (EXISTS ( SELECT 1
+  WHERE ((thread.id = message.thread_id) AND ((thread.creator_id = ( SELECT auth.uid() AS uid)) OR (thread.responder_id = ( SELECT auth.uid() AS uid))))))))
+with check (((sender_id <> ( SELECT auth.uid() AS uid)) AND (EXISTS ( SELECT 1
    FROM public.thread
-  WHERE ((thread.id = message.thread_id) AND ((thread.creator_id = auth.uid()) OR (thread.responder_id = auth.uid())))))));
+  WHERE ((thread.id = message.thread_id) AND ((thread.creator_id = ( SELECT auth.uid() AS uid)) OR (thread.responder_id = ( SELECT auth.uid() AS uid))))))));
 
 
 
@@ -1205,7 +1156,7 @@ with check (((sender_id <> auth.uid()) AND (EXISTS ( SELECT 1
 with check ((EXISTS ( SELECT 1
    FROM (public.message
      JOIN public.thread ON ((thread.id = message.thread_id)))
-  WHERE ((message.id = message_image.message_id) AND (message.sender_id = auth.uid()) AND ((thread.creator_id = auth.uid()) OR (thread.responder_id = auth.uid()))))));
+  WHERE ((message.id = message_image.message_id) AND (message.sender_id = ( SELECT auth.uid() AS uid)) AND ((thread.creator_id = ( SELECT auth.uid() AS uid)) OR (thread.responder_id = ( SELECT auth.uid() AS uid)))))));
 
 
 
@@ -1217,7 +1168,7 @@ with check ((EXISTS ( SELECT 1
 using ((EXISTS ( SELECT 1
    FROM (public.message
      JOIN public.thread ON ((thread.id = message.thread_id)))
-  WHERE ((message.id = message_image.message_id) AND ((thread.creator_id = auth.uid()) OR (thread.responder_id = auth.uid()))))));
+  WHERE ((message.id = message_image.message_id) AND ((thread.creator_id = ( SELECT auth.uid() AS uid)) OR (thread.responder_id = ( SELECT auth.uid() AS uid)))))));
 
 
 
@@ -1228,7 +1179,7 @@ using ((EXISTS ( SELECT 1
   to authenticated
 using ((EXISTS ( SELECT 1
    FROM public.message
-  WHERE ((message.id = message_image.message_id) AND (message.sender_id = auth.uid())))));
+  WHERE ((message.id = message_image.message_id) AND (message.sender_id = ( SELECT auth.uid() AS uid))))));
 
 
 
@@ -1237,7 +1188,7 @@ using ((EXISTS ( SELECT 1
   as permissive
   for delete
   to authenticated
-using (((creator_id = auth.uid()) OR (responder_id = auth.uid())));
+using (((creator_id = ( SELECT auth.uid() AS uid)) OR (responder_id = ( SELECT auth.uid() AS uid))));
 
 
 
@@ -1246,7 +1197,7 @@ using (((creator_id = auth.uid()) OR (responder_id = auth.uid())));
   as permissive
   for select
   to authenticated
-using (((creator_id = auth.uid()) OR (responder_id = auth.uid())));
+using (((creator_id = ( SELECT auth.uid() AS uid)) OR (responder_id = ( SELECT auth.uid() AS uid))));
 
 
 
@@ -1255,7 +1206,7 @@ using (((creator_id = auth.uid()) OR (responder_id = auth.uid())));
   as permissive
   for insert
   to authenticated
-with check ((creator_id = auth.uid()));
+with check ((creator_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1273,7 +1224,7 @@ using ((vendor_id IS NOT NULL));
   as permissive
   for insert
   to authenticated
-with check ((id = auth.uid()));
+with check ((id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1282,8 +1233,8 @@ with check ((id = auth.uid()));
   as permissive
   for update
   to authenticated
-using ((id = auth.uid()))
-with check ((id = auth.uid()));
+using ((id = ( SELECT auth.uid() AS uid)))
+with check ((id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1301,7 +1252,7 @@ using (true);
   as permissive
   for delete
   to authenticated
-using ((user_id = auth.uid()));
+using ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1310,7 +1261,7 @@ using ((user_id = auth.uid()));
   as permissive
   for insert
   to authenticated
-with check ((user_id = auth.uid()));
+with check ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1319,8 +1270,8 @@ with check ((user_id = auth.uid()));
   as permissive
   for update
   to authenticated
-using ((user_id = auth.uid()))
-with check ((user_id = auth.uid()));
+using ((user_id = ( SELECT auth.uid() AS uid)))
+with check ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1329,7 +1280,7 @@ with check ((user_id = auth.uid()));
   as permissive
   for select
   to authenticated
-using ((user_id = auth.uid()));
+using ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1338,7 +1289,7 @@ using ((user_id = auth.uid()));
   as permissive
   for insert
   to authenticated
-with check ((user_id = auth.uid()));
+with check ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1347,7 +1298,7 @@ with check ((user_id = auth.uid()));
   as permissive
   for delete
   to authenticated
-using ((user_id = auth.uid()));
+using ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1356,8 +1307,8 @@ using ((user_id = auth.uid()));
   as permissive
   for update
   to authenticated
-using ((user_id = auth.uid()))
-with check ((user_id = auth.uid()));
+using ((user_id = ( SELECT auth.uid() AS uid)))
+with check ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 
@@ -1366,7 +1317,7 @@ with check ((user_id = auth.uid()));
   as permissive
   for select
   to authenticated
-using ((user_id = auth.uid()));
+using ((user_id = ( SELECT auth.uid() AS uid)));
 
 
 

@@ -39,17 +39,17 @@ alter table message_image enable row level security;
 create policy "Participants can view threads"
     on thread for select
     to authenticated
-    using (creator_id = auth.uid() or responder_id = auth.uid());
+    using (creator_id = (select auth.uid()) or responder_id = (select auth.uid()));
 
 create policy "Users can create threads"
     on thread for insert
     to authenticated
-    with check (creator_id = auth.uid());
+    with check (creator_id = (select auth.uid()));
 
 create policy "Participants can delete threads"
     on thread for delete
     to authenticated
-    using (creator_id = auth.uid() or responder_id = auth.uid());
+    using (creator_id = (select auth.uid()) or responder_id = (select auth.uid()));
 
 -- Message policies (thread participants only)
 create policy "Participants can view messages"
@@ -59,7 +59,7 @@ create policy "Participants can view messages"
         exists (
             select 1 from thread
             where thread.id = message.thread_id
-            and (thread.creator_id = auth.uid() or thread.responder_id = auth.uid())
+            and (thread.creator_id = (select auth.uid()) or thread.responder_id = (select auth.uid()))
         )
     );
 
@@ -67,11 +67,11 @@ create policy "Participants can send messages"
     on message for insert
     to authenticated
     with check (
-        sender_id = auth.uid()
+        sender_id = (select auth.uid())
         and exists (
             select 1 from thread
             where thread.id = message.thread_id
-            and (thread.creator_id = auth.uid() or thread.responder_id = auth.uid())
+            and (thread.creator_id = (select auth.uid()) or thread.responder_id = (select auth.uid()))
         )
     );
 
@@ -80,19 +80,19 @@ create policy "Recipients can update message read status"
     on message for update
     to authenticated
     using (
-        sender_id != auth.uid()
+        sender_id != (select auth.uid())
         and exists (
             select 1 from thread
             where thread.id = message.thread_id
-            and (thread.creator_id = auth.uid() or thread.responder_id = auth.uid())
+            and (thread.creator_id = (select auth.uid()) or thread.responder_id = (select auth.uid()))
         )
     )
     with check (
-        sender_id != auth.uid()
+        sender_id != (select auth.uid())
         and exists (
             select 1 from thread
             where thread.id = message.thread_id
-            and (thread.creator_id = auth.uid() or thread.responder_id = auth.uid())
+            and (thread.creator_id = (select auth.uid()) or thread.responder_id = (select auth.uid()))
         )
     );
 
@@ -105,7 +105,7 @@ create policy "Participants can view message images"
             select 1 from message
             join thread on thread.id = message.thread_id
             where message.id = message_image.message_id
-            and (thread.creator_id = auth.uid() or thread.responder_id = auth.uid())
+            and (thread.creator_id = (select auth.uid()) or thread.responder_id = (select auth.uid()))
         )
     );
 
@@ -117,8 +117,8 @@ create policy "Participants can insert message images"
             select 1 from message
             join thread on thread.id = message.thread_id
             where message.id = message_image.message_id
-            and message.sender_id = auth.uid()
-            and (thread.creator_id = auth.uid() or thread.responder_id = auth.uid())
+            and message.sender_id = (select auth.uid())
+            and (thread.creator_id = (select auth.uid()) or thread.responder_id = (select auth.uid()))
         )
     );
 
@@ -129,6 +129,6 @@ create policy "Senders can delete own message images"
         exists (
             select 1 from message
             where message.id = message_image.message_id
-            and message.sender_id = auth.uid()
+            and message.sender_id = (select auth.uid())
         )
     );

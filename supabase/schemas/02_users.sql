@@ -54,63 +54,59 @@ create policy "Public can view vendor profiles"
 create policy "Users can update own profile"
     on "user" for update
     to authenticated
-    using (id = auth.uid())
-    with check (id = auth.uid());
+    using (id = (select auth.uid()))
+    with check (id = (select auth.uid()));
 
 -- Users can insert their own profile (during signup)
 create policy "Users can insert own profile"
     on "user" for insert
     to authenticated
-    with check (id = auth.uid());
+    with check (id = (select auth.uid()));
 
 -- Contact info policies
--- Users can view their own contact info
-create policy "Users can view own contact info"
-    on contact_info for select
-    to authenticated
-    using (user_id = auth.uid());
-
--- Users can view public contact info (even anonymous users)
+-- Anonymous users can view public contact info
 create policy "Anyone can view public contact info"
     on contact_info for select
-    to anon, authenticated
+    to anon
     using (visibility = 'public');
+
+-- Authenticated user SELECT policy is in 08_cross_table_policies.sql
 
 -- Users can manage their own contact info
 create policy "Users can insert own contact info"
     on contact_info for insert
     to authenticated
-    with check (user_id = auth.uid());
+    with check (user_id = (select auth.uid()));
 
 create policy "Users can update own contact info"
     on contact_info for update
     to authenticated
-    using (user_id = auth.uid())
-    with check (user_id = auth.uid());
+    using (user_id = (select auth.uid()))
+    with check (user_id = (select auth.uid()));
 
 create policy "Users can delete own contact info"
     on contact_info for delete
     to authenticated
-    using (user_id = auth.uid());
+    using (user_id = (select auth.uid()));
 
 -- User settings policies (owner only)
 create policy "Users can view own settings"
     on user_settings for select
     to authenticated
-    using (user_id = auth.uid());
+    using (user_id = (select auth.uid()));
 
 create policy "Users can insert own settings"
     on user_settings for insert
     to authenticated
-    with check (user_id = auth.uid());
+    with check (user_id = (select auth.uid()));
 
 create policy "Users can update own settings"
     on user_settings for update
     to authenticated
-    using (user_id = auth.uid())
-    with check (user_id = auth.uid());
+    using (user_id = (select auth.uid()))
+    with check (user_id = (select auth.uid()));
 
 create policy "Users can delete own settings"
     on user_settings for delete
     to authenticated
-    using (user_id = auth.uid());
+    using (user_id = (select auth.uid()));
