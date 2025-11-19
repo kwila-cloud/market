@@ -12,7 +12,7 @@ Supabase for database hosting.
 
 Preview branches are set up with the GitHub integration, using the following settings:
 
-- Supabase directory: supabase
+- Supabase directory: .
 - Deploy to production: enabled
 - Production branch name: main
 - Automatic branching: enabled
