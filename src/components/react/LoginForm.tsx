@@ -37,13 +37,14 @@ export default function LoginForm() {
       });
 
       if (signInError) {
-        if (signInError.message.includes('Signups not allowed')) {
-          setError(
-            'No account found with this email. Please check your email or contact support.'
-          );
-        } else {
-          setError(signInError.message);
-        }
+        // Log the actual error for debugging, but don't expose to user
+        console.error('Sign in error:', signInError.code, signInError.message);
+
+        // Show generic error message to prevent user enumeration attacks
+        // All auth errors should look the same to the user
+        setError(
+          'Unable to sign in. Please check your email address and try again.'
+        );
         return;
       }
 
