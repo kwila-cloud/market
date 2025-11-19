@@ -66,7 +66,7 @@ export default function LoginForm() {
           Welcome back
         </h2>
         <p className="text-neutral-300 text-sm">
-          Enter your email to receive a one-time code
+          Enter your email to receive a one-time password
         </p>
       </div>
 
@@ -101,12 +101,13 @@ export default function LoginForm() {
         disabled={isLoading}
         className="w-full py-3 px-4 bg-primary hover:bg-primary-600 disabled:bg-primary/50 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-elevated"
       >
-        {isLoading ? 'Sending code...' : 'Continue with email'}
+        {isLoading ? 'Sending...' : 'Continue with email'}
       </button>
 
       <p className="text-center text-sm text-neutral-400">
-        Don&apos;t have an account?{' '}
-        <span className="text-neutral-300">
+        Don&apos;t have an account?
+        <br />
+        <span className="font-bold">
           You&apos;ll need an invite code to sign up.
         </span>
       </p>

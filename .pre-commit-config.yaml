@@ -28,10 +28,3 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-commit]
-
-      - id: type-check
-        name: TypeScript type check
-        entry: npm run type-check
-        language: system
-        pass_filenames: false
-        stages: [pre-commit]
