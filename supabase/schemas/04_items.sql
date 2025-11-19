@@ -5,7 +5,7 @@ create table item (
     id uuid primary key default uuid_generate_v4(),
     user_id uuid not null references "user"(id) on delete cascade,
     type item_type not null,
-    category_id uuid not null references category(id),
+    category_id text not null references category(id),
     title text not null,
     description text,
     price_string text,

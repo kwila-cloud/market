@@ -1,7 +1,7 @@
 -- Category table for item classification
 
 create table category (
-    id uuid primary key default uuid_generate_v4(),
+    id text primary key,
     name text not null unique,
     description text,
     created_at timestamptz not null default now()
