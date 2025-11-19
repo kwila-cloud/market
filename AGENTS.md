@@ -57,7 +57,7 @@ This is a request-driven marketplace that prioritizes relationships over profit.
   - Note: CI runs unit and E2E tests separately
 - **Database**:
   - `npm run db:types` - Generate TypeScript types from schema
-  - `npm run db:diff` - Show pending schema changes
+  - `npm run db:reset` - Reset local DB with fresh schema and seed data
 - **Direct CLI access**: Use `npx astro` or `npx supabase` for advanced operations
 
 ### Security & Best Practices
