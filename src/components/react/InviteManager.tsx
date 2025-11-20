@@ -175,15 +175,15 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
           )}
         </div>
 
-        <div className="w-full">
-          <h2 className="text-xl font-semibold text-neutral-50 mb-4">
-            History
-          </h2>
+        <div className="bg-surface-elevated border border-surface-border rounded-xl p-6 w-full">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold text-neutral-50">History</h2>
+          </div>
           {pastInvites.length === 0 ? (
             <p className="text-neutral-400">No past invites.</p>
           ) : (
-            <div className="bg-surface-elevated border border-surface-border rounded-xl overflow-hidden">
-              <table className="w-full text-left text-sm">
+            <div className="rounded-lg overflow-hidden border border-surface-border/60">
+              <table className="w-full text-left text-sm bg-surface-base">
                 <thead className="bg-surface-base text-neutral-400">
                   <tr>
                     <th className="px-6 py-3 font-medium">Code</th>
