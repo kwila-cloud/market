@@ -1,0 +1,20 @@
+---
+import Layout, { type Props as LayoutProps } from './Layout.astro';
+import Breadcrumbs, {
+  type BreadcrumbItem,
+} from '../components/astro/Breadcrumbs.astro';
+
+interface Props extends LayoutProps {
+  breadcrumbs: BreadcrumbItem[];
+}
+
+const { breadcrumbs, ...layoutProps } = Astro.props;
+---
+
+<Layout {...layoutProps}>
+  <div class="mb-8">
+    <Breadcrumbs items={breadcrumbs} class="mb-2" />
+    <slot name="heading" />
+  </div>
+  <slot />
+</Layout>

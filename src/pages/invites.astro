@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import PageLayoutWithBreadcrumbs from '../layouts/PageLayoutWithBreadcrumbs.astro';
 import InviteManager from '../components/react/InviteManager';
 import { createSupabaseServerClient } from '../lib/auth';
 
@@ -28,23 +28,22 @@ if (error) {
 }
 ---
 
-<Layout title="Manage Invites">
-  <div class="max-w-3xl mx-auto">
-    <div class="mb-8">
-      <div class="flex items-center gap-2 text-sm text-neutral-400 mb-2">
-        <a href="/dashboard" class="hover:text-primary-400 transition-colors"
-          >Dashboard</a
-        >
-        <span>/</span>
-        <span class="text-neutral-200">Invites</span>
-      </div>
-      <h1 class="text-3xl font-bold text-neutral-50">Manage Invites</h1>
-      <p class="text-neutral-400 mt-2">
-        Invite friends and trusted connections to join the marketplace. You can
-        generate one new invite code every 24 hours.
-      </p>
-    </div>
+<PageLayoutWithBreadcrumbs
+  title="Manage Invites"
+  breadcrumbs={[
+    { label: 'Dashboard', href: '/dashboard' },
+    { label: 'Invites' },
+  ]}
+>
+  <div slot="heading">
+    <h1 class="text-3xl font-bold text-neutral-50">Manage Invites</h1>
+    <p class="text-neutral-400 mt-2">
+      Invite friends and trusted connections to join the marketplace. You can
+      generate one new invite code every 24 hours.
+    </p>
+  </div>
 
+  <div class="max-w-3xl mx-auto">
     <InviteManager client:load initialInvites={invites || []} />
   </div>
-</Layout>
+</PageLayoutWithBreadcrumbs>
