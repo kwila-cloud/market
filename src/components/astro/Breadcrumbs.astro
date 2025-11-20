@@ -11,28 +11,39 @@ export interface Props {
 
 const { items = [], class: className = '' } = Astro.props;
 ---
-{items.length > 0 && (
-  <nav
-    class={`flex items-center gap-2 text-sm text-neutral-400 ${className}`}
-    aria-label="Breadcrumb"
-  >
-    <ol class="flex items-center gap-2">
-      {items.map((item, index) => {
-        const isLast = index === items.length - 1;
 
-        return (
-          <li class="flex items-center gap-2" aria-current={isLast ? 'page' : undefined}>
-            {item.href && !isLast ? (
-              <a href={item.href} class="hover:text-primary-400 transition-colors">
-                {item.label}
-              </a>
-            ) : (
-              <span class={isLast ? 'text-neutral-200' : ''}>{item.label}</span>
-            )}
-            {!isLast && <span>/</span>}
-          </li>
-        );
-      })}
-    </ol>
-  </nav>
-)}
+{
+  items.length > 0 && (
+    <nav
+      class={`flex items-center gap-2 text-sm text-neutral-400 ${className}`}
+      aria-label="Breadcrumb"
+    >
+      <ol class="flex items-center gap-2">
+        {items.map((item, index) => {
+          const isLast = index === items.length - 1;
+
+          return (
+            <li
+              class="flex items-center gap-2"
+              aria-current={isLast ? 'page' : undefined}
+            >
+              {item.href && !isLast ? (
+                <a
+                  href={item.href}
+                  class="hover:text-primary-400 transition-colors"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <span class={isLast ? 'text-neutral-200' : ''}>
+                  {item.label}
+                </span>
+              )}
+              {!isLast && <span>/</span>}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  )
+}
