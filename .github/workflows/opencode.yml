@@ -18,8 +18,9 @@ jobs:
       (
         github.event.comment.author_association == 'OWNER' ||
         github.event.comment.author_association == 'MEMBER'
-      )
+       )
     runs-on: ubuntu-latest
+    retry: 2
     permissions:
       id-token: write
       # Allow updating code
