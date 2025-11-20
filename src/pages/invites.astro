@@ -1,6 +1,7 @@
 ---
 import PageLayoutWithBreadcrumbs from '../layouts/PageLayoutWithBreadcrumbs.astro';
 import InviteManager from '../components/react/InviteManager';
+import PageHeader from '../components/astro/PageHeader.astro';
 import { createSupabaseServerClient } from '../lib/auth';
 
 // Auth check handled by middleware, but we need user for data fetching
@@ -35,13 +36,11 @@ if (error) {
     { label: 'Invites' },
   ]}
 >
-  <div slot="heading">
-    <h1 class="text-3xl font-bold text-neutral-50">Manage Invites</h1>
-    <p class="text-neutral-400 mt-2">
-      Invite friends and trusted connections to join the marketplace. You can
-      generate one new invite code every 24 hours.
-    </p>
-  </div>
+  <PageHeader
+    slot="heading"
+    title="Manage Invites"
+    description="Invite trusted connections to join the marketplace. You can generate one new invite code every 24 hours."
+  />
 
   <InviteManager client:load initialInvites={invites || []} />
 </PageLayoutWithBreadcrumbs>

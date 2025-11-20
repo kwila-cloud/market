@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LogoutButton from '../components/react/LogoutButton';
+import PageHeader from '../components/astro/PageHeader.astro';
 
 // User is set by middleware for protected routes
 const user = Astro.locals.user;
@@ -17,10 +18,13 @@ const createdAt = user?.created_at
 
 <Layout title="Dashboard">
   <div class="max-w-2xl mx-auto">
-    <div class="flex items-center justify-between mb-8">
-      <h1 class="text-3xl font-bold text-neutral-50">Dashboard</h1>
-      <LogoutButton client:load />
-    </div>
+    <PageHeader
+      class="mb-8"
+      title="Dashboard"
+      description="Your account overview. We'll keep adding tools as the marketplace grows."
+    >
+      <LogoutButton slot="action" client:load />
+    </PageHeader>
 
     <div
       class="bg-surface-elevated border border-surface-border rounded-xl p-6 space-y-6"
@@ -94,15 +98,6 @@ const createdAt = user?.created_at
             </div>
           </a>
         </div>
-      </div>
-
-      <hr class="border-surface-border" />
-
-      <div>
-        <p class="text-sm text-neutral-400">
-          This is a basic dashboard for authenticated users. More features will
-          be added as development progresses.
-        </p>
       </div>
     </div>
   </div>
