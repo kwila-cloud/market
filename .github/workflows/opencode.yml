@@ -6,15 +6,19 @@ on:
 
 jobs:
   opencode:
+    # Only allow repository owners to trigger this job.
     if: |
-      contains(github.event.comment.body, ' /oc') ||
-      startsWith(github.event.comment.body, '/oc') ||
-      contains(github.event.comment.body, ' /opencode') ||
-      startsWith(github.event.comment.body, '/opencode')
+      (
+        contains(github.event.comment.body, ' /oc') ||
+        startsWith(github.event.comment.body, '/oc') ||
+        contains(github.event.comment.body, ' /opencode') ||
+        startsWith(github.event.comment.body, '/opencode')
+      ) && github.event.comment.author_association == 'OWNER'
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      contents: read
+      # Allow updating code
+      contents: write
       pull-requests: read
       issues: read
     steps:
