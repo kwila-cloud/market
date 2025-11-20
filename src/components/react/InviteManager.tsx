@@ -32,6 +32,7 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
     try {
       const res = await fetch('/api/invites/create', {
         method: 'POST',
+        credentials: 'include',
       });
 
       if (!res.ok) {
@@ -62,6 +63,7 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ inviteId }),
+        credentials: 'include',
       });
 
       if (!res.ok) {
