@@ -4,11 +4,6 @@ on:
   issue_comment:
     types: [created]
 
-permissions:
-  contents: write # prevents non-writers from committing
-  pull-requests: write
-  issues: write
-
 jobs:
   opencode:
     if: |
