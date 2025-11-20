@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import LogoutButton from '../components/react/LogoutButton';
 import PageHeader from '../components/astro/PageHeader.astro';
+import Card from '../components/react/Card';
 
 // User is set by middleware for protected routes
 const user = Astro.locals.user;
@@ -25,46 +26,8 @@ const createdAt = user?.created_at
     <LogoutButton slot="action" client:load />
   </PageHeader>
 
-  <div
-    class="bg-surface-elevated border border-surface-border rounded-xl p-6 space-y-6"
-  >
-    <div>
-      <h2 class="text-lg font-semibold text-neutral-50 mb-4">
-        Account Information
-      </h2>
-      <dl class="space-y-4">
-        <div>
-          <dt class="text-sm text-neutral-400">Email</dt>
-          <dd class="text-neutral-100 mt-1">{user?.email || 'Not set'}</dd>
-        </div>
-        <div>
-          <dt class="text-sm text-neutral-400">User ID</dt>
-          <dd class="text-neutral-100 mt-1 font-mono text-sm">
-            {user?.id || 'Unknown'}
-          </dd>
-        </div>
-        <div>
-          <dt class="text-sm text-neutral-400">Account Created</dt>
-          <dd class="text-neutral-100 mt-1">{createdAt}</dd>
-        </div>
-        <div>
-          <dt class="text-sm text-neutral-400">Last Sign In</dt>
-          <dd class="text-neutral-100 mt-1">
-            {
-              user?.last_sign_in_at
-                ? new Date(user.last_sign_in_at).toLocaleString('en-US', {
-                    dateStyle: 'medium',
-                    timeStyle: 'short',
-                  })
-                : 'Unknown'
-            }
-          </dd>
-        </div>
-      </dl>
-    </div>
-
-    <div>
-      <h2 class="text-lg font-semibold text-neutral-50 mb-4">Quick Actions</h2>
+  <div class="space-y-6">
+    <Card title="Quick Actions">
       <div class="grid grid-cols-1 gap-4">
         <a
           href="/invites"
@@ -95,6 +58,38 @@ const createdAt = user?.created_at
           </div>
         </a>
       </div>
-    </div>
+    </Card>
+
+    <Card title="Account Information">
+      <dl class="space-y-4">
+        <div>
+          <dt class="text-sm text-neutral-400">Email</dt>
+          <dd class="text-neutral-100 mt-1">{user?.email || 'Not set'}</dd>
+        </div>
+        <div>
+          <dt class="text-sm text-neutral-400">User ID</dt>
+          <dd class="text-neutral-100 mt-1 font-mono text-sm">
+            {user?.id || 'Unknown'}
+          </dd>
+        </div>
+        <div>
+          <dt class="text-sm text-neutral-400">Account Created</dt>
+          <dd class="text-neutral-100 mt-1">{createdAt}</dd>
+        </div>
+        <div>
+          <dt class="text-sm text-neutral-400">Last Sign In</dt>
+          <dd class="text-neutral-100 mt-1">
+            {
+              user?.last_sign_in_at
+                ? new Date(user.last_sign_in_at).toLocaleString('en-US', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short',
+                  })
+                : 'Unknown'
+            }
+          </dd>
+        </div>
+      </dl>
+    </Card>
   </div>
 </Layout>
