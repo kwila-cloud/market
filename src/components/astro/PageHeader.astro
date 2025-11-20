@@ -17,9 +17,11 @@ const hasAction = Astro.slots.has('action');
     {description && <p class="text-neutral-400 mt-2">{description}</p>}
   </div>
 
-  {hasAction && (
-    <div class="flex items-center justify-start sm:justify-end">
-      <slot name="action" />
-    </div>
-  )}
+  {
+    hasAction && (
+      <div class="flex items-center justify-start sm:justify-end">
+        <slot name="action" />
+      </div>
+    )
+  }
 </div>
