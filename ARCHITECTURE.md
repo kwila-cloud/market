@@ -300,7 +300,6 @@ Every feature should support both power users and those who rank low on the "tec
 1. If < 24 hours: shows limit message
 1. If eligible: generates 8-character code
 1. Creates invite record
-1. Returns link: `/signup?code=CODE`
 1. User can revoke anytime (sets revoked_at)
 
 ## Site Structure

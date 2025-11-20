@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from './Button';
 import type { Tables } from '../../lib/database.types';
 import { createSupabaseBrowserClient } from '../../lib/auth';
 
@@ -118,7 +119,7 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
         await navigator.share({
           title: 'Join Market',
           text: `Join me on Market! Use my invite code: ${code}`,
-          url: window.location.origin + '/auth/login', // Or a signup specific page if it existed
+          url: window.location.origin + '/auth/signup?code=' + code,
         });
       } catch (err) {
         console.error('Error sharing:', err);
@@ -136,13 +137,9 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
             <h2 className="text-xl font-semibold text-neutral-50">
               Active Invites
             </h2>
-            <button
-              onClick={createInvite}
-              disabled={loading}
-              className="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+            <Button onClick={createInvite} disabled={loading}>
               {loading ? 'Creating...' : 'Create Invite'}
-            </button>
+            </Button>
           </div>
 
           {error && (
@@ -171,24 +168,27 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
                   </div>
 
                   <div className="flex gap-2">
-                    <button
+                    <Button
+                      variant="neutral"
                       onClick={() => copyCode(invite.invite_code)}
-                      className="px-3 py-1.5 text-sm font-medium text-neutral-300 bg-neutral-800 hover:bg-neutral-700 rounded-md transition-colors"
+                      className="px-3 py-1.5"
                     >
                       Copy
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                      variant="neutral"
                       onClick={() => shareCode(invite.invite_code)}
-                      className="px-3 py-1.5 text-sm font-medium text-neutral-300 bg-neutral-800 hover:bg-neutral-700 rounded-md transition-colors"
+                      className="px-3 py-1.5"
                     >
                       Share
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                      variant="secondary"
                       onClick={() => revokeInvite(invite.id)}
-                      className="px-3 py-1.5 text-sm font-medium text-red-400 bg-red-900/20 hover:bg-red-900/40 rounded-md transition-colors"
+                      className="px-3 py-1.5"
                     >
                       Revoke
-                    </button>
+                    </Button>
                   </div>
                 </div>
               ))}
