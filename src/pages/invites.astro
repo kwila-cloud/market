@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import InviteManager from '../components/react/InviteManager';
+import { createSupabaseServerClient } from '../lib/auth';
+
+// Auth check handled by middleware, but we need user for data fetching
+const user = Astro.locals.user;
+
+if (!user) {
+  return Astro.redirect('/auth/login');
+}
+
+const supabase = createSupabaseServerClient(Astro.cookies);
+
+// Fetch user's invites
+const { data: invites, error } = await supabase
+  .from('invite')
+  .select('*')
+  .eq('inviter_id', user.id)
+  .order('created_at', { ascending: false });
+
+if (error) {
+  console.error('Error fetching invites:', error);
+}
+---
+
+<Layout title="Manage Invites">
+  <div class="max-w-3xl mx-auto">
+    <div class="mb-8">
+      <div class="flex items-center gap-2 text-sm text-neutral-400 mb-2">
+        <a href="/dashboard" class="hover:text-primary-400 transition-colors"
+          >Dashboard</a
+        >
+        <span>/</span>
+        <span class="text-neutral-200">Invites</span>
+      </div>
+      <h1 class="text-3xl font-bold text-neutral-50">Manage Invites</h1>
+      <p class="text-neutral-400 mt-2">
+        Invite friends and trusted connections to join the marketplace. You can
+        generate one new invite code every 24 hours.
+      </p>
+    </div>
+
+    <InviteManager client:load initialInvites={invites || []} />
+  </div>
+</Layout>
