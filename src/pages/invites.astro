@@ -11,9 +11,11 @@ if (!user) {
   return Astro.redirect('/auth/login');
 }
 
+const cookieHeader = Astro.request.headers.get('cookie');
+
 const supabase = createSupabaseServerClient(
   Astro.cookies,
-  undefined,
+  cookieHeader,
   undefined
 );
 

@@ -4,7 +4,7 @@ import type {
   ReactNode,
 } from 'react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'neutral';
+export type ButtonVariant = 'primary' | 'secondary' | 'neutral' | 'danger';
 
 type BaseProps = {
   variant?: ButtonVariant;
@@ -32,6 +32,8 @@ const variantStyles: Record<ButtonVariant, string> = {
     'bg-secondary hover:bg-secondary-600 text-white focus:ring-secondary focus:ring-offset-surface-elevated',
   neutral:
     'bg-surface-border hover:bg-surface-elevated text-neutral-200 focus:ring-neutral-500 focus:ring-offset-surface',
+  danger:
+    'bg-error hover:bg-error-600 text-white focus:ring-error focus:ring-offset-surface',
 };
 
 export default function Button(props: ButtonProps) {

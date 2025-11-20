@@ -17,18 +17,29 @@ export function createSupabaseServerClient(
   cookieHeader?: string | null,
   authHeader?: string | null
 ) {
+  const formatCookies = (
+    cookieList: { name: string; value: string | undefined }[]
+  ) =>
+    cookieList
+      .filter(
+        (cookie): cookie is { name: string; value: string } =>
+          typeof cookie.value === 'string'
+      )
+      .map((cookie) => ({ name: cookie.name, value: cookie.value }));
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const config: any = {
     cookies: {
       getAll() {
-        const parsed = parseCookieHeader(cookieHeader ?? '');
-        // Filter out cookies without values and ensure type safety
-        return parsed
-          .filter(
-            (cookie): cookie is { name: string; value: string } =>
-              cookie.value !== undefined
-          )
-          .map((cookie) => ({ name: cookie.name, value: cookie.value }));
+        if (cookieHeader) {
+          return formatCookies(parseCookieHeader(cookieHeader));
+        }
+
+        const astroCookies = cookies
+          .getAll()
+          .map(({ name, value }) => ({ name, value }));
+
+        return formatCookies(astroCookies);
       },
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setAll(cookiesToSet: any) {

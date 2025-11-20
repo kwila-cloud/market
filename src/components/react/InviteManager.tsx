@@ -54,7 +54,7 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
       }
 
       const newInvite = await res.json();
-      setInvites([newInvite, ...invites]);
+      setInvites((prev) => [newInvite, ...prev]);
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -94,10 +94,8 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
       }
 
       const updatedInvite = await res.json();
-      setInvites(
-        invites.map((inv) =>
-          inv.id === updatedInvite.id ? updatedInvite : inv
-        )
+      setInvites((prev) =>
+        prev.map((inv) => (inv.id === updatedInvite.id ? updatedInvite : inv))
       );
     } catch (err) {
       if (err instanceof Error) {
@@ -108,9 +106,14 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
     }
   };
 
-  const copyCode = (code: string) => {
-    navigator.clipboard.writeText(code);
-    alert('Invite code copied to clipboard!');
+  const copyCode = async (code: string) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      alert('Invite code copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy invite code:', err);
+      alert('Failed to copy invite code. Please try again.');
+    }
   };
 
   const shareCode = async (code: string) => {
@@ -125,7 +128,7 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
         console.error('Error sharing:', err);
       }
     } else {
-      copyCode(code);
+      await copyCode(code);
     }
   };
 
@@ -143,7 +146,7 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
           </div>
 
           {error && (
-            <div className="bg-red-900/30 border border-red-800 text-red-200 p-4 rounded-lg mb-4">
+            <div className="bg-error/20 border border-error p-4 rounded-lg mb-4">
               {error}
             </div>
           )}
@@ -176,14 +179,14 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
                       Copy
                     </Button>
                     <Button
-                      variant="neutral"
+                      variant="primary"
                       onClick={() => shareCode(invite.invite_code)}
                       className="px-3 py-1.5"
                     >
                       Share
                     </Button>
                     <Button
-                      variant="secondary"
+                      variant="danger"
                       onClick={() => revokeInvite(invite.id)}
                       className="px-3 py-1.5"
                     >
