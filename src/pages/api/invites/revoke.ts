@@ -2,7 +2,8 @@ import type { APIRoute } from 'astro';
 import { createSupabaseServerClient } from '../../../lib/auth';
 
 export const POST: APIRoute = async ({ request, cookies }) => {
-  const supabase = createSupabaseServerClient(cookies);
+  const authHeader = request.headers.get('Authorization');
+  const supabase = createSupabaseServerClient(cookies, undefined, authHeader);
 
   // Get current user
   const {

@@ -14,9 +14,11 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
  */
 export function createSupabaseServerClient(
   cookies: AstroCookies,
-  cookieHeader?: string | null
+  cookieHeader?: string | null,
+  authHeader?: string | null
 ) {
-  return createServerClient(supabaseUrl, supabaseAnonKey, {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const config: any = {
     cookies: {
       getAll() {
         const parsed = parseCookieHeader(cookieHeader ?? '');
@@ -28,7 +30,8 @@ export function createSupabaseServerClient(
           )
           .map((cookie) => ({ name: cookie.name, value: cookie.value }));
       },
-      setAll(cookiesToSet) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setAll(cookiesToSet: any) {
         for (const { name, value, options } of cookiesToSet) {
           cookies.set(name, value, {
             path: '/',
@@ -40,7 +43,17 @@ export function createSupabaseServerClient(
         }
       },
     },
-  });
+  };
+
+  if (authHeader) {
+    config.global = {
+      headers: {
+        Authorization: authHeader,
+      },
+    };
+  }
+
+  return createServerClient(supabaseUrl, supabaseAnonKey, config);
 }
 
 /**
@@ -58,7 +71,7 @@ export async function getSession(
   cookies: AstroCookies,
   cookieHeader?: string | null
 ) {
-  const supabase = createSupabaseServerClient(cookies, cookieHeader);
+  const supabase = createSupabaseServerClient(cookies, cookieHeader, undefined);
   const {
     data: { session },
     error,
@@ -80,7 +93,7 @@ export async function getUser(
   cookies: AstroCookies,
   cookieHeader?: string | null
 ) {
-  const supabase = createSupabaseServerClient(cookies, cookieHeader);
+  const supabase = createSupabaseServerClient(cookies, cookieHeader, undefined);
   const {
     data: { user },
     error,

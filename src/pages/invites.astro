@@ -10,7 +10,11 @@ if (!user) {
   return Astro.redirect('/auth/login');
 }
 
-const supabase = createSupabaseServerClient(Astro.cookies);
+const supabase = createSupabaseServerClient(
+  Astro.cookies,
+  undefined,
+  undefined
+);
 
 // Fetch user's invites
 const { data: invites, error } = await supabase

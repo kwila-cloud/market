@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { Tables } from '../../lib/database.types';
+import { createSupabaseBrowserClient } from '../../lib/auth';
 
 type Invite = Tables<'invite'>;
 
@@ -30,9 +31,20 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
     setLoading(true);
     setError(null);
     try {
+      const supabase = createSupabaseBrowserClient();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error('You must be logged in to create invites');
+      }
+
       const res = await fetch('/api/invites/create', {
         method: 'POST',
-        credentials: 'include',
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
       });
 
       if (!res.ok) {
@@ -57,13 +69,22 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
     if (!confirm('Are you sure you want to revoke this invite code?')) return;
 
     try {
+      const supabase = createSupabaseBrowserClient();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error('You must be logged in to revoke invites');
+      }
+
       const res = await fetch('/api/invites/revoke', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({ inviteId }),
-        credentials: 'include',
       });
 
       if (!res.ok) {
