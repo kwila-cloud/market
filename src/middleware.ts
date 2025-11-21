@@ -1,5 +1,10 @@
 import { defineMiddleware } from 'astro:middleware';
-import { getUser, publicRoutes, authRoutes } from './lib/auth';
+import {
+  getUser,
+  publicRoutes,
+  authRoutes,
+  createSupabaseServerClient,
+} from './lib/auth';
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const { pathname } = context.url;
@@ -23,6 +28,25 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   // Store user in locals for access in pages
   context.locals.user = user;
+
+  // Check if authenticated user has completed signup (has public user record)
+  if (user && pathname !== '/auth/welcome') {
+    const supabase = createSupabaseServerClient(context.cookies, cookieHeader);
+
+    // Call the get_user_by_auth_id RPC to check if user profile exists
+    const { data: userId, error } = await supabase.rpc('get_user_by_auth_id', {
+      p_auth_user_id: user.id,
+    });
+
+    if (error) {
+      console.error('Error checking user profile:', error);
+    }
+
+    // If no user profile exists, redirect to welcome/onboarding page
+    if (!userId) {
+      return context.redirect('/auth/welcome');
+    }
+  }
 
   // Redirect to login if accessing protected route without auth
   if (!isPublicRoute && !user) {
