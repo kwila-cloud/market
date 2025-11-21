@@ -1,21 +1,47 @@
 import type { APIRoute } from 'astro';
-import { createSupabaseServerClient } from '../../../lib/auth';
+import {
+  createSupabaseServerClient,
+  createSupabaseWithJWT,
+} from '../../../lib/auth';
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   const authHeader = request.headers.get('Authorization');
-  const supabase = createSupabaseServerClient(cookies, undefined, authHeader);
 
-  // Get current user
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
+  // Extract token from Authorization header
+  const token = authHeader?.replace('Bearer ', '');
 
-  if (userError || !user) {
+  if (!token) {
+    console.error('[API] No token found in Authorization header');
     return new Response(JSON.stringify({ error: 'Unauthorized' }), {
       status: 401,
     });
   }
+
+  // Create a temporary client to validate the token
+  const tempSupabase = createSupabaseServerClient(cookies, undefined);
+
+  // Get current user - pass the token directly to getUser()
+  const {
+    data: { user },
+    error: userError,
+  } = await tempSupabase.auth.getUser(token);
+
+  if (userError) {
+    console.error('[API] Auth error:', userError.message);
+    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
+    });
+  }
+
+  if (!user) {
+    console.error('[API] No user found after authentication');
+    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
+    });
+  }
+
+  // Create a new Supabase client with the JWT token for RLS context
+  const supabase = createSupabaseWithJWT(token);
 
   try {
     const body = await request.json();

@@ -379,7 +379,7 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
                           className={`inline-flex items-center px-4 py-1 rounded-full text-xs font-bold border ${
                             status === 'Used'
                               ? 'border-primary-700 text-primary-400'
-                              : 'border-neutral-700 text-neutral-400'
+                              : 'border-neutral-500 text-neutral-400'
                           }`}
                         >
                           {status}
