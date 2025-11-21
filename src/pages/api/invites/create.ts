@@ -1,10 +1,7 @@
 import type { APIRoute } from 'astro';
-import {
-  createSupabaseServerClient,
-  createSupabaseWithJWT,
-} from '../../../lib/auth';
+import { createSupabaseWithJWT } from '../../../lib/auth';
 
-export const POST: APIRoute = async ({ cookies, request }) => {
+export const POST: APIRoute = async ({ request }) => {
   const authHeader = request.headers.get('Authorization');
 
   // Extract token from Authorization header
@@ -17,14 +14,14 @@ export const POST: APIRoute = async ({ cookies, request }) => {
     });
   }
 
-  // Create a temporary client to validate the token
-  const tempSupabase = createSupabaseServerClient(cookies, undefined);
+  // Create a Supabase client with the JWT token for authentication and RLS context
+  const supabase = createSupabaseWithJWT(token);
 
-  // Get current user - pass the token directly to getUser()
+  // Validate the token and get current user
   const {
     data: { user },
     error: userError,
-  } = await tempSupabase.auth.getUser(token);
+  } = await supabase.auth.getUser(token);
 
   if (userError) {
     console.error('[API] Auth error:', userError.message);
@@ -39,9 +36,6 @@ export const POST: APIRoute = async ({ cookies, request }) => {
       status: 401,
     });
   }
-
-  // Create a new Supabase client with the JWT token for RLS context
-  const supabase = createSupabaseWithJWT(token);
 
   // Check if user exists in user table
   const { data: dbUser, error: dbUserError } = await supabase
@@ -101,7 +95,7 @@ export const POST: APIRoute = async ({ cookies, request }) => {
     if (recentInvites && recentInvites.length > 0) {
       return new Response(
         JSON.stringify({
-          error: 'You can only create one invite code every 24 hours.',
+          error: 'You can only generate one invite code every 24 hours.',
         }),
         { status: 429 }
       );
