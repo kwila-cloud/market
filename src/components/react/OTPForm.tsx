@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { createSupabaseBrowserClient } from '../../lib/auth';
 import Button from './Button';
 import ErrorAlert from './ErrorAlert';
+import Card from './Card';
 
 const otpSchema = z.object({
   code: z
@@ -155,83 +156,82 @@ export default function OTPForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-neutral-50 mb-2">
-          Check your email
-        </h2>
-        <p className="text-neutral-300 text-sm">
-          We sent a 6-digit code to{' '}
-          <span className="font-medium text-neutral-100">{email}</span>
-        </p>
-      </div>
-
-      {error && <ErrorAlert message={error} />}
-
-      <div>
-        <label
-          htmlFor="otp-input-0"
-          className="block text-sm font-medium text-neutral-200 mb-3"
-        >
-          Verification code
-        </label>
-        <div className="flex gap-2 justify-center" onPaste={handlePaste}>
-          {[0, 1, 2, 3, 4, 5].map((index) => (
-            <input
-              key={index}
-              id={`otp-input-${index}`}
-              ref={(el) => {
-                inputRefs.current[index] = el;
-              }}
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              value={codeValue[index] || ''}
-              onChange={(e) => handleCodeChange(index, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(index, e)}
-              className="w-12 h-14 text-center text-xl font-mono bg-surface border border-surface-border rounded-lg text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-              aria-label={`Digit ${index + 1} of 6`}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus={index === 0}
-            />
-          ))}
-        </div>
-        {errors.code && (
-          <p className="mt-2 text-sm text-red-400 text-center">
-            {errors.code.message}
+    <div className="w-full max-w-2xl mx-auto">
+      <Card title="Check your email">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <p className="text-neutral-300 text-sm">
+            We sent a 6-digit code to{' '}
+            <span className="font-medium text-neutral-100">{email}</span>
           </p>
-        )}
-      </div>
 
-      <Button
-        type="submit"
-        fullWidth
-        disabled={isLoading || codeValue.length !== 6}
-      >
-        {isLoading ? 'Verifying...' : 'Verify code'}
-      </Button>
+          {error && <ErrorAlert message={error} />}
 
-      <div className="text-center">
-        <button
-          type="button"
-          onClick={handleResend}
-          disabled={resendCooldown > 0 || isLoading}
-          className="text-sm text-primary hover:text-primary-400 disabled:text-neutral-500 disabled:cursor-not-allowed transition-colors"
-        >
-          {resendCooldown > 0
-            ? `Resend code in ${resendCooldown}s`
-            : "Didn't receive code? Resend"}
-        </button>
-      </div>
+          <div>
+            <label
+              htmlFor="otp-input-0"
+              className="block text-sm font-medium text-neutral-200 mb-3"
+            >
+              Verification code
+            </label>
+            <div className="flex gap-2 justify-center" onPaste={handlePaste}>
+              {[0, 1, 2, 3, 4, 5].map((index) => (
+                <input
+                  key={index}
+                  id={`otp-input-${index}`}
+                  ref={(el) => {
+                    inputRefs.current[index] = el;
+                  }}
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={1}
+                  value={codeValue[index] || ''}
+                  onChange={(e) => handleCodeChange(index, e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(index, e)}
+                  className="w-12 h-14 text-center text-xl font-mono bg-surface border border-surface-border rounded-lg text-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                  aria-label={`Digit ${index + 1} of 6`}
+                  // eslint-disable-next-line jsx-a11y/no-autofocus
+                  autoFocus={index === 0}
+                />
+              ))}
+            </div>
+            {errors.code && (
+              <p className="mt-2 text-sm text-red-400 text-center">
+                {errors.code.message}
+              </p>
+            )}
+          </div>
 
-      <div className="text-center">
-        <a
-          href="/auth/login"
-          className="text-sm text-neutral-400 hover:text-neutral-300 transition-colors"
-        >
-          Use a different email
-        </a>
-      </div>
-    </form>
+          <Button
+            type="submit"
+            fullWidth
+            disabled={isLoading || codeValue.length !== 6}
+          >
+            {isLoading ? 'Verifying...' : 'Verify code'}
+          </Button>
+
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={handleResend}
+              disabled={resendCooldown > 0 || isLoading}
+              className="text-sm text-primary hover:text-primary-400 disabled:text-neutral-500 disabled:cursor-not-allowed transition-colors"
+            >
+              {resendCooldown > 0
+                ? `Resend code in ${resendCooldown}s`
+                : "Didn't receive code? Resend"}
+            </button>
+          </div>
+
+          <div className="text-center">
+            <a
+              href="/auth/login"
+              className="text-sm text-neutral-400 hover:text-neutral-300 transition-colors"
+            >
+              Use a different email
+            </a>
+          </div>
+        </form>
+      </Card>
+    </div>
   );
 }
