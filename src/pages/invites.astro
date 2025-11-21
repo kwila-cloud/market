@@ -13,11 +13,7 @@ if (!user) {
 
 const cookieHeader = Astro.request.headers.get('cookie');
 
-const supabase = createSupabaseServerClient(
-  Astro.cookies,
-  cookieHeader,
-  undefined
-);
+const supabase = createSupabaseServerClient(Astro.cookies, cookieHeader);
 
 // Fetch user's invites
 const { data: invites, error } = await supabase
