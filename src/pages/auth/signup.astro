@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SignupForm from '../../components/react/SignupForm';
+
+const title = 'Sign Up';
+---
+
+<Layout title={title}>
+  <div class="min-h-screen flex items-center justify-center px-4">
+    <div class="w-full max-w-md">
+      <div
+        class="bg-surface-elevated border border-surface-border rounded-2xl p-8 shadow-lg"
+      >
+        <SignupForm client:load />
+      </div>
+    </div>
+  </div>
+</Layout>
