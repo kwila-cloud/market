@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from './Button';
 import Card from './Card';
+import ErrorAlert from './ErrorAlert';
 import type { Tables } from '../../lib/database.types';
 import { createSupabaseBrowserClient } from '../../lib/auth';
 import { platformName } from '../../lib/globals';
@@ -253,11 +254,7 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
                 </div>
               </div>
 
-              {error && (
-                <div className="bg-error/20 border border-error p-4 rounded-lg">
-                  {error}
-                </div>
-              )}
+              {error && <ErrorAlert message={error} />}
 
               <div className="flex space-x-3">
                 <Button

@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import OnboardingWizard from '../../components/react/OnboardingWizard';
+
+const title = 'Welcome';
+---
+
+<Layout title={title}>
+  <OnboardingWizard client:load />
+</Layout>
