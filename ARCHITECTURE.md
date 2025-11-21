@@ -10,9 +10,9 @@ A trust-based, invite-only marketplace built with Astro, React, and Supabase. Us
 
 All infrastructure defined as code:
 
-- **Supabase**: Database schema via SQL migrations, RLS policies in migrations
+- **Supabase**: Database schema via declarative SQL files in `supabase/schemas/`, migrations auto-generated via `supabase db diff`
 - **Cloudflare**: Workers config in `wrangler.toml`, environment variables in `.dev.vars`
-- **Benefits**: Version controlled, reproducible, reviewable, no manual dashboard configuration
+- **Benefits**: Version controlled, reproducible, reviewable, no manual dashboard configuration, single source of truth
 
 ### 2. Local Development Parity
 
@@ -55,9 +55,9 @@ Every feature should support both power users and those who rank low on the "tec
 
 - **Database**: Supabase (PostgreSQL)
 - **Authentication**: Supabase Auth (email/phone OTP via Twilio)
-- **Storage**: Supabase Storage (single bucket)
+- **Storage**: Supabase Storage (images bucket with structured folders: avatars/, items/, messages/)
 - **Real-time**: Supabase Realtime
-- **API**: Supabase REST + PostgREST with RLS
+- **API**: Supabase REST + PostgREST with RLS, Custom API routes with JWT authentication
 
 ### Deployment
 
@@ -83,173 +83,7 @@ Every feature should support both power users and those who rank low on the "tec
 
 ## Database Schema
 
-### user
-
-- id (uuid, pk)
-- display_name (text)
-- about (text)
-- avatar_url (text)
-- vendor_id (text, unique, nullable) -- alphanumeric + underscore/dash
-- created_at (timestamp)
-- invited_by (uuid, fk -> user.id)
-
-### contact_info
-
-- id (uuid, pk)
-- user_id (uuid, fk -> user.id)
-- contact_type (enum: email|phone)
-- value (text)
-- visibility (enum: hidden|connections-only|public)
-- created_at (timestamp)
-
-### user_settings
-
-- id (uuid, pk)
-- user_id (uuid, fk -> user.id)
-- setting_key (text)
-- setting_value (jsonb)
-- created_at (timestamp)
-- updated_at (timestamp)
-
-### category
-
-- id (uuid, pk)
-- name (text) -- new, resale, service
-- description (text)
-- created_at (timestamp)
-
-### item
-
-- id (uuid, pk)
-- user_id (uuid, fk -> user.id)
-- type (enum: buy|sell)
-- category_id (uuid, fk -> category.id)
-- title (text)
-- description (text)
-- price_string (text) -- price or budget
-- visibility (enum: hidden|connections-only|public)
-- status (enum: active|archived|deleted)
-- created_at (timestamp)
-- updated_at (timestamp)
-
-### item_image
-
-- id (uuid, pk)
-- item_id (uuid, fk -> item.id)
-- url (text)
-- alt_text (text)
-- order_index (integer)
-- created_at (timestamp)
-
-### watch
-
-- id (uuid, pk)
-- name (text)
-- query_params (text)
-- notify (uuid, fk -> contact_info.id, nullable)
-
-### connection
-
-- id (uuid, pk)
-- user_a (uuid, fk -> user.id) -- requester
-- user_b (uuid, fk -> user.id) -- recipient
-- status (enum: pending|accepted|declined)
-- created_at (timestamp)
-- unique(user_a, user_b)
-
-### thread
-
-- id (uuid, pk)
-- item_id (uuid, fk -> item.id)
-- creator_id (uuid, fk -> user.id) -- thread initiator
-- responder_id (uuid, fk -> user.id) -- other participant
-- created_at (timestamp)
-- unique(item_id, creator_id, responder_id)
-
-### message
-
-- id (uuid, pk)
-- thread_id (uuid, fk -> thread.id)
-- sender_id (uuid, fk -> user.id)
-- content (text)
-- read (boolean)
-- created_at (timestamp)
-
-### message_image
-
-- id (uuid, pk)
-- message_id (uuid, fk -> message.id)
-- url (text)
-- order_index (integer)
-- created_at (timestamp)
-
-### invite
-
-- id (uuid, pk)
-- inviter_id (uuid, fk -> user.id)
-- invite_code (text, unique) -- 8 alphanumeric characters
-- used_by (uuid, fk -> user.id, nullable)
-- used_at (timestamp, nullable)
-- revoked_at (timestamp, nullable)
-- created_at (timestamp)
-
-## Row Level Security (RLS)
-
-### user
-
-- Public profiles: All authenticated users
-- Vendor profiles: Accessible via public routes (does not require authentication)
-
-### contact_info
-
-- Hidden: System only
-- Connections Only: Direct connections only (status='accepted')
-- Public: Anyone can view, even if not authenticated
-
-### user_settings
-
-- Read/Write: Owner only (user_id)
-
-### category
-
-- Public: All authenticated users (read-only)
-
-### item
-
-- Hidden: Creator only
-- Connections Only: Creator + direct connections (status='accepted')
-- Public: All authenticated users
-- Buy items: Creator shown as "Anonymous" to non-connections
-
-### item_image
-
-- Follows parent item visibility rules
-- Images inherit visibility from their item
-
-### connection
-
-- Read: Both parties (user_a or user_b)
-- Write: user_a creates with status='pending', user_b updates status
-
-### thread
-
-- Read/write: Participants only (creator_id or responder_id)
-- Thread creator identity follows item visibility rules
-
-### message
-
-- Read/write: Participants only (sender_id or recipient in thread)
-- Message images inherit thread visibility
-
-### message_image
-
-- Follows parent message visibility rules
-- Images inherit visibility from their message
-
-### invite
-
-- Read/Write: Inviter only (inviter_id)
-- Read: Used by user (used_by) for validation
+See [here](supabase/schemas)
 
 ## Key Flows
 
@@ -296,11 +130,15 @@ Every feature should support both power users and those who rank low on the "tec
 ### Invite Generation
 
 1. User clicks "Invite someone"
-1. System checks last invite timestamp
-1. If < 24 hours: shows limit message
-1. If eligible: generates 8-character code
-1. Creates invite record
-1. User can revoke anytime (sets revoked_at)
+1. User enters invitee's full name
+1. User confirms two requirements:
+   - "I have met this person in person multiple times and know them well"
+   - "I agree to allow this person to have access to my Contacts-Only information"
+1. System checks rate limit via `can_create_invite()` database function (uses database time, excludes revoked invites)
+1. If non-revoked invite exists within last 24 hours: shows limit message
+1. If eligible: generates 8-character code (uppercase alphanumeric, excludes I/L/O/0/1)
+1. Creates invite record with invitee name
+1. User can copy/share code or revoke anytime (sets revoked_at)
 
 ## Site Structure
 
@@ -343,54 +181,60 @@ Content:
 
 ## Project Structure
 
+(Only important directories and files are shown for brevity)
+
 ```
 project-root/
-├── wrangler.toml               # Cloudflare Workers config
+├── wrangler.jsonc              # Cloudflare Workers config
 ├── supabase/
 │   ├── config.toml            # Supabase configuration
-│   ├── migrations/
-│   │   ├── 001_initial_schema.sql
-│   │   ├── 002_rls_policies.sql
-│   │   └── 003_indexes.sql
-│   └── seed.sql               # Test data
+│   ├── schemas/               # Declarative database schemas (source of truth)
+│   ├── migrations/            # Auto-generated from schemas via `supabase db diff`
+│   │   └── *.sql
+│   ├── seeds/                 # Test data for local development
+│   └── storage/               # Seed storage files
+│       └── images/
+│           ├── avatars/
+│           ├── items/
+│           └── messages/
 ├── src/
 │   ├── pages/                 # Astro routes
+│   │   ├── api/              # API endpoints (JWT-authenticated)
+│   │   │   └── invites/
+│   │   ├── auth/
 │   │   ├── index.astro       # Landing page
-│   │   ├── about.astro       # About page
+│   │   ├── about.mdx         # About page (MDX)
+│   │   ├── content-policy.mdx # Content policy (MDX)
 │   │   ├── dashboard.astro   # User dashboard
-│   │   ├── items/
-│   │   │   ├── index.astro   # Item listings
-│   │   │   ├── [id].astro    # Item details
-│   │   │   └── new.astro     # Create item
-│   │   ├── vendors.astro     # Vendor directory
-│   │   ├── profile/[id].astro # User profiles
-│   │   ├── messages/
-│   │   │   └── index.astro   # Message threads
-│   │   ├── signup.astro      # Invite signup
-│   │   ├── [vendor_id].astro # Vendor profile
-│   │   └── v/[vendor_id].astro # Alt vendor route
+│   │   └── invites.astro     # Invite management
 │   ├── components/
 │   │   ├── react/            # Interactive components
-│   │   │   ├── ItemForm.tsx
-│   │   │   ├── MessageThread.tsx
-│   │   │   ├── ItemFeed.tsx
-│   │   │   └── ConnectionsList.tsx
 │   │   └── astro/           # Static components
-│   │       ├── Header.astro
-│   │       └── ItemCard.astro
 │   ├── layouts/
-│   │   ├── BaseLayout.astro  # Common wrapper
-│   │   └── AuthLayout.astro  # Auth wrapper
-│   └── lib/
-│       ├── supabase.ts      # Database client
-│       ├── auth.ts          # Auth utilities
-│       └── utils/           # Helpers
+│   │   ├── Layout.astro           # Base layout
+│   │   ├── PageLayoutWithBreadcrumbs.astro
+│   │   └── ProseLayout.astro      # MDX layout
+│   ├── lib/
+│   │   ├── auth.ts                # Auth utilities (createSupabaseWithJWT, etc.)
+│   │   ├── database.types.ts      # Generated TypeScript types
+│   │   ├── globals.ts
+│   │   ├── storage.ts
+│   │   ├── themeManager.ts
+│   │   └── themes.ts
+│   ├── styles/
+│   │   ├── global.css
+│   │   └── themes.css
+│   └── middleware.ts              # Route protection
 ├── tests/
-│   ├── unit/               # Unit tests
-│   └── e2e/               # Integration tests
+│   ├── unit/                      # Unit tests (Vitest)
+│   ├── e2e/                       # E2E tests (Playwright)
+│   └── setup.ts
 └── .github/
     └── workflows/
-        └── ci.yml         # CI/CD pipeline
+        ├── ci.yml                  # CI/CD pipeline
+        ├── code-review.yml
+        ├── opencode.yml
+        └── preview-deploy.yaml
 ```
 
 ## Security
@@ -401,6 +245,7 @@ project-root/
 - Session management via Supabase Auth
 - Protected routes via Astro middleware
 - Invite-only prevents open signups
+- API routes use JWT bearer tokens with `createSupabaseWithJWT()` for RLS context
 
 ### Authorization
 
@@ -431,7 +276,8 @@ project-root/
 
 - Auto-compression on upload (balanced quality/size)
 - 5 images per item/message
-- Single storage bucket (simpler for MVP)
+- Single 'images' bucket with structured folders (avatars/, items/, messages/)
+- Storage RLS policies enforce visibility rules matching parent entities
 
 ## Error Handling
 
