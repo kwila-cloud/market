@@ -111,11 +111,21 @@ export default function OTPForm() {
         return;
       }
 
-      // Clear stored email
+      // Check if this is a signup flow
+      const isSignupFlow = sessionStorage.getItem('signup_flow') === 'true';
+
+      // Clear auth_email (but keep signup data if it's a signup flow)
       sessionStorage.removeItem('auth_email');
 
-      // Redirect to dashboard
-      window.location.href = '/dashboard';
+      // Redirect based on flow type
+      if (isSignupFlow) {
+        // Keep invite_code and invitee_name in sessionStorage for welcome page
+        sessionStorage.removeItem('signup_flow');
+        window.location.href = '/auth/welcome';
+      } else {
+        // Regular login - redirect to dashboard
+        window.location.href = '/dashboard';
+      }
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');
       console.error('Verification error:', err);
@@ -134,9 +144,6 @@ export default function OTPForm() {
       const supabase = createSupabaseBrowserClient();
       const { error: resendError } = await supabase.auth.signInWithOtp({
         email,
-        options: {
-          shouldCreateUser: false,
-        },
       });
 
       if (resendError) {

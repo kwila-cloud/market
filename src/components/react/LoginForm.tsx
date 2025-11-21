@@ -32,9 +32,6 @@ export default function LoginForm() {
       const supabase = createSupabaseBrowserClient();
       const { error: signInError } = await supabase.auth.signInWithOtp({
         email: data.email,
-        options: {
-          shouldCreateUser: false,
-        },
       });
 
       if (signInError) {
