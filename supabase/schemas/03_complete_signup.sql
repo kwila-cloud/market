@@ -27,6 +27,51 @@ grant execute on function public.get_user_by_auth_id(uuid) to authenticated;
 comment on function public.get_user_by_auth_id is
   'Returns the user.id for a given auth.users.id. Returns null if no user profile exists.';
 
+-- Function to validate invite codes for new users
+-- Bypasses RLS so new authenticated users (without profiles) can check invite validity
+-- TODO: Consider adding Terraform-based Cloudflare rate limiting for production if brute force becomes a concern
+create or replace function public.validate_invite_code(p_invite_code text)
+returns jsonb
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  v_invite_record record;
+begin
+  -- Rate limiting: 5 second delay to prevent brute force attacks
+  -- With 2.8 trillion possible codes, this makes brute forcing impractical
+  perform pg_sleep(5);
+
+  -- Validate and fetch invite code
+  select * into v_invite_record
+  from public.invite
+  where invite_code = upper(p_invite_code)
+    and used_at is null
+    and revoked_at is null;
+
+  if not found then
+    return jsonb_build_object(
+      'valid', false,
+      'error', 'Invalid or already used invite code'
+    );
+  end if;
+
+  -- Valid invite code
+  return jsonb_build_object(
+    'valid', true,
+    'name', v_invite_record.name
+  );
+end;
+$$;
+
+-- Grant execute to authenticated users
+grant execute on function public.validate_invite_code(text) to authenticated;
+
+-- Add comment for documentation
+comment on function public.validate_invite_code is
+  'Validates an invite code for new users. Includes 5-second delay for brute force protection. Returns validation status and invitee name if valid.';
+
 -- Function to complete user signup after OTP verification
 -- Called from the frontend after onboarding wizard is complete
 create or replace function public.complete_signup(

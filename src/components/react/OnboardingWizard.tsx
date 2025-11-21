@@ -115,30 +115,29 @@ export default function OnboardingWizard() {
       try {
         const supabase = createSupabaseBrowserClient();
 
-        // Validate the invite code
-        const { data: inviteData, error: inviteError } = await supabase
-          .from('invite')
-          .select('invite_code, name, used_at, revoked_at')
-          .eq('invite_code', inviteCode)
-          .single();
+        // Validate the invite code using RPC (bypasses RLS for new users)
+        const { data, error: rpcError } = await supabase.rpc(
+          'validate_invite_code',
+          {
+            p_invite_code: inviteCode,
+          }
+        );
 
-        if (inviteError || !inviteData) {
-          setError('Invalid invite code. Please check and try again.');
+        if (rpcError) {
+          console.error('RPC error:', rpcError);
+          setError('Failed to validate invite code. Please try again.');
           return;
         }
 
-        if (inviteData.used_at) {
-          setError('This invite code has already been used.');
-          return;
-        }
-
-        if (inviteData.revoked_at) {
-          setError('This invite code has been revoked.');
+        if (!data?.valid) {
+          setError(
+            data?.error || 'Invalid invite code. Please check and try again.'
+          );
           return;
         }
 
         // Valid invite! Pre-fill display name with invitee name
-        setValue('display_name', inviteData.name);
+        setValue('display_name', data.name);
       } catch (err) {
         console.error('Invite validation error:', err);
         setError('Failed to validate invite code. Please try again.');
@@ -172,8 +171,8 @@ export default function OnboardingWizard() {
               <button
                 type="button"
                 onClick={handleSignOut}
-                disabled={isSigningOut}
-                className="text-neutral-400 hover:text-neutral-300 transition-colors disabled:opacity-50"
+                disabled={isSigningOut || isValidatingInvite}
+                className="text-neutral-400 hover:text-neutral-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSigningOut ? 'Signing out...' : 'Wrong account? Sign out'}
               </button>
@@ -212,13 +211,19 @@ export default function OnboardingWizard() {
                   type="text"
                   maxLength={8}
                   {...register('invite_code')}
-                  className="w-full px-4 py-3 bg-surface border border-surface-border rounded-lg text-neutral-50 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all uppercase font-mono tracking-wider text-center text-xl"
+                  disabled={isValidatingInvite}
+                  className="w-full px-4 py-3 bg-surface border border-surface-border rounded-lg text-neutral-50 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all uppercase font-mono tracking-wider text-center text-xl disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="ABC12345"
                   style={{ textTransform: 'uppercase' }}
                 />
                 {errors.invite_code && (
                   <p className="mt-2 text-sm text-error-200">
                     {errors.invite_code.message}
+                  </p>
+                )}
+                {isValidatingInvite && (
+                  <p className="mt-2 text-sm text-neutral-400">
+                    Validating invite code... (this may take a few seconds)
                   </p>
                 )}
               </div>
