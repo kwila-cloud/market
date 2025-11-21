@@ -65,9 +65,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-neutral-50 mb-2">
-          Welcome back
-        </h2>
+        <h2 className="text-2xl font-bold text-neutral-50 mb-2">Welcome</h2>
         <p className="text-neutral-300 text-sm">
           Enter your email to receive a one-time password
         </p>
@@ -100,11 +98,13 @@ export default function LoginForm() {
       </Button>
 
       <p className="text-center text-sm text-neutral-400">
-        Don&apos;t have an account?
-        <br />
-        <span className="font-bold">
-          You&apos;ll need an invite code to sign up.
-        </span>
+        Don&apos;t have an account?{' '}
+        <a
+          href="/auth/signup"
+          className="text-primary hover:text-primary-400 transition-colors"
+        >
+          Sign up with an invite code
+        </a>
       </p>
     </form>
   );
