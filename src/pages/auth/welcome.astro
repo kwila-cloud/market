@@ -1,0 +1,12 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import OnboardingWizard from '../../components/react/OnboardingWizard';
+
+const title = 'Welcome';
+---
+
+<Layout title={title}>
+  <div class="min-h-screen flex items-center justify-center px-4 py-12">
+    <OnboardingWizard client:load />
+  </div>
+</Layout>
