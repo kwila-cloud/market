@@ -91,18 +91,8 @@ export default function LoginForm() {
       </div>
 
       <Button type="submit" fullWidth disabled={isLoading}>
-        {isLoading ? 'Sending...' : 'Continue with email'}
+        {isLoading ? 'Sending...' : 'Continue'}
       </Button>
-
-      <p className="text-center text-sm text-neutral-400">
-        Don&apos;t have an account?{' '}
-        <a
-          href="/auth/signup"
-          className="text-primary hover:text-primary-400 transition-colors"
-        >
-          Sign up with an invite code
-        </a>
-      </p>
     </form>
   );
 }

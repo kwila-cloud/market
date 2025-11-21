@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -8,6 +8,10 @@ import Card from './Card';
 import ErrorAlert from './ErrorAlert';
 
 const onboardingSchema = z.object({
+  invite_code: z
+    .string()
+    .length(8, 'Invite code must be 8 characters')
+    .regex(/^[A-Z0-9]+$/, 'Invalid invite code format'),
   display_name: z
     .string()
     .min(1, 'Display name is required')
@@ -24,8 +28,8 @@ type OnboardingFormData = z.infer<typeof onboardingSchema>;
 export default function OnboardingWizard() {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isValidatingInvite, setIsValidatingInvite] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [inviteCode, setInviteCode] = useState<string>('');
 
   const {
     register,
@@ -42,25 +46,6 @@ export default function OnboardingWizard() {
 
   const formValues = watch();
 
-  // Load invite data from sessionStorage
-  useEffect(() => {
-    const storedCode = sessionStorage.getItem('invite_code');
-    const storedName = sessionStorage.getItem('invitee_name');
-
-    if (!storedCode) {
-      // No invite code stored, redirect to login
-      window.location.href = '/auth/login';
-      return;
-    }
-
-    setInviteCode(storedCode);
-
-    // Pre-fill display name with invitee name
-    if (storedName) {
-      setValue('display_name', storedName);
-    }
-  }, [setValue]);
-
   const onSubmit = async (data: OnboardingFormData) => {
     setIsLoading(true);
     setError(null);
@@ -72,7 +57,7 @@ export default function OnboardingWizard() {
       const { data: result, error: signupError } = await supabase.rpc(
         'complete_signup',
         {
-          p_invite_code: inviteCode,
+          p_invite_code: data.invite_code.toUpperCase(),
           p_display_name: data.display_name,
           p_about: data.about || '',
           p_contact_visibility: data.contact_visibility,
@@ -90,10 +75,6 @@ export default function OnboardingWizard() {
         return;
       }
 
-      // Clear sessionStorage
-      sessionStorage.removeItem('invite_code');
-      sessionStorage.removeItem('invitee_name');
-
       // Redirect to dashboard
       window.location.href = '/dashboard';
     } catch (err) {
@@ -104,8 +85,56 @@ export default function OnboardingWizard() {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     setError(null);
+
+    // If moving from step 1 (invite code), validate it first
+    if (step === 1) {
+      const inviteCode = formValues.invite_code?.toUpperCase();
+
+      if (!inviteCode || inviteCode.length !== 8) {
+        setError('Please enter a valid 8-character invite code');
+        return;
+      }
+
+      setIsValidatingInvite(true);
+
+      try {
+        const supabase = createSupabaseBrowserClient();
+
+        // Validate the invite code
+        const { data: inviteData, error: inviteError } = await supabase
+          .from('invite')
+          .select('invite_code, name, used_at, revoked_at')
+          .eq('invite_code', inviteCode)
+          .single();
+
+        if (inviteError || !inviteData) {
+          setError('Invalid invite code. Please check and try again.');
+          return;
+        }
+
+        if (inviteData.used_at) {
+          setError('This invite code has already been used.');
+          return;
+        }
+
+        if (inviteData.revoked_at) {
+          setError('This invite code has been revoked.');
+          return;
+        }
+
+        // Valid invite! Pre-fill display name with invitee name
+        setValue('display_name', inviteData.name);
+      } catch (err) {
+        console.error('Invite validation error:', err);
+        setError('Failed to validate invite code. Please try again.');
+        return;
+      } finally {
+        setIsValidatingInvite(false);
+      }
+    }
+
     setStep(step + 1);
   };
 
@@ -126,20 +155,67 @@ export default function OnboardingWizard() {
           {/* Progress indicator */}
           <div className="space-y-2">
             <div className="flex justify-between items-center text-sm text-neutral-400">
-              <span>Step {step} of 3</span>
+              <span>Step {step} of 4</span>
             </div>
             <div className="w-full bg-surface-border rounded-full h-2">
               <div
                 className="bg-primary rounded-full h-2 transition-all duration-300"
-                style={{ width: `${(step / 3) * 100}%` }}
+                style={{ width: `${(step / 4) * 100}%` }}
               />
             </div>
           </div>
 
           {error && <ErrorAlert message={error} />}
 
-          {/* Step 1: Contact Visibility */}
+          {/* Step 1: Invite Code */}
           {step === 1 && (
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-lg font-semibold text-neutral-50 mb-2">
+                  Enter Your Invite Code
+                </h3>
+                <p className="text-sm text-neutral-300 mb-4">
+                  You need an invite code from an existing member to join
+                </p>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="invite_code"
+                  className="block text-sm font-medium text-neutral-200 mb-2"
+                >
+                  Invite Code *
+                </label>
+                <input
+                  id="invite_code"
+                  type="text"
+                  maxLength={8}
+                  {...register('invite_code')}
+                  className="w-full px-4 py-3 bg-surface border border-surface-border rounded-lg text-neutral-50 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all uppercase font-mono tracking-wider text-center text-xl"
+                  placeholder="ABC12345"
+                  style={{ textTransform: 'uppercase' }}
+                />
+                {errors.invite_code && (
+                  <p className="mt-2 text-sm text-error-200">
+                    {errors.invite_code.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex justify-end pt-4">
+                <Button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={isValidatingInvite}
+                >
+                  {isValidatingInvite ? 'Validating...' : 'Next Step →'}
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* Step 2: Contact Visibility */}
+          {step === 2 && (
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-semibold text-neutral-50 mb-2">
@@ -226,8 +302,8 @@ export default function OnboardingWizard() {
             </div>
           )}
 
-          {/* Step 2: Display Name & Bio */}
-          {step === 2 && (
+          {/* Step 3: Display Name & Bio */}
+          {step === 3 && (
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-semibold text-neutral-50 mb-2">
@@ -294,8 +370,8 @@ export default function OnboardingWizard() {
             </div>
           )}
 
-          {/* Step 3: Review & Complete */}
-          {step === 3 && (
+          {/* Step 4: Review & Complete */}
+          {step === 4 && (
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-semibold text-neutral-50 mb-2">

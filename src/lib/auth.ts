@@ -126,7 +126,6 @@ export const publicRoutes = [
   '/about',
   '/content-policy',
   '/auth/login',
-  '/auth/signup',
   '/auth/verify',
   '/auth/welcome',
 ];
@@ -135,4 +134,4 @@ export const publicRoutes = [
  * Auth routes that should redirect to dashboard if already authenticated.
  * Note: /auth/welcome is NOT in this list because it's for incomplete signups.
  */
-export const authRoutes = ['/auth/login', '/auth/signup', '/auth/verify'];
+export const authRoutes = ['/auth/login', '/auth/verify'];
