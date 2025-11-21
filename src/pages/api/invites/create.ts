@@ -76,13 +76,14 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Check for invites created in the last 24 hours
+    // Check for non-revoked invites created in the last 24 hours
     const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
     const { data: recentInvites, error: queryError } = await supabase
       .from('invite')
       .select('created_at')
       .eq('inviter_id', user.id)
+      .eq('revoked_at', null)
       .gte('created_at', oneDayAgo)
       .limit(1);
 
