@@ -14,35 +14,21 @@ const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
  */
 export function createSupabaseServerClient(
   cookies: AstroCookies,
-  cookieHeader?: string | null,
-  authHeader?: string | null
+  cookieHeader?: string | null
 ) {
-  const formatCookies = (
-    cookieList: { name: string; value: string | undefined }[]
-  ) =>
-    cookieList
-      .filter(
-        (cookie): cookie is { name: string; value: string } =>
-          typeof cookie.value === 'string'
-      )
-      .map((cookie) => ({ name: cookie.name, value: cookie.value }));
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const config: any = {
+  return createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: {
       getAll() {
-        if (cookieHeader) {
-          return formatCookies(parseCookieHeader(cookieHeader));
-        }
-
-        const astroCookies = cookies
-          .getAll()
-          .map(({ name, value }) => ({ name, value }));
-
-        return formatCookies(astroCookies);
+        const parsed = parseCookieHeader(cookieHeader ?? '');
+        // Filter out cookies without values and ensure type safety
+        return parsed
+          .filter(
+            (cookie): cookie is { name: string; value: string } =>
+              cookie.value !== undefined
+          )
+          .map((cookie) => ({ name: cookie.name, value: cookie.value }));
       },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setAll(cookiesToSet: any) {
+      setAll(cookiesToSet) {
         for (const { name, value, options } of cookiesToSet) {
           cookies.set(name, value, {
             path: '/',
@@ -54,17 +40,7 @@ export function createSupabaseServerClient(
         }
       },
     },
-  };
-
-  if (authHeader) {
-    config.global = {
-      headers: {
-        Authorization: authHeader,
-      },
-    };
-  }
-
-  return createServerClient(supabaseUrl, supabaseAnonKey, config);
+  });
 }
 
 /**
@@ -82,7 +58,7 @@ export async function getSession(
   cookies: AstroCookies,
   cookieHeader?: string | null
 ) {
-  const supabase = createSupabaseServerClient(cookies, cookieHeader, undefined);
+  const supabase = createSupabaseServerClient(cookies, cookieHeader);
   const {
     data: { session },
     error,
@@ -104,7 +80,7 @@ export async function getUser(
   cookies: AstroCookies,
   cookieHeader?: string | null
 ) {
-  const supabase = createSupabaseServerClient(cookies, cookieHeader, undefined);
+  const supabase = createSupabaseServerClient(cookies, cookieHeader);
   const {
     data: { user },
     error,
