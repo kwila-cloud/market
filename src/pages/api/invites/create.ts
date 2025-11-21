@@ -76,24 +76,20 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Check for non-revoked invites created in the last 24 hours
-    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    // Check if user can create an invite (uses database time for accuracy)
+    const { data: canCreate, error: rateLimitError } = await supabase.rpc(
+      'can_create_invite',
+      { user_id: user.id }
+    );
 
-    const { data: recentInvites, error: queryError } = await supabase
-      .from('invite')
-      .select('created_at')
-      .eq('inviter_id', user.id)
-      .eq('revoked_at', null)
-      .gte('created_at', oneDayAgo)
-      .limit(1);
-
-    if (queryError) {
+    if (rateLimitError) {
+      console.error('[API] Rate limit check error:', rateLimitError.message);
       return new Response(JSON.stringify({ error: 'Database error' }), {
         status: 500,
       });
     }
 
-    if (recentInvites && recentInvites.length > 0) {
+    if (!canCreate) {
       return new Response(
         JSON.stringify({
           error: 'You can only generate one invite code every 24 hours.',
