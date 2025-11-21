@@ -19,14 +19,13 @@ export const POST: APIRoute = async ({ cookies, request }) => {
 
   try {
     const body = await request.json();
-    const { inviteeName, metInPerson, allowContactAccess } = body;
+    const { name } = body;
 
     // Validate required fields
-    if (!inviteeName || !metInPerson || !allowContactAccess) {
+    if (!name) {
       return new Response(
         JSON.stringify({
-          error:
-            'All fields are required: invitee name, met in person confirmation, and contact access confirmation.',
+          error: 'Invite name is required',
         }),
         {
           status: 400,
@@ -76,7 +75,7 @@ export const POST: APIRoute = async ({ cookies, request }) => {
         .insert({
           inviter_id: user.id,
           invite_code: code,
-          invitee_name: inviteeName,
+          name: name,
         })
         .select()
         .single();

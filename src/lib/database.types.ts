@@ -135,6 +135,7 @@ export type Database = {
           id: string;
           invite_code: string;
           inviter_id: string;
+          name: string;
           revoked_at: string | null;
           used_at: string | null;
           used_by: string | null;
@@ -144,6 +145,7 @@ export type Database = {
           id?: string;
           invite_code: string;
           inviter_id: string;
+          name?: string;
           revoked_at?: string | null;
           used_at?: string | null;
           used_by?: string | null;
@@ -153,6 +155,7 @@ export type Database = {
           id?: string;
           invite_code?: string;
           inviter_id?: string;
+          name?: string;
           revoked_at?: string | null;
           used_at?: string | null;
           used_by?: string | null;
