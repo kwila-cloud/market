@@ -184,8 +184,7 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
                 </h3>
                 <p className="text-sm text-error-300 mt-1">
                   Only invite people you trust and have met in person multiple
-                  times. This person will have access to your contact
-                  information and connections.
+                  times. This person will automatically be connected to you.
                 </p>
               </div>
             </div>
@@ -346,7 +345,7 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
               <thead className="bg-surface-base text-neutral-400">
                 <tr>
                   <th className="px-6 py-3 font-medium">Code</th>
-                  <th className="px-6 py-3 font-medium">Invitee</th>
+                  <th className="px-6 py-3 font-medium">Name</th>
                   <th className="px-6 py-3 font-medium">Status</th>
                   <th className="px-6 py-3 font-medium">Date</th>
                 </tr>
