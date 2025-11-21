@@ -27,7 +27,7 @@ insert into auth.users (
     (
         '22222222-2222-2222-2222-222222222201',
         '00000000-0000-0000-0000-000000000000',
-        'alice@example.com',
+        'alice.market@kwila.cloud',
         crypt('password123', gen_salt('bf')),
         '2025-10-20 10:00:00+00',
         '2025-10-20 10:00:00+00',
@@ -45,7 +45,7 @@ insert into auth.users (
     (
         '22222222-2222-2222-2222-222222222202',
         '00000000-0000-0000-0000-000000000000',
-        'bob@example.com',
+        'bob.market@kwila.cloud',
         crypt('password123', gen_salt('bf')),
         '2025-10-25 14:30:00+00',
         '2025-10-25 14:30:00+00',
@@ -63,7 +63,7 @@ insert into auth.users (
     (
         '22222222-2222-2222-2222-222222222203',
         '00000000-0000-0000-0000-000000000000',
-        'carol@example.com',
+        'carol.market@kwila.cloud',
         crypt('password123', gen_salt('bf')),
         '2025-10-30 09:15:00+00',
         '2025-10-30 09:15:00+00',
@@ -81,7 +81,7 @@ insert into auth.users (
     (
         '22222222-2222-2222-2222-222222222204',
         '00000000-0000-0000-0000-000000000000',
-        'david@example.com',
+        'david.market@kwila.cloud',
         crypt('password123', gen_salt('bf')),
         '2025-11-04 11:00:00+00',
         '2025-11-04 11:00:00+00',
@@ -99,7 +99,7 @@ insert into auth.users (
     (
         '22222222-2222-2222-2222-222222222205',
         '00000000-0000-0000-0000-000000000000',
-        'eve@example.com',
+        'eve.market@kwila.cloud',
         crypt('password123', gen_salt('bf')),
         '2025-11-09 16:45:00+00',
         '2025-11-09 16:45:00+00',
@@ -133,7 +133,7 @@ insert into auth.identities (
         '22222222-2222-2222-2222-222222222201',
         '22222222-2222-2222-2222-222222222201',
         'email',
-        '{"sub": "22222222-2222-2222-2222-222222222201", "email": "alice@example.com", "email_verified": true, "phone_verified": false}',
+        '{"sub": "22222222-2222-2222-2222-222222222201", "email": "alice.market@kwila.cloud", "email_verified": true, "phone_verified": false}',
         '2025-10-20 10:00:00+00',
         '2025-10-20 10:00:00+00',
         '2025-10-20 10:00:00+00'
@@ -144,7 +144,7 @@ insert into auth.identities (
         '22222222-2222-2222-2222-222222222202',
         '22222222-2222-2222-2222-222222222202',
         'email',
-        '{"sub": "22222222-2222-2222-2222-222222222202", "email": "bob@example.com", "email_verified": true, "phone_verified": false}',
+        '{"sub": "22222222-2222-2222-2222-222222222202", "email": "bob.market@kwila.cloud", "email_verified": true, "phone_verified": false}',
         '2025-10-25 14:30:00+00',
         '2025-10-25 14:30:00+00',
         '2025-10-25 14:30:00+00'
@@ -155,7 +155,7 @@ insert into auth.identities (
         '22222222-2222-2222-2222-222222222203',
         '22222222-2222-2222-2222-222222222203',
         'email',
-        '{"sub": "22222222-2222-2222-2222-222222222203", "email": "carol@example.com", "email_verified": true, "phone_verified": false}',
+        '{"sub": "22222222-2222-2222-2222-222222222203", "email": "carol.market@kwila.cloud", "email_verified": true, "phone_verified": false}',
         '2025-10-30 09:15:00+00',
         '2025-10-30 09:15:00+00',
         '2025-10-30 09:15:00+00'
@@ -166,7 +166,7 @@ insert into auth.identities (
         '22222222-2222-2222-2222-222222222204',
         '22222222-2222-2222-2222-222222222204',
         'email',
-        '{"sub": "22222222-2222-2222-2222-222222222204", "email": "david@example.com", "email_verified": true, "phone_verified": false}',
+        '{"sub": "22222222-2222-2222-2222-222222222204", "email": "david.market@kwila.cloud", "email_verified": true, "phone_verified": false}',
         '2025-11-04 11:00:00+00',
         '2025-11-04 11:00:00+00',
         '2025-11-04 11:00:00+00'
@@ -177,7 +177,7 @@ insert into auth.identities (
         '22222222-2222-2222-2222-222222222205',
         '22222222-2222-2222-2222-222222222205',
         'email',
-        '{"sub": "22222222-2222-2222-2222-222222222205", "email": "eve@example.com", "email_verified": true, "phone_verified": false}',
+        '{"sub": "22222222-2222-2222-2222-222222222205", "email": "eve.market@kwila.cloud", "email_verified": true, "phone_verified": false}',
         '2025-11-09 16:45:00+00',
         '2025-11-09 16:45:00+00',
         '2025-11-09 16:45:00+00'

@@ -67,6 +67,7 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 - **Use TypeScript strict mode**
 - **Don't modify git config**
 - **Always use pre-existing layouts** from `src/layouts/` for page structure consistency
+- **Always use pre-existing component** from `src/components/` for UI consistency and less duplicate code
 
 ### Contribution Process
 

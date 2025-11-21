@@ -19,7 +19,7 @@ Required behavior (non-interactive flow)
    - Run the relevant automated tests immediately after implementing the change. Tests must be run and pass before committing.
      - If a change only affects unit tests, run the narrower set of packages to save time.
    - If tests fail, refine the code until tests pass. Do not proceed to committing that TODO item until its tests pass.
-   - Once tests pass, update the spec (check off corresponding item) and commit the change locally using a descriptive conventional commit message (example `feat(7): add backup script`).
+   - Once tests pass, update the spec (check off corresponding item) and commit the change locally using a descriptive conventional commit message (example `feat: add backup script`).
      - Use: `git add -A && git commit -m "<scope>: <short description>"`
 3. After all task items for the current section are completed and committed locally:
    - Push the branch to the remote:

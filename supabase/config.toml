@@ -202,7 +202,7 @@ otp_expiry = 3600
 # content_path = "./supabase/templates/invite.html"
 
 [auth.email.template.magic_link]
-subject = "Your sign-in code"
+subject = "One-Time Password"
 content_path = "./supabase/templates/magic_link.html"
 
 # Uncomment to customize notification email template

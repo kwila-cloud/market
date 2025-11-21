@@ -52,6 +52,29 @@ export function createSupabaseBrowserClient() {
 }
 
 /**
+ * Create a Supabase client for API routes with JWT token authentication.
+ * Sets the JWT as the global auth token for RLS policy evaluation.
+ */
+export function createSupabaseWithJWT(jwt: string) {
+  const client = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      getAll() {
+        return [];
+      },
+      setAll() {
+        // No-op for JWT-based clients
+      },
+    },
+    global: {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    },
+  });
+  return client;
+}
+
+/**
  * Get the current session from a server-side Supabase client.
  */
 export async function getSession(

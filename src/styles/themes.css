@@ -52,6 +52,21 @@
   --color-neutral-800: oklch(var(--theme-neutral-800));
   --color-neutral-900: oklch(var(--theme-neutral-900));
   --color-neutral-950: oklch(var(--theme-neutral-950));
+  --color-neutral: oklch(var(--theme-neutral-500));
+
+  /* Error color scale (OKLCH) */
+  --color-error-50: oklch(var(--theme-error-50));
+  --color-error-100: oklch(var(--theme-error-100));
+  --color-error-200: oklch(var(--theme-error-200));
+  --color-error-300: oklch(var(--theme-error-300));
+  --color-error-400: oklch(var(--theme-error-400));
+  --color-error-500: oklch(var(--theme-error-500));
+  --color-error-600: oklch(var(--theme-error-600));
+  --color-error-700: oklch(var(--theme-error-700));
+  --color-error-800: oklch(var(--theme-error-800));
+  --color-error-900: oklch(var(--theme-error-900));
+  --color-error-950: oklch(var(--theme-error-950));
+  --color-error: oklch(var(--theme-error-500));
 
   /* Surface colors (OKLCH) */
   --color-surface: oklch(var(--theme-surface));
@@ -104,6 +119,19 @@
   --theme-surface: 0.158 0.025 250; /* very dark blue-gray */
   --theme-surface-elevated: 0.219 0.028 250; /* elevated surface */
   --theme-surface-border: 0.292 0.032 250; /* border */
+
+  /* Error palette - Crimson (OKLCH via tints.dev #7f1d1d) */
+  --theme-error-50: 0.941 0.022 17.63;
+  --theme-error-100: 0.886 0.045 18.07;
+  --theme-error-200: 0.762 0.109 19.91;
+  --theme-error-300: 0.652 0.185 23.76;
+  --theme-error-400: 0.522 0.175 25.69;
+  --theme-error-500: 0.396 0.133 25.73;
+  --theme-error-600: 0.341 0.114 25.67;
+  --theme-error-700: 0.296 0.099 25.7;
+  --theme-error-800: 0.241 0.081 25.78;
+  --theme-error-900: 0.197 0.066 25.73;
+  --theme-error-950: 0.154 0.054 26.25;
 }
 
 /* Ember Theme - Orange and burnt orange on dark gray (Dark) */
@@ -151,6 +179,19 @@
   --theme-surface: 0.168 0.002 0; /* very dark gray */
   --theme-surface-elevated: 0.216 0.002 0; /* elevated surface */
   --theme-surface-border: 0.292 0.002 0; /* border */
+
+  /* Error palette - Crimson (OKLCH via tints.dev #7f1d1d) */
+  --theme-error-50: 0.941 0.022 17.63;
+  --theme-error-100: 0.886 0.045 18.07;
+  --theme-error-200: 0.762 0.109 19.91;
+  --theme-error-300: 0.652 0.185 23.76;
+  --theme-error-400: 0.522 0.175 25.69;
+  --theme-error-500: 0.396 0.133 25.73;
+  --theme-error-600: 0.341 0.114 25.67;
+  --theme-error-700: 0.296 0.099 25.7;
+  --theme-error-800: 0.241 0.081 25.78;
+  --theme-error-900: 0.197 0.066 25.73;
+  --theme-error-950: 0.154 0.054 26.25;
 }
 
 /* Ocean Theme - Blue and teal on white (Light) */
@@ -198,6 +239,19 @@
   --theme-surface: 1 0 0; /* pure white */
   --theme-surface-elevated: 0.985 0.002 247.8; /* very light gray */
   --theme-surface-border: 0.916 0.005 250; /* light gray border */
+
+  /* Error palette - Claret (OKLCH via tints.dev #c41f1f) */
+  --theme-error-50: 0.95 0.022 17.62;
+  --theme-error-100: 0.901 0.045 18.05;
+  --theme-error-200: 0.814 0.094 19.3;
+  --theme-error-300: 0.717 0.159 21.87;
+  --theme-error-400: 0.631 0.229 26.87;
+  --theme-error-500: 0.528 0.198 27.46;
+  --theme-error-600: 0.452 0.17 27.47;
+  --theme-error-700: 0.371 0.139 27.45;
+  --theme-error-800: 0.299 0.112 27.5;
+  --theme-error-900: 0.217 0.082 27.53;
+  --theme-error-950: 0.174 0.064 27.08;
 }
 
 /* Forest Theme - Green and tree bark brown on white (Light) */
@@ -245,4 +299,17 @@
   --theme-surface: 1 0 0; /* pure white */
   --theme-surface-elevated: 0.985 0.002 247.8; /* very light gray */
   --theme-surface-border: 0.916 0.005 250; /* light gray border */
+
+  /* Error palette - Claret (OKLCH via tints.dev #c41f1f) */
+  --theme-error-50: 0.95 0.022 17.62;
+  --theme-error-100: 0.901 0.045 18.05;
+  --theme-error-200: 0.814 0.094 19.3;
+  --theme-error-300: 0.717 0.159 21.87;
+  --theme-error-400: 0.631 0.229 26.87;
+  --theme-error-500: 0.528 0.198 27.46;
+  --theme-error-600: 0.452 0.17 27.47;
+  --theme-error-700: 0.371 0.139 27.45;
+  --theme-error-800: 0.299 0.112 27.5;
+  --theme-error-900: 0.217 0.082 27.53;
+  --theme-error-950: 0.174 0.064 27.08;
 }

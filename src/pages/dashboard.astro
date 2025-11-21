@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LogoutButton from '../components/react/LogoutButton';
+import PageHeader from '../components/astro/PageHeader.astro';
+import Card from '../components/react/Card';
 
 // User is set by middleware for protected routes
 const user = Astro.locals.user;
@@ -16,58 +18,78 @@ const createdAt = user?.created_at
 ---
 
 <Layout title="Dashboard">
-  <div class="max-w-2xl mx-auto">
-    <div class="flex items-center justify-between mb-8">
-      <h1 class="text-3xl font-bold text-neutral-50">Dashboard</h1>
-      <LogoutButton client:load />
-    </div>
+  <PageHeader
+    class="mb-8"
+    title="Dashboard"
+    description="Your home in the market. We'll keep adding tools as we grow."
+  >
+    <LogoutButton slot="action" client:load />
+  </PageHeader>
 
-    <div
-      class="bg-surface-elevated border border-surface-border rounded-xl p-6 space-y-6"
-    >
-      <div>
-        <h2 class="text-lg font-semibold text-neutral-50 mb-4">
-          Account Information
-        </h2>
-        <dl class="space-y-4">
-          <div>
-            <dt class="text-sm text-neutral-400">Email</dt>
-            <dd class="text-neutral-100 mt-1">{user?.email || 'Not set'}</dd>
+  <div class="space-y-6">
+    <Card title="Quick Actions">
+      <div class="grid grid-cols-1 gap-4">
+        <a
+          href="/invites"
+          class="block p-4 rounded-lg border border-surface-border bg-surface-base hover:border-primary-500/50 hover:bg-surface-base/80 transition-all group"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <h3
+                class="font-medium text-neutral-100 group-hover:text-primary-400 transition-colors"
+              >
+                Manage Invites
+              </h3>
+              <p class="text-sm text-neutral-400 mt-1">
+                Create and manage invite codes for new users
+              </p>
+            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              class="w-5 h-5 text-neutral-500 group-hover:text-primary-400 transition-colors"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                clip-rule="evenodd"></path>
+            </svg>
           </div>
-          <div>
-            <dt class="text-sm text-neutral-400">User ID</dt>
-            <dd class="text-neutral-100 mt-1 font-mono text-sm">
-              {user?.id || 'Unknown'}
-            </dd>
-          </div>
-          <div>
-            <dt class="text-sm text-neutral-400">Account Created</dt>
-            <dd class="text-neutral-100 mt-1">{createdAt}</dd>
-          </div>
-          <div>
-            <dt class="text-sm text-neutral-400">Last Sign In</dt>
-            <dd class="text-neutral-100 mt-1">
-              {
-                user?.last_sign_in_at
-                  ? new Date(user.last_sign_in_at).toLocaleString('en-US', {
-                      dateStyle: 'medium',
-                      timeStyle: 'short',
-                    })
-                  : 'Unknown'
-              }
-            </dd>
-          </div>
-        </dl>
+        </a>
       </div>
+    </Card>
 
-      <hr class="border-surface-border" />
-
-      <div>
-        <p class="text-sm text-neutral-400">
-          This is a basic dashboard for authenticated users. More features will
-          be added as development progresses.
-        </p>
-      </div>
-    </div>
+    <Card title="Account Information">
+      <dl class="space-y-4">
+        <div>
+          <dt class="text-sm text-neutral-400">Email</dt>
+          <dd class="text-neutral-100 mt-1">{user?.email || 'Not set'}</dd>
+        </div>
+        <div>
+          <dt class="text-sm text-neutral-400">User ID</dt>
+          <dd class="text-neutral-100 mt-1 font-mono text-sm">
+            {user?.id || 'Unknown'}
+          </dd>
+        </div>
+        <div>
+          <dt class="text-sm text-neutral-400">Account Created</dt>
+          <dd class="text-neutral-100 mt-1">{createdAt}</dd>
+        </div>
+        <div>
+          <dt class="text-sm text-neutral-400">Last Sign In</dt>
+          <dd class="text-neutral-100 mt-1">
+            {
+              user?.last_sign_in_at
+                ? new Date(user.last_sign_in_at).toLocaleString('en-US', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short',
+                  })
+                : 'Unknown'
+            }
+          </dd>
+        </div>
+      </dl>
+    </Card>
   </div>
 </Layout>

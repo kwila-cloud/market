@@ -1,0 +1,27 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  class?: string;
+}
+
+const { title, description, class: className = '' } = Astro.props;
+const hasAction = Astro.slots.has('action');
+---
+
+<div
+  class={`flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between ${className}`}
+>
+  <div>
+    <h1 class="text-3xl font-bold text-neutral-50">{title}</h1>
+    {description && <p class="text-neutral-400 mt-2">{description}</p>}
+  </div>
+
+  {
+    hasAction && (
+      <div class="flex items-center justify-start sm:justify-end">
+        <slot name="action" />
+      </div>
+    )
+  }
+</div>

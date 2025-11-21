@@ -1,5 +1,5 @@
 -- Drop foreign key constraint first
-alter table "public"."item" drop constraint if exists "item_category_id_fkey";
+alter table "public"."item" drop constraint "item_category_id_fkey";
 
 -- Drop primary key constraint (this also drops the underlying index)
 alter table "public"."category" drop constraint if exists "category_pkey";
@@ -19,5 +19,6 @@ alter table "public"."category" add constraint "category_pkey" primary key ("id"
 CREATE INDEX idx_item_category_id ON public.item USING btree (category_id);
 
 -- Recreate foreign key constraint
-alter table "public"."item" add constraint "item_category_id_fkey"
-  foreign key ("category_id") references "public"."category"("id") on delete set null;
+alter table "public"."item" add constraint "item_category_id_fkey" FOREIGN KEY (category_id) REFERENCES public.category(id) not valid;
+
+alter table "public"."item" validate constraint "item_category_id_fkey";

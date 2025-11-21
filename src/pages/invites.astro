@@ -1,0 +1,44 @@
+---
+import PageLayoutWithBreadcrumbs from '../layouts/PageLayoutWithBreadcrumbs.astro';
+import InviteManager from '../components/react/InviteManager';
+import PageHeader from '../components/astro/PageHeader.astro';
+import { createSupabaseServerClient } from '../lib/auth';
+
+// Auth check handled by middleware, but we need user for data fetching
+const user = Astro.locals.user;
+
+if (!user) {
+  return Astro.redirect('/auth/login');
+}
+
+const cookieHeader = Astro.request.headers.get('cookie');
+
+const supabase = createSupabaseServerClient(Astro.cookies, cookieHeader);
+
+// Fetch user's invites
+const { data: invites, error } = await supabase
+  .from('invite')
+  .select('*')
+  .eq('inviter_id', user.id)
+  .order('created_at', { ascending: false });
+
+if (error) {
+  console.error('Error fetching invites:', error);
+}
+---
+
+<PageLayoutWithBreadcrumbs
+  title="Manage Invites"
+  breadcrumbs={[
+    { label: 'Dashboard', href: '/dashboard' },
+    { label: 'Invites' },
+  ]}
+>
+  <PageHeader
+    slot="heading"
+    title="Manage Invites"
+    description="Invite trusted connections to join the marketplace. You can generate one new invite code every 24 hours."
+  />
+
+  <InviteManager client:load initialInvites={invites || []} />
+</PageLayoutWithBreadcrumbs>
