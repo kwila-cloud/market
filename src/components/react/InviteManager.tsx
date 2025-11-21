@@ -3,6 +3,7 @@ import Button from './Button';
 import Card from './Card';
 import type { Tables } from '../../lib/database.types';
 import { createSupabaseBrowserClient } from '../../lib/auth';
+import { platformName } from '../../lib/globals';
 
 type Invite = Tables<'invite'>;
 
@@ -159,9 +160,9 @@ export default function InviteManager({ initialInvites }: InviteManagerProps) {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Join Market',
-          text: `Join me on Market! Use my invite code: ${code}`,
-          url: window.location.origin + '/auth/signup?code=' + code,
+          title: `Join ${platformName}`,
+          text: `Join me on ${platformName}! Use my invite code: ${code}`,
+          url: window.location.origin + '/auth/login',
         });
       } catch (err) {
         console.error('Error sharing:', err);
