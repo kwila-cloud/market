@@ -29,7 +29,20 @@ export default function OnboardingWizard() {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isValidatingInvite, setIsValidatingInvite] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    try {
+      const supabase = createSupabaseBrowserClient();
+      await supabase.auth.signOut();
+      window.location.href = '/';
+    } catch (err) {
+      console.error('Sign out error:', err);
+      setIsSigningOut(false);
+    }
+  };
 
   const {
     register,
@@ -156,6 +169,14 @@ export default function OnboardingWizard() {
           <div className="space-y-2">
             <div className="flex justify-between items-center text-sm text-neutral-400">
               <span>Step {step} of 4</span>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                disabled={isSigningOut}
+                className="text-neutral-400 hover:text-neutral-300 transition-colors disabled:opacity-50"
+              >
+                {isSigningOut ? 'Signing out...' : 'Wrong account? Sign out'}
+              </button>
             </div>
             <div className="w-full bg-surface-border rounded-full h-2">
               <div
