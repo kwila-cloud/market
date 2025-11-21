@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createSupabaseBrowserClient } from '../../lib/auth';
 import Button from './Button';
+import ErrorAlert from './ErrorAlert';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -72,11 +73,7 @@ export default function LoginForm() {
         </p>
       </div>
 
-      {error && (
-        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-red-400 text-sm">
-          {error}
-        </div>
-      )}
+      {error && <ErrorAlert message={error} />}
 
       <div>
         <label

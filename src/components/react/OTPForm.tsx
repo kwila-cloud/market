@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createSupabaseBrowserClient } from '../../lib/auth';
 import Button from './Button';
+import ErrorAlert from './ErrorAlert';
 
 const otpSchema = z.object({
   code: z
@@ -168,11 +169,7 @@ export default function OTPForm() {
         </p>
       </div>
 
-      {error && (
-        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-red-400 text-sm">
-          {error}
-        </div>
-      )}
+      {error && <ErrorAlert message={error} />}
 
       <div>
         <label
