@@ -77,13 +77,17 @@ export default function OnboardingWizard() {
         }
       );
 
+      console.log('Signup response:', { result, signupError });
+
       if (signupError) {
         console.error('Signup error:', signupError);
-        setError('Failed to complete signup. Please try again.');
+        const errorMessage = signupError.message || 'Failed to complete signup. Please try again.';
+        setError(errorMessage);
         return;
       }
 
       if (!result?.success) {
+        console.error('Signup failed - not successful:', result);
         setError('Failed to complete signup. Please try again.');
         return;
       }
@@ -91,8 +95,9 @@ export default function OnboardingWizard() {
       // Redirect to dashboard
       window.location.href = '/dashboard';
     } catch (err) {
-      console.error('Unexpected error:', err);
-      setError('An unexpected error occurred. Please try again.');
+      console.error('Unexpected error during signup:', err);
+      const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred. Please try again.';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -207,15 +212,21 @@ export default function OnboardingWizard() {
                   Invite Code *
                 </label>
                 <input
-                  id="invite_code"
-                  type="text"
-                  maxLength={8}
-                  {...register('invite_code')}
-                  disabled={isValidatingInvite}
-                  className="w-full px-4 py-3 bg-surface border border-surface-border rounded-lg text-neutral-50 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all uppercase font-mono tracking-wider text-center text-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                  placeholder="ABC12345"
-                  style={{ textTransform: 'uppercase' }}
-                />
+                    id="invite_code"
+                    type="text"
+                    maxLength={8}
+                    {...register('invite_code')}
+                    disabled={isValidatingInvite}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleNext();
+                      }
+                    }}
+                    className="w-full px-4 py-3 bg-surface border border-surface-border rounded-lg text-neutral-50 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all uppercase font-mono tracking-wider text-center text-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                    placeholder="ABC12345"
+                    style={{ textTransform: 'uppercase' }}
+                  />
                 {errors.invite_code && (
                   <p className="mt-2 text-sm text-error-200">
                     {errors.invite_code.message}

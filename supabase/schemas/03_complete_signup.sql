@@ -91,11 +91,11 @@ declare
   v_new_user_id uuid;
   v_avatar_url text;
 begin
-  -- Rate limiting: 5 second delay to prevent brute force attacks
-  -- This prevents attackers from bypassing validate_invite_code() and calling complete_signup() directly
-  perform pg_sleep(5);
+   -- Rate limiting: 5 second delay to prevent brute force attacks
+   -- This prevents attackers from bypassing validate_invite_code() and calling complete_signup() directly
+   perform pg_sleep(5);
 
-  -- Get the authenticated user's ID
+   -- Get the authenticated user's ID
   v_auth_user_id := auth.uid();
 
   -- Security check: must be authenticated
@@ -111,7 +111,7 @@ begin
   -- Validate and fetch invite code
   select * into v_invite_record
   from public.invite
-  where invite_code = p_invite_code
+  where invite_code = upper(p_invite_code)
     and used_at is null
     and revoked_at is null;
 

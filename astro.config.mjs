@@ -10,7 +10,11 @@ import { platformName } from './src/lib/globals';
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: false,
+    },
+  }),
   integrations: [
     react(),
     mdx(),
