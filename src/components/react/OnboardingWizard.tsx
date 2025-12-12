@@ -26,12 +26,12 @@ const onboardingSchema = z.object({
 type OnboardingFormData = z.infer<typeof onboardingSchema>;
 
 export default function OnboardingWizard() {
-   const [step, setStep] = useState(1);
-   const [isLoading, setIsLoading] = useState(false);
-   const [isValidatingInvite, setIsValidatingInvite] = useState(false);
-   const [isSigningOut, setIsSigningOut] = useState(false);
-   const [error, setError] = useState<string | null>(null);
-   const submitButtonRef = React.useRef<HTMLButtonElement>(null);
+  const [step, setStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isValidatingInvite, setIsValidatingInvite] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const submitButtonRef = React.useRef<HTMLButtonElement>(null);
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
@@ -78,18 +78,18 @@ export default function OnboardingWizard() {
         }
       );
 
-      console.log('Signup response:', { result, signupError });
-
       if (signupError) {
         console.error('Signup error:', signupError);
-        const errorMessage = signupError.message || 'Failed to complete signup. Please try again.';
+        const errorMessage =
+          signupError.message || 'Failed to complete signup. Please try again.';
         setError(errorMessage);
         return;
       }
 
       if (!result?.success) {
         console.error('Signup failed - not successful:', result);
-        const errorMsg = result?.error || 'Failed to complete signup. Please try again.';
+        const errorMsg =
+          result?.error || 'Failed to complete signup. Please try again.';
         setError(errorMsg);
         return;
       }
@@ -98,7 +98,10 @@ export default function OnboardingWizard() {
       window.location.href = '/dashboard';
     } catch (err) {
       console.error('Unexpected error during signup:', err);
-      const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred. Please try again.';
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : 'An unexpected error occurred. Please try again.';
       setError(errorMessage);
     } finally {
       setIsLoading(false);
@@ -183,7 +186,12 @@ export default function OnboardingWizard() {
   return (
     <div className="w-full max-w-2xl mx-auto">
       <Card title="Complete Your Profile">
-        <form onSubmit={handleSubmit(onSubmit)} onKeyDown={handleFormKeyDown} className="space-y-6">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          onKeyDown={handleFormKeyDown}
+          className="space-y-6"
+          role="presentation"
+        >
           {/* Progress indicator */}
           <div className="space-y-2">
             <div className="flex justify-between items-center text-sm text-neutral-400">
@@ -227,15 +235,15 @@ export default function OnboardingWizard() {
                   Invite Code *
                 </label>
                 <input
-                    id="invite_code"
-                    type="text"
-                    maxLength={8}
-                    {...register('invite_code')}
-                    disabled={isValidatingInvite}
-                    className="w-full px-4 py-3 bg-surface border border-surface-border rounded-lg text-neutral-50 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all uppercase font-mono tracking-wider text-center text-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                    placeholder="ABC12345"
-                    style={{ textTransform: 'uppercase' }}
-                  />
+                  id="invite_code"
+                  type="text"
+                  maxLength={8}
+                  {...register('invite_code')}
+                  disabled={isValidatingInvite}
+                  className="w-full px-4 py-3 bg-surface border border-surface-border rounded-lg text-neutral-50 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all uppercase font-mono tracking-wider text-center text-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  placeholder="ABC12345"
+                  style={{ textTransform: 'uppercase' }}
+                />
                 {errors.invite_code && (
                   <p className="mt-2 text-sm text-error-200">
                     {errors.invite_code.message}
@@ -473,7 +481,11 @@ export default function OnboardingWizard() {
                 <Button type="button" variant="neutral" onClick={handleBack}>
                   ← Back
                 </Button>
-                <Button ref={submitButtonRef} type="submit" disabled={isLoading}>
+                <Button
+                  ref={submitButtonRef}
+                  type="submit"
+                  disabled={isLoading}
+                >
                   {isLoading ? 'Completing...' : 'Complete Signup'}
                 </Button>
               </div>

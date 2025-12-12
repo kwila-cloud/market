@@ -2,7 +2,9 @@ import type {
   ButtonHTMLAttributes,
   AnchorHTMLAttributes,
   ReactNode,
+  Ref,
 } from 'react';
+import { forwardRef } from 'react';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'neutral' | 'danger';
 
@@ -36,33 +38,52 @@ const variantStyles: Record<ButtonVariant, string> = {
     'bg-error hover:bg-error-600 text-white focus:ring-error focus:ring-offset-surface',
 };
 
-export default function Button(props: ButtonProps) {
-  const {
-    variant = 'primary',
-    fullWidth = false,
-    children,
-    className = '',
-    ...rest
-  } = props;
+const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
+  (props, ref) => {
+    const {
+      variant = 'primary',
+      fullWidth = false,
+      children,
+      className = '',
+      ...rest
+    } = props;
 
-  const baseClassName = `cursor-pointer px-4 py-2 text-sm font-bold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${fullWidth ? 'w-full' : ''} ${className}`;
+    const baseClassName = `cursor-pointer px-4 py-2 text-sm font-bold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${variantStyles[variant]} ${fullWidth ? 'w-full' : ''} ${className}`;
 
-  if ('href' in props && props.href) {
-    const { href, ...linkProps } = rest as Omit<ButtonAsLink, keyof BaseProps>;
+    if ('href' in props && props.href) {
+      const { href, ...linkProps } = rest as Omit<
+        ButtonAsLink,
+        keyof BaseProps
+      >;
+      return (
+        <a
+          ref={ref as Ref<HTMLAnchorElement>}
+          href={href}
+          className={baseClassName}
+          {...linkProps}
+        >
+          {children}
+        </a>
+      );
+    }
+
+    const { disabled, ...buttonProps } = rest as Omit<
+      ButtonAsButton,
+      keyof BaseProps
+    >;
     return (
-      <a href={href} className={baseClassName} {...linkProps}>
+      <button
+        ref={ref as Ref<HTMLButtonElement>}
+        className={baseClassName}
+        disabled={disabled}
+        {...buttonProps}
+      >
         {children}
-      </a>
+      </button>
     );
   }
+);
 
-  const { disabled, ...buttonProps } = rest as Omit<
-    ButtonAsButton,
-    keyof BaseProps
-  >;
-  return (
-    <button className={baseClassName} disabled={disabled} {...buttonProps}>
-      {children}
-    </button>
-  );
-}
+Button.displayName = 'Button';
+
+export default Button;
