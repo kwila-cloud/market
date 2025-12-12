@@ -453,7 +453,8 @@ export default function OnboardingWizard() {
                 type="button"
                 variant="neutral"
                 disabled={isLoading}
-                onClick={handleBack}>
+                onClick={handleBack}
+              >
                 ← Back
               </Button>
             )}
