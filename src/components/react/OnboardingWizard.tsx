@@ -7,6 +7,13 @@ import Button from './Button';
 import Card from './Card';
 import ErrorAlert from './ErrorAlert';
 
+const STEPS = {
+  INVITE_CODE: 1,
+  CONTACT_VISIBILITY: 2,
+  PROFILE_INFO: 3,
+  REVIEW: 4,
+} as const;
+
 const step1Schema = z.object({
   invite_code: z
     .string()
@@ -57,7 +64,6 @@ export default function OnboardingWizard() {
     watch,
     setValue,
     trigger,
-    getValues,
   } = useForm<OnboardingFormData>({
     resolver: zodResolver(fullSchema),
     mode: 'onSubmit',
@@ -73,7 +79,7 @@ export default function OnboardingWizard() {
     setIsLoading(true);
     setError(null);
 
-    if (step === 4) {
+    if (step === STEPS.REVIEW) {
       try {
         const supabase = createSupabaseBrowserClient();
 
@@ -115,24 +121,22 @@ export default function OnboardingWizard() {
         setError(errorMessage);
       }
     } else {
-      // Validate only current step's fields
-      const currentStepFields =
-        step === 1
-          ? ['invite_code']
-          : step === 2
-            ? ['contact_visibility']
-            : step == 3
-              ? ['display_name', 'about']
-              : [];
+      const stepFieldsMap: Record<number, string[]> = {
+        [STEPS.INVITE_CODE]: ['invite_code'],
+        [STEPS.CONTACT_VISIBILITY]: ['contact_visibility'],
+        [STEPS.PROFILE_INFO]: ['display_name', 'about'],
+      };
 
+      // Validate only current step's fields
+      const currentStepFields = stepFieldsMap[step] || [];
       const isValid = await trigger(currentStepFields as never);
 
       if (!isValid) {
         return;
       }
 
-      // Additional validation for step 1: check invite code validity
-      if (step === 1) {
+      // Additional validation for invite code step: check validity
+      if (step === STEPS.INVITE_CODE) {
         const inviteCode = formValues.invite_code?.toUpperCase();
 
         try {
@@ -165,11 +169,6 @@ export default function OnboardingWizard() {
     setStep(step - 1);
   };
 
-  const handleComplete = async () => {
-    setIsLoading(true);
-    setError(null);
-  };
-
   // Generate avatar preview URL
   const avatarUrl = formValues.display_name
     ? `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(formValues.display_name)}`
@@ -186,7 +185,7 @@ export default function OnboardingWizard() {
           {/* Progress indicator */}
           <div className="space-y-2">
             <div className="flex justify-between items-center text-sm text-neutral-400">
-              <span>Step {step} of 4</span>
+              <span>Step {step} of {STEPS.REVIEW}</span>
               <button
                 type="button"
                 onClick={handleSignOut}
@@ -199,15 +198,15 @@ export default function OnboardingWizard() {
             <div className="w-full bg-surface-border rounded-full h-2">
               <div
                 className="bg-primary rounded-full h-2 transition-all duration-300"
-                style={{ width: `${(step / 4) * 100}%` }}
+                style={{ width: `${(step / STEPS.REVIEW) * 100}%` }}
               />
             </div>
           </div>
 
           {error && <ErrorAlert message={error} />}
 
-          {/* Step 1: Invite Code */}
-          {step === 1 && (
+          {/* Invite Code Step */}
+          {step === STEPS.INVITE_CODE && (
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-semibold text-neutral-50 mb-2">
@@ -249,8 +248,8 @@ export default function OnboardingWizard() {
             </div>
           )}
 
-          {/* Step 2: Contact Visibility */}
-          {step === 2 && (
+          {/* Contact Visibility Step */}
+          {step === STEPS.CONTACT_VISIBILITY && (
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-semibold text-neutral-50 mb-2">
@@ -331,8 +330,8 @@ export default function OnboardingWizard() {
             </div>
           )}
 
-          {/* Step 3: Display Name & Bio */}
-          {step === 3 && (
+          {/* Profile Info Step */}
+          {step === STEPS.PROFILE_INFO && (
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-semibold text-neutral-50 mb-2">
@@ -390,8 +389,8 @@ export default function OnboardingWizard() {
             </div>
           )}
 
-          {/* Step 4: Review & Complete */}
-          {step === 4 && (
+          {/* Review Step */}
+          {step === STEPS.REVIEW && (
             <div className="space-y-4">
               <div>
                 <h3 className="text-lg font-semibold text-neutral-50 mb-2">
@@ -447,7 +446,7 @@ export default function OnboardingWizard() {
 
           {/* Navigation buttons */}
           <div className="pt-4 flex justify-between">
-            {step > 1 && (
+            {step > STEPS.INVITE_CODE && (
               <Button type="button" variant="neutral" onClick={handleBack}>
                 ← Back
               </Button>
@@ -455,9 +454,13 @@ export default function OnboardingWizard() {
             <Button
               type="submit"
               disabled={isLoading}
-              className={step === 1 ? 'ml-auto' : ''}
+              className={step === STEPS.INVITE_CODE ? 'ml-auto' : ''}
             >
-              {isLoading ? 'Validating...' : (step === 4 ? 'Complete Signup' : 'Next Step →')}
+              {isLoading
+                ? 'Validating...'
+                : step === STEPS.REVIEW
+                  ? 'Complete Signup'
+                  : 'Next Step →'}
             </Button>
           </div>
         </form>
