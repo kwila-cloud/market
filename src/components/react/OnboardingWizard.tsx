@@ -75,7 +75,8 @@ export default function OnboardingWizard() {
   const formValues = watch();
 
 
-  const handleNext = async () => {
+  const handleNext = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     setIsLoading(true);
     setError(null);
 
@@ -132,6 +133,7 @@ export default function OnboardingWizard() {
       const isValid = await trigger(currentStepFields as never);
 
       if (!isValid) {
+        setIsLoading(false);
         return;
       }
 
@@ -147,6 +149,7 @@ export default function OnboardingWizard() {
 
           if (error || !data?.valid) {
             setError(data?.error || 'Invalid or already used invite code');
+            setIsLoading(false);
             return;
           }
 
@@ -155,6 +158,7 @@ export default function OnboardingWizard() {
         } catch (err) {
           console.error('Invite validation error:', err);
           setError('Failed to validate invite code. Please try again.');
+          setIsLoading(false);
           return;
         }
       }
