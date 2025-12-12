@@ -44,6 +44,7 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 
 ### Development Workflow
 
+**NPM Commands:**
 - **Frontend**: `npm run start:frontend` - Start Astro dev server (localhost:4321)
 - **Backend**: `npm run start:backend` - Start local Supabase services
 - **Stop backend**: `npm run stop:backend` - Stop local Supabase services
@@ -55,10 +56,13 @@ This is a request-driven marketplace that prioritizes relationships over profit.
   - `npm run test:unit` - Run unit tests with Vitest
   - `npm run test:e2e` - Run E2E tests with Playwright
   - Note: CI runs unit and E2E tests separately
-- **Database**:
-  - `npm run db:types` - Generate TypeScript types from schema
-  - `npm run db:reset` - Reset local DB with fresh schema and seed data
-- **Direct CLI access**: Use `npx astro` or `npx supabase` for advanced operations
+
+**Just Recipes (for database operations):**
+- **Database migrations**: `just db-diff <migration_name>` - Generate migration from schema changes
+- **Reset DB**: `just db-reset` - Reset local DB with fresh schema and seed data
+- **Generate types**: `just db-types` - Generate TypeScript types from schema
+
+**Direct CLI access**: Use `npx astro` or `npx supabase` for advanced operations
 
 ### Security & Best Practices
 

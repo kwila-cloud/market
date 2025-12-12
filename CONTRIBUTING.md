@@ -79,8 +79,9 @@ npm run test:unit         # Run unit tests with Vitest
 npm run test:e2e          # Run E2E tests with Playwright
 
 # Database
-npm run db:types          # Generate TypeScript types from schema
-npm run db:reset          # Reset DB - fresh schema and seed data
+just db-diff <name>       # Generate migration from schema changes
+just db-reset             # Reset DB - fresh schema and seed data
+just db-types             # Generate TypeScript types from schema
 ```
 
 ### Direct CLI Access
@@ -170,6 +171,6 @@ Remember: PR titles should quickly communicate the core change, not list every t
 
 ### Schema Migrations
 
-Database changes should be made to the schema files in `supabase/schemas`, then run `npx run supbase db -f <migration-name>` to generate migrations.
+Database changes should be made to the schema files in `supabase/schemas`, then run `just db-diff <migration-name>` to generate migrations.
 
 Some schema changes are not compatible with automatic migration generation. See [here](https://supabase.com/docs/guides/local-development/declarative-database-schemas#known-caveats) for things that will require manual migration scripts.

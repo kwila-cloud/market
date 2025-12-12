@@ -3,9 +3,6 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "start:frontend": "astro dev",
-    "start:backend": "supabase start",
-    "stop:backend": "supabase stop",
     "build:frontend": "astro build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -13,9 +10,7 @@
     "format:check": "prettier --check .",
     "type-check": "astro check",
     "test:unit": "vitest run",
-    "test:e2e": "playwright test",
-    "db:types": "supabase gen types typescript --local > src/lib/database.types.ts",
-    "db:reset": "supabase db reset"
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.5",

@@ -186,9 +186,3 @@ grant execute on function public.complete_signup(text, text, text, visibility) t
 -- Add comment for documentation
 comment on function public.complete_signup is
    'Completes user signup after OTP verification. Creates user profile, establishes connection with inviter, and marks invite as used. Must be called by authenticated user without existing profile.';
-
--- Increase statement timeout for authenticated and anon roles
--- Default is 8s, we need at least 10s for safety (5s sleep + query execution time)
--- This accommodates pg_sleep(5) calls in validate_invite_code and complete_signup RPCs
-alter role authenticated set statement_timeout = '15s';
-alter role anon set statement_timeout = '15s';
