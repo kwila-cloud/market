@@ -72,6 +72,7 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 - **Don't modify git config**
 - **Always use pre-existing layouts** from `src/layouts/` for page structure consistency
 - **Always use pre-existing component** from `src/components/` for UI consistency and less duplicate code
+- **React components with hooks**: Use `client:only="react"` instead of `client:load` to avoid SSR errors. `client:only` skips server rendering and runs only in the browser, which prevents "Invalid hook call" errors when components use `useState`, `useEffect`, etc.
 
 ### Contribution Process
 

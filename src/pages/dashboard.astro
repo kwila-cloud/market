@@ -23,7 +23,7 @@ const createdAt = user?.created_at
     title="Dashboard"
     description="Your home in the market. We'll keep adding tools as we grow."
   >
-    <LogoutButton slot="action" client:load />
+    <LogoutButton slot="action" client:only="react" />
   </PageHeader>
 
   <div class="space-y-6">

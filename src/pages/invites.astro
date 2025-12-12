@@ -40,5 +40,5 @@ if (error) {
     description="Invite trusted connections to join the marketplace. You can generate one new invite code every 24 hours."
   />
 
-  <InviteManager client:load initialInvites={invites || []} />
+  <InviteManager client:only="react" initialInvites={invites || []} />
 </PageLayoutWithBreadcrumbs>
