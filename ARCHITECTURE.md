@@ -238,8 +238,8 @@ project-root/
     └── workflows/
         ├── ci.yml                  # CI/CD pipeline
         ├── code-review.yml
-        ├── opencode.yml
-        └── preview-deploy.yaml
+        ├── deploy.yml              # Manual deployment to Cloudflare Workers
+        └── opencode.yml
 ```
 
 ## Security
