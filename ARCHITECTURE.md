@@ -10,16 +10,16 @@ A trust-based, invite-only marketplace built with Astro, React, and Supabase. Us
 
 All infrastructure defined as code:
 
-- **Supabase**: Database schema via declarative SQL files in `supabase/schemas/`, migrations auto-generated via `supabase db diff`
+- **Supabase**: Database schema via declarative SQL files in `supabase/schemas/`, migrations auto-generated via `just db-diff <migration-name>`
 - **Cloudflare**: Workers config in `wrangler.toml`, environment variables in `.dev.vars`
 - **Benefits**: Version controlled, reproducible, reviewable, no manual dashboard configuration, single source of truth
 
 ### 2. Local Development Parity
 
-Full stack runs locally via `npm run` commands:
+Full stack runs locally via `just` recipes:
 
-- Supabase stack (database, auth, storage, API)
-- Astro dev server
+- `just start-backend` - Supabase stack (database, auth, storage, API)
+- `just start-frontend-local` - Astro dev server
 - Twilio test credentials
 - No cloud dependencies for development
 
@@ -53,11 +53,12 @@ Every feature should support both power users and those who rank low on the "tec
 
 ### Backend
 
-- **Database**: Supabase (PostgreSQL)
-- **Authentication**: Supabase Auth (email/phone OTP via Twilio)
-- **Storage**: Supabase Storage (images bucket with structured folders: avatars/, items/, messages/)
-- **Real-time**: Supabase Realtime
-- **API**: Supabase REST + PostgREST with RLS, Custom API routes with JWT authentication
+- **Database**: PostgreSQL (via Supabase)
+- **Authentication**: Email/phone OTP via Supabase Auth (passwordless)
+- **Authorization**: Row-Level Security (RLS) policies enforce all access control
+- **Storage**: Supabase Storage (structured buckets: avatars/, items/, messages/)
+- **Real-time**: Supabase Realtime (for messaging, presence)
+- **API**: Supabase REST API with RLS, Custom Astro API routes with JWT authentication
 
 ### Deployment
 
@@ -89,17 +90,21 @@ See [here](supabase/schemas)
 
 ### Invite & Onboarding
 
-1. User clicks invite link with code
-1. Server validates code (not used, not revoked)
-1. Shows inviter name + auth method choice (email or phone OTP)
-1. User enters email/phone, receives OTP (Supabase/Twilio)
-1. Verifies OTP, creates account
-1. Creates user record with invited_by
-1. Creates contact_info (visibility=hidden)
-1. Creates connection (user_a=inviter, user_b=invitee, status='accepted')
-1. Marks invite as used
-1. Mandatory 3-step wizard: account type, contact visibility, about/avatar
-1. Redirects to dashboard
+1. User receives invite code from existing member
+1. User enters email/phone, receives OTP (Supabase Auth)
+1. Verifies OTP, creates authenticated account (no user profile yet)
+1. Completes 4-step onboarding wizard:
+   - **Step 1 - Invite Code**: Validates via `validate_invite_code()` RPC (5-second rate limit), prefills display name
+   - **Step 2 - Contact Visibility**: Choose hidden/connections-only/public
+   - **Step 3 - Profile Info**: Display name (prefilled), optional bio
+   - **Step 4 - Review**: Verify all info, avatar preview (auto-generated via dicebear)
+1. On final submission, `complete_signup()` RPC executes atomically:
+   - Creates user profile with invited_by relationship
+   - Creates contact_info with specified visibility
+   - Establishes accepted connection with inviter
+   - Marks invite code as used
+   - Includes 5-second rate limit (defense-in-depth)
+1. Redirects to dashboard with full access
 
 ### Item Creation
 
