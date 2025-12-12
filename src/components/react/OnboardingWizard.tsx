@@ -449,7 +449,11 @@ export default function OnboardingWizard() {
           {/* Navigation buttons */}
           <div className="pt-4 flex justify-between">
             {step > STEPS.INVITE_CODE && (
-              <Button type="button" variant="neutral" onClick={handleBack}>
+              <Button
+                type="button"
+                variant="neutral"
+                disabled={isLoading}
+                onClick={handleBack}>
                 ← Back
               </Button>
             )}
