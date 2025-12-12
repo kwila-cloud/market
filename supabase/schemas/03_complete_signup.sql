@@ -1,12 +1,4 @@
--- Complete signup function and auth_user_id column
--- Replaces the automatic user creation trigger with manual signup completion
-
--- Add auth_user_id column to user table
--- This explicitly tracks which auth.users record owns each user profile
-alter table "user" add column if not exists auth_user_id uuid unique not null references auth.users(id) on delete cascade;
-
--- Create index for performance
-create index if not exists idx_user_auth_user_id on "user"(auth_user_id);
+-- Complete signup RPC functions and role configuration
 
 -- Helper function to get user by auth ID
 -- Useful for RLS policies and API endpoints
@@ -179,12 +171,12 @@ begin
   );
 
 exception
-  when others then
-    -- Return error details for debugging
-    return jsonb_build_object(
-      'success', false,
-      'error', SQLERRM
-    );
+   when others then
+     -- Return generic error message without exposing internal details
+     return jsonb_build_object(
+       'success', false,
+       'error', 'Failed to complete signup. Please try again.'
+     );
 end;
 $$;
 
@@ -193,4 +185,10 @@ grant execute on function public.complete_signup(text, text, text, visibility) t
 
 -- Add comment for documentation
 comment on function public.complete_signup is
-  'Completes user signup after OTP verification. Creates user profile, establishes connection with inviter, and marks invite as used. Must be called by authenticated user without existing profile.';
+   'Completes user signup after OTP verification. Creates user profile, establishes connection with inviter, and marks invite as used. Must be called by authenticated user without existing profile.';
+
+-- Increase statement timeout for authenticated and anon roles
+-- Default is 8s, we need at least 10s for safety (5s sleep + query execution time)
+-- This accommodates pg_sleep(5) calls in validate_invite_code and complete_signup RPCs
+alter role authenticated set statement_timeout = '15s';
+alter role anon set statement_timeout = '15s';

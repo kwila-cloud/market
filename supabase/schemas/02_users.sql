@@ -3,6 +3,7 @@
 -- Main user profile table
 create table "user" (
     id uuid primary key default uuid_generate_v4(),
+    auth_user_id uuid unique not null references auth.users(id) on delete cascade,
     display_name text not null,
     about text,
     avatar_url text,
@@ -10,6 +11,9 @@ create table "user" (
     created_at timestamptz not null default now(),
     invited_by uuid references "user"(id)
 );
+
+-- Create index for performance
+create index idx_user_auth_user_id on "user"(auth_user_id);
 
 -- Contact information for users (email/phone)
 create table contact_info (
