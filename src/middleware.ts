@@ -3,7 +3,6 @@ import {
   getUser,
   publicRoutes,
   authRoutes,
-  protectedRoutes,
   createSupabaseServerClient,
 } from './lib/auth';
 
@@ -20,9 +19,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
   const isAuthRoute = authRoutes.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`)
-  );
-  const isProtectedRoute = protectedRoutes.some(
     (route) => pathname === route || pathname.startsWith(`${route}/`)
   );
 
@@ -53,12 +49,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   // Redirect to login if accessing protected/auth route without auth
-  if (!isPublicRoute && !isProtectedRoute && !user) {
-    return context.redirect('/auth/login');
-  }
-
-  // Redirect to login if accessing protected routes without auth
-  if (isProtectedRoute && !user) {
+  if (!isPublicRoute && !user) {
     return context.redirect('/auth/login');
   }
 
