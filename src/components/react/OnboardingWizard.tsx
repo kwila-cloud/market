@@ -74,7 +74,6 @@ export default function OnboardingWizard() {
 
   const formValues = watch();
 
-
   const handleNext = async (e?: React.FormEvent) => {
     e?.preventDefault();
     setIsLoading(true);
@@ -98,7 +97,8 @@ export default function OnboardingWizard() {
         if (signupError) {
           console.error('Signup error:', signupError);
           const errorMessage =
-            signupError.message || 'Failed to complete signup. Please try again.';
+            signupError.message ||
+            'Failed to complete signup. Please try again.';
           setError(errorMessage);
           return;
         }
@@ -181,15 +181,13 @@ export default function OnboardingWizard() {
   return (
     <div className="w-full max-w-2xl mx-auto">
       <Card title="Complete Your Profile">
-        <form
-          onSubmit={handleNext}
-          className="space-y-6"
-          role="presentation"
-        >
+        <form onSubmit={handleNext} className="space-y-6" role="presentation">
           {/* Progress indicator */}
           <div className="space-y-2">
             <div className="flex justify-between items-center text-sm text-neutral-400">
-              <span>Step {step} of {STEPS.REVIEW}</span>
+              <span>
+                Step {step} of {STEPS.REVIEW}
+              </span>
               <button
                 type="button"
                 onClick={handleSignOut}

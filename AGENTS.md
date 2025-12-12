@@ -45,6 +45,7 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 ### Development Workflow
 
 **Just Recipes:**
+
 - `just start-frontend-local` - Start Astro dev server (localhost:4321)
 - `just start-frontend-lan` - Start Astro dev server (0.0.0.0:4321 for LAN access)
 - `just start-backend` - Start local Supabase services
