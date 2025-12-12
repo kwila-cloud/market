@@ -53,6 +53,7 @@ export default function OnboardingWizard() {
     setValue,
   } = useForm<OnboardingFormData>({
     resolver: zodResolver(onboardingSchema),
+    mode: 'onBlur',
     defaultValues: {
       contact_visibility: 'hidden',
     },
@@ -111,14 +112,14 @@ export default function OnboardingWizard() {
   const handleNext = async () => {
     setError(null);
 
+    // Don't advance if there are validation errors
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
     // If moving from step 1 (invite code), validate it first
     if (step === 1) {
       const inviteCode = formValues.invite_code?.toUpperCase();
-
-      if (!inviteCode || inviteCode.length !== 8) {
-        setError('Please enter a valid 8-character invite code');
-        return;
-      }
 
       setIsValidatingInvite(true);
 
@@ -255,16 +256,6 @@ export default function OnboardingWizard() {
                   </p>
                 )}
               </div>
-
-              <div className="flex justify-end pt-4">
-                <Button
-                  type="button"
-                  onClick={handleNext}
-                  disabled={isValidatingInvite}
-                >
-                  {isValidatingInvite ? 'Validating...' : 'Next Step →'}
-                </Button>
-              </div>
             </div>
           )}
 
@@ -347,12 +338,6 @@ export default function OnboardingWizard() {
                   </div>
                 </label>
               </div>
-
-              <div className="flex justify-end pt-4">
-                <Button type="button" onClick={handleNext}>
-                  Next Step →
-                </Button>
-              </div>
             </div>
           )}
 
@@ -412,15 +397,6 @@ export default function OnboardingWizard() {
                   {formValues.about?.length || 0} / 500 characters
                 </p>
               </div>
-
-              <div className="flex justify-between pt-4">
-                <Button type="button" variant="neutral" onClick={handleBack}>
-                  ← Back
-                </Button>
-                <Button type="button" onClick={handleNext}>
-                  Next Step →
-                </Button>
-              </div>
             </div>
           )}
 
@@ -476,21 +452,36 @@ export default function OnboardingWizard() {
                   </div>
                 </div>
               </div>
-
-              <div className="flex justify-between pt-4">
-                <Button type="button" variant="neutral" onClick={handleBack}>
-                  ← Back
-                </Button>
-                <Button
-                  ref={submitButtonRef}
-                  type="submit"
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Completing...' : 'Complete Signup'}
-                </Button>
-              </div>
             </div>
           )}
+
+          {/* Navigation buttons */}
+          <div className="pt-4 flex justify-between">
+            {step > 1 && (
+              <Button type="button" variant="neutral" onClick={handleBack}>
+                ← Back
+              </Button>
+            )}
+            {step < 4 && (
+              <Button
+                type="button"
+                onClick={handleNext}
+                disabled={isValidatingInvite || Object.keys(errors).length > 0}
+                className={step === 1 ? 'ml-auto' : ''}
+              >
+                {isValidatingInvite ? 'Validating...' : 'Next Step →'}
+              </Button>
+            )}
+            {step === 4 && (
+              <Button
+                ref={submitButtonRef}
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Completing...' : 'Complete Signup'}
+              </Button>
+            )}
+          </div>
         </form>
       </Card>
     </div>
