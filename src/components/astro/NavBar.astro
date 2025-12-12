@@ -38,13 +38,13 @@ const { user } = Astro.props;
               href="/auth/login"
               variant="primary"
               className="py-2"
-              client:idle
+              client:only="react"
             >
               Sign in
             </Button>
           )
         }
-        <ThemeSelector client:load />
+        <ThemeSelector client:only="react" />
       </div>
     </div>
   </div>

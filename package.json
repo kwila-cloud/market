@@ -2,21 +2,7 @@
   "name": "market",
   "type": "module",
   "version": "0.0.1",
-  "scripts": {
-    "start:frontend": "astro dev",
-    "start:backend": "supabase start",
-    "stop:backend": "supabase stop",
-    "build:frontend": "astro build",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "type-check": "astro check",
-    "test:unit": "vitest run",
-    "test:e2e": "playwright test",
-    "db:types": "supabase gen types typescript --local > src/lib/database.types.ts",
-    "db:reset": "supabase db reset"
-  },
+  "scripts": {},
   "dependencies": {
     "@astrojs/check": "^0.9.5",
     "@astrojs/cloudflare": "^12.6.10",
@@ -58,7 +44,7 @@
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
-    "supabase": "^2.58.5",
+    "supabase": "^2.65.5",
     "tailwindcss": "^4.1.17",
     "vitest": "^4.0.9",
     "wrangler": "^4.46.0"

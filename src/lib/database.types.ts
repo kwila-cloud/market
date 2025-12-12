@@ -392,6 +392,7 @@ export type Database = {
       user: {
         Row: {
           about: string | null;
+          auth_user_id: string;
           avatar_url: string | null;
           created_at: string;
           display_name: string;
@@ -401,6 +402,7 @@ export type Database = {
         };
         Insert: {
           about?: string | null;
+          auth_user_id: string;
           avatar_url?: string | null;
           created_at?: string;
           display_name: string;
@@ -410,6 +412,7 @@ export type Database = {
         };
         Update: {
           about?: string | null;
+          auth_user_id?: string;
           avatar_url?: string | null;
           created_at?: string;
           display_name?: string;
@@ -509,7 +512,21 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      can_create_invite: { Args: { user_id: string }; Returns: boolean };
+      complete_signup: {
+        Args: {
+          p_about: string;
+          p_contact_visibility: Database['public']['Enums']['visibility'];
+          p_display_name: string;
+          p_invite_code: string;
+        };
+        Returns: Json;
+      };
+      get_user_by_auth_id: {
+        Args: { p_auth_user_id: string };
+        Returns: string;
+      };
+      validate_invite_code: { Args: { p_invite_code: string }; Returns: Json };
     };
     Enums: {
       connection_status: 'pending' | 'accepted' | 'declined';

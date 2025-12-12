@@ -44,21 +44,25 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 
 ### Development Workflow
 
-- **Frontend**: `npm run start:frontend` - Start Astro dev server (localhost:4321)
-- **Backend**: `npm run start:backend` - Start local Supabase services
-- **Stop backend**: `npm run stop:backend` - Stop local Supabase services
-- **Build**: `npm run build:frontend` - Build for production
-- **Type checking**: `npm run type-check` - Run Astro type checker
-- **Linting**: `npm run lint` or `npm run lint:fix` - ESLint checks
-- **Formatting**: `npm run format` or `npm run format:check` - Prettier formatting
-- **Testing**:
-  - `npm run test:unit` - Run unit tests with Vitest
-  - `npm run test:e2e` - Run E2E tests with Playwright
-  - Note: CI runs unit and E2E tests separately
-- **Database**:
-  - `npm run db:types` - Generate TypeScript types from schema
-  - `npm run db:reset` - Reset local DB with fresh schema and seed data
-- **Direct CLI access**: Use `npx astro` or `npx supabase` for advanced operations
+**Just Recipes:**
+
+- `just start-frontend-local` - Start Astro dev server (localhost:4321)
+- `just start-frontend-lan` - Start Astro dev server (0.0.0.0:4321 for LAN access)
+- `just start-backend` - Start local Supabase services
+- `just stop-backend` - Stop local Supabase services
+- `just build-frontend` - Build frontend for production
+- `just lint` - Run ESLint
+- `just lint-fix` - Fix ESLint issues
+- `just format` - Format with Prettier
+- `just format-check` - Check formatting
+- `just type-check` - Run TypeScript type checking
+- `just test-unit` - Run unit tests with Vitest
+- `just test-e2e` - Run E2E tests with Playwright
+- `just db-diff <migration_name>` - Generate migration from schema changes
+- `just db-reset` - Reset local DB with fresh schema and seed data
+- `just db-types` - Generate TypeScript types from schema
+
+**Direct CLI access**: Use `npx astro` or `npx supabase` for advanced operations
 
 ### Security & Best Practices
 
@@ -68,6 +72,7 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 - **Don't modify git config**
 - **Always use pre-existing layouts** from `src/layouts/` for page structure consistency
 - **Always use pre-existing component** from `src/components/` for UI consistency and less duplicate code
+- **React components with hooks**: Use `client:only="react"` instead of `client:load` to avoid SSR errors. `client:only` skips server rendering and runs only in the browser, which prevents "Invalid hook call" errors when components use `useState`, `useEffect`, etc.
 
 ### Contribution Process
 
@@ -98,7 +103,7 @@ This is a request-driven marketplace that prioritizes relationships over profit.
 2. **Adding features**: Check existing specs, create new spec if needed
 3. **Bug fixes**: Check if related spec exists, verify with tests
 4. **Tests**:
-   - Run `npm run test:unit` before committing changes
+   - Run `just test-unit` before committing changes
    - Write unit tests for utilities in `tests/unit/`
    - Write E2E tests for user flows in `tests/e2e/`
    - See `tests/README.md` for testing guidelines

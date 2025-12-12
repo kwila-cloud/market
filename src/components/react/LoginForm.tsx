@@ -4,6 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createSupabaseBrowserClient } from '../../lib/auth';
 import Button from './Button';
+import ErrorAlert from './ErrorAlert';
+import Card from './Card';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -31,9 +33,6 @@ export default function LoginForm() {
       const supabase = createSupabaseBrowserClient();
       const { error: signInError } = await supabase.auth.signInWithOtp({
         email: data.email,
-        options: {
-          shouldCreateUser: false,
-        },
       });
 
       if (signInError) {
@@ -62,53 +61,42 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-neutral-50 mb-2">
-          Welcome back
-        </h2>
-        <p className="text-neutral-300 text-sm">
-          Enter your email to receive a one-time password
-        </p>
-      </div>
+    <div className="w-full max-w-2xl mx-auto">
+      <Card title="Welcome">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <p className="text-neutral-300 text-sm">
+            Enter your email to receive a one-time password
+          </p>
 
-      {error && (
-        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-red-400 text-sm">
-          {error}
-        </div>
-      )}
+          {error && <ErrorAlert message={error} />}
 
-      <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-neutral-200 mb-2"
-        >
-          Email address
-        </label>
-        <input
-          id="email"
-          type="email"
-          autoComplete="email"
-          {...register('email')}
-          className="w-full px-4 py-3 bg-surface border border-surface-border rounded-lg text-neutral-50 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-          placeholder="you@example.com"
-        />
-        {errors.email && (
-          <p className="mt-2 text-sm text-red-400">{errors.email.message}</p>
-        )}
-      </div>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-neutral-200 mb-2"
+            >
+              Email address
+            </label>
+            <input
+              id="email"
+              type="email"
+              autoComplete="email"
+              {...register('email')}
+              className="w-full px-4 py-3 bg-surface border border-surface-border rounded-lg text-neutral-50 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              placeholder="you@example.com"
+            />
+            {errors.email && (
+              <p className="mt-2 text-sm text-red-400">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
 
-      <Button type="submit" fullWidth disabled={isLoading}>
-        {isLoading ? 'Sending...' : 'Continue with email'}
-      </Button>
-
-      <p className="text-center text-sm text-neutral-400">
-        Don&apos;t have an account?
-        <br />
-        <span className="font-bold">
-          You&apos;ll need an invite code to sign up.
-        </span>
-      </p>
-    </form>
+          <Button type="submit" fullWidth disabled={isLoading}>
+            {isLoading ? 'Sending...' : 'Continue'}
+          </Button>
+        </form>
+      </Card>
+    </div>
   );
 }

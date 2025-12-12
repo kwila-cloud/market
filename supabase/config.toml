@@ -48,6 +48,10 @@ max_client_conn = 100
 # [db.vault]
 # secret_key = "env(SECRET_VALUE)"
 
+[db.settings]
+# Increase statement timeout to accommodate pg_sleep(5) for rate limiting (in milliseconds)
+statement_timeout = 15000
+
 [db.migrations]
 # If disabled, migrations will be skipped during a db push or reset.
 enabled = true
@@ -135,7 +139,7 @@ enable_refresh_token_rotation = true
 # Requires enable_refresh_token_rotation = true.
 refresh_token_reuse_interval = 10
 # Allow/disallow new user signups to your project.
-enable_signup = false
+enable_signup = true
 # Allow/disallow anonymous sign-ins to your project.
 enable_anonymous_sign_ins = false
 # Allow/disallow testing manual linking of accounts

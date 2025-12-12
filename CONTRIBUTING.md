@@ -30,10 +30,10 @@ npm install
 cp .env.example .env
 
 # Start the backend (Supabase local)
-npm run start:backend
+just start-backend
 
 # In a new terminal, start the frontend
-npm run start:frontend
+just start-frontend-local
 ```
 
 The frontend will be available at http://localhost:4321
@@ -53,7 +53,7 @@ cp .env.example .env
 
 To get the publishable key for local development:
 
-1. Run `npm run start:backend`
+1. Run `just start-backend`
 2. Copy the `Publishable key` from the output
 3. Paste it as the value for `PUBLIC_SUPABASE_ANON_KEY` in your `.env` file
 
@@ -63,24 +63,27 @@ For production, these will be set in your deployment environment (e.g., Cloudfla
 
 ```bash
 # Development
-npm run start:frontend    # Start Astro dev server
-npm run start:backend     # Start local Supabase
-npm run stop:backend      # Stop local Supabase
+just start-frontend-local # Start Astro dev server (localhost only)
+just start-frontend-lan   # Start Astro dev server (LAN access)
+just start-backend        # Start local Supabase
+just stop-backend         # Stop local Supabase
+just build-frontend       # Build frontend for production
 
 # Code quality
-npm run lint              # Run ESLint
-npm run lint:fix          # Fix ESLint issues
-npm run format            # Format with Prettier
-npm run format:check      # Check formatting
-npm run type-check        # TypeScript type checking
+just lint                 # Run ESLint
+just lint-fix             # Fix ESLint issues
+just format               # Format with Prettier
+just format-check         # Check formatting
+just type-check           # TypeScript type checking
 
 # Testing
-npm run test:unit         # Run unit tests with Vitest
-npm run test:e2e          # Run E2E tests with Playwright
+just test-unit            # Run unit tests with Vitest
+just test-e2e             # Run E2E tests with Playwright
 
 # Database
-npm run db:types          # Generate TypeScript types from schema
-npm run db:reset          # Reset DB - fresh schema and seed data
+just db-diff <name>       # Generate migration from schema changes
+just db-reset             # Reset DB - fresh schema and seed data
+just db-types             # Generate TypeScript types from schema
 ```
 
 ### Direct CLI Access
@@ -170,6 +173,6 @@ Remember: PR titles should quickly communicate the core change, not list every t
 
 ### Schema Migrations
 
-Database changes should be made to the schema files in `supabase/schemas`, then run `npx run supbase db -f <migration-name>` to generate migrations.
+Database changes should be made to the schema files in `supabase/schemas`, then run `just db-diff <migration-name>` to generate migrations.
 
 Some schema changes are not compatible with automatic migration generation. See [here](https://supabase.com/docs/guides/local-development/declarative-database-schemas#known-caveats) for things that will require manual migration scripts.

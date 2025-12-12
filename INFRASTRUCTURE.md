@@ -4,22 +4,11 @@
 
 Cloudflare Workers for frontend SSR hosting.
 
-Deployments were set up in the Cloudflare dashboard with the GitHub integration. Production deployments run on `main` branch (automatically triggered in Cloudflare). Preview deployments run on pull requests triggered by GitHub Action that gets the appropriate environment variables for accessing the Supabase preview branch.
+Deployments run manually via `npx wrangler deploy` triggered by the GitHub Actions workflow (`.github/workflows/deploy.yml`) on push to the `main` branch. This workflow builds the Astro frontend and deploys to Cloudflare Workers.
 
 ## Database
 
 Supabase for database hosting.
-
-Preview branches are set up with the GitHub integration, using the following settings:
-
-- Supabase directory: .
-- Deploy to production: enabled
-- Production branch name: main
-- Automatic branching: enabled
-- Branch limit: 2
-- Supabase changes only: disabled
-
-The [preview deploy](.github/workflows/preview-deploy.yaml) workflow triggers Cloudflare preview deployments based on preview branches in Supabase.
 
 ## Storage
 
@@ -54,7 +43,7 @@ Supabase Auth with email OTP (one-time password) verification.
 
 ### Local Development
 
-Emails are caught by **Inbucket** (port 54324) during local development. Visit `http://localhost:54324` to view sent emails and OTP codes.
+Emails are caught by **Mailpit** (port 54324) during local development. Visit `http://localhost:54324` to view sent emails and OTP codes.
 
 ### Route Protection
 
