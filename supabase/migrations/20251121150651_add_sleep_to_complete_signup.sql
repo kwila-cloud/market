@@ -25,14 +25,14 @@ begin
   end if;
 
   -- Security check: user must not already have a profile
-  if get_user_by_auth_id(v_auth_user_id) is not null then
+  if public.get_user_by_auth_id(v_auth_user_id) is not null then
     raise exception 'User profile already exists';
   end if;
 
   -- Validate and fetch invite code
   select * into v_invite_record
   from public.invite
-  where invite_code = p_invite_code
+  where invite_code = upper(p_invite_code)
     and used_at is null
     and revoked_at is null;
 
@@ -71,8 +71,8 @@ begin
   select
     v_new_user_id,
     case
-      when au.email is not null then 'email'::contact_type
-      when au.phone is not null then 'phone'::contact_type
+      when au.email is not null then 'email'::public.contact_type
+      when au.phone is not null then 'phone'::public.contact_type
     end,
     coalesce(au.email, au.phone),
     p_contact_visibility
@@ -100,10 +100,12 @@ begin
   );
 
 exception
-  when others then
-    -- Log error for debugging but return generic message
-    raise notice 'Signup error: %', SQLERRM;
-    raise exception 'Failed to complete signup. Please try again.';
+   when others then
+     -- Return error details for debugging
+     return jsonb_build_object(
+       'success', false,
+       'error', SQLERRM
+     );
 end;
 $function$
 ;

@@ -127,11 +127,15 @@ export const publicRoutes = [
   '/content-policy',
   '/auth/login',
   '/auth/verify',
-  '/auth/welcome',
 ];
 
 /**
  * Auth routes that should redirect to dashboard if already authenticated.
- * Note: /auth/welcome is NOT in this list because it's for incomplete signups.
  */
 export const authRoutes = ['/auth/login', '/auth/verify'];
+
+/**
+ * Protected routes that require authentication.
+ * Users without a complete profile are redirected to /auth/welcome.
+ */
+export const protectedRoutes = ['/auth/welcome'];

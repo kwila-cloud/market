@@ -3,6 +3,7 @@ import {
   getUser,
   publicRoutes,
   authRoutes,
+  protectedRoutes,
   createSupabaseServerClient,
 } from './lib/auth';
 
@@ -15,12 +16,15 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   // Check route type
-  const isPublicRoute = publicRoutes.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`)
-  );
-  const isAuthRoute = authRoutes.some(
-    (route) => pathname === route || pathname.startsWith(`${route}/`)
-  );
+   const isPublicRoute = publicRoutes.some(
+     (route) => pathname === route || pathname.startsWith(`${route}/`)
+   );
+   const isAuthRoute = authRoutes.some(
+     (route) => pathname === route || pathname.startsWith(`${route}/`)
+   );
+   const isProtectedRoute = protectedRoutes.some(
+     (route) => pathname === route || pathname.startsWith(`${route}/`)
+   );
 
   // Always get user for navbar state
   const cookieHeader = context.request.headers.get('cookie');
@@ -48,10 +52,15 @@ export const onRequest = defineMiddleware(async (context, next) => {
     }
   }
 
-  // Redirect to login if accessing protected route without auth
-  if (!isPublicRoute && !user) {
-    return context.redirect('/auth/login');
-  }
+  // Redirect to login if accessing protected/auth route without auth
+   if (!isPublicRoute && !isProtectedRoute && !user) {
+     return context.redirect('/auth/login');
+   }
+
+   // Redirect to login if accessing protected routes without auth
+   if (isProtectedRoute && !user) {
+     return context.redirect('/auth/login');
+   }
 
   // Redirect to dashboard if accessing auth routes while authenticated
   if (isAuthRoute && user) {

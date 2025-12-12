@@ -26,11 +26,12 @@ const onboardingSchema = z.object({
 type OnboardingFormData = z.infer<typeof onboardingSchema>;
 
 export default function OnboardingWizard() {
-  const [step, setStep] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isValidatingInvite, setIsValidatingInvite] = useState(false);
-  const [isSigningOut, setIsSigningOut] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+   const [step, setStep] = useState(1);
+   const [isLoading, setIsLoading] = useState(false);
+   const [isValidatingInvite, setIsValidatingInvite] = useState(false);
+   const [isSigningOut, setIsSigningOut] = useState(false);
+   const [error, setError] = useState<string | null>(null);
+   const submitButtonRef = React.useRef<HTMLButtonElement>(null);
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
@@ -88,7 +89,8 @@ export default function OnboardingWizard() {
 
       if (!result?.success) {
         console.error('Signup failed - not successful:', result);
-        setError('Failed to complete signup. Please try again.');
+        const errorMsg = result?.error || 'Failed to complete signup. Please try again.';
+        setError(errorMsg);
         return;
       }
 
@@ -165,10 +167,23 @@ export default function OnboardingWizard() {
     ? `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(formValues.display_name)}`
     : '';
 
+  const handleFormKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    // Enter advances through steps (except in textareas)
+    if (e.key === 'Enter' && (e.target as HTMLElement).tagName !== 'TEXTAREA') {
+      e.preventDefault();
+      if (step === 4) {
+        // On final step, click submit button
+        submitButtonRef.current?.click();
+      } else if (step < 4) {
+        handleNext();
+      }
+    }
+  };
+
   return (
     <div className="w-full max-w-2xl mx-auto">
       <Card title="Complete Your Profile">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} onKeyDown={handleFormKeyDown} className="space-y-6">
           {/* Progress indicator */}
           <div className="space-y-2">
             <div className="flex justify-between items-center text-sm text-neutral-400">
@@ -217,12 +232,6 @@ export default function OnboardingWizard() {
                     maxLength={8}
                     {...register('invite_code')}
                     disabled={isValidatingInvite}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        handleNext();
-                      }
-                    }}
                     className="w-full px-4 py-3 bg-surface border border-surface-border rounded-lg text-neutral-50 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all uppercase font-mono tracking-wider text-center text-xl disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="ABC12345"
                     style={{ textTransform: 'uppercase' }}
@@ -464,7 +473,7 @@ export default function OnboardingWizard() {
                 <Button type="button" variant="neutral" onClick={handleBack}>
                   ← Back
                 </Button>
-                <Button type="submit" disabled={isLoading}>
+                <Button ref={submitButtonRef} type="submit" disabled={isLoading}>
                   {isLoading ? 'Completing...' : 'Complete Signup'}
                 </Button>
               </div>
