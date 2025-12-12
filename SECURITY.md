@@ -5,6 +5,7 @@
 RPCs `validate_invite_code` and `complete_signup` include 5-second sleeps (`pg_sleep(5)`) to help protect against brute force attacks attempting to guess invite codes. This rate limiting makes it impractical to brute force the 2.8 trillion possible alphanumeric invite codes.
 
 Both functions are called separately during the signup flow:
+
 - `validate_invite_code` is called first during step 1 of the onboarding wizard to validate the code before advancing
 - `complete_signup` is called again when the user submits the final step, providing defense-in-depth
 

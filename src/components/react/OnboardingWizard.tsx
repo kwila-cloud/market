@@ -7,31 +7,55 @@ import Button from './Button';
 import Card from './Card';
 import ErrorAlert from './ErrorAlert';
 
-const onboardingSchema = z.object({
-  invite_code: z
-    .string()
-    .length(8, 'Invite code must be 8 characters')
-    .regex(/^[A-Z0-9]+$/, 'Invalid invite code format'),
-  display_name: z
-    .string()
-    .min(1, 'Display name is required')
-    .max(100, 'Display name must be less than 100 characters'),
-  about: z
-    .string()
-    .max(500, 'About must be less than 500 characters')
-    .optional(),
-  contact_visibility: z.enum(['hidden', 'connections-only', 'public']),
-});
+const createOnboardingSchema = (
+  displayNameRef: ReturnType<typeof React.useRef<string | null>>
+) =>
+  z.object({
+    // Step 1: Invite Code
+    invite_code: z
+      .string()
+      .length(8, 'Invite code must be 8 characters')
+      .regex(/^[A-Z0-9]+$/, 'Invalid invite code format')
+      .refine(
+        async (code) => {
+          try {
+            const supabase = createSupabaseBrowserClient();
+            const { data, error } = await supabase.rpc('validate_invite_code', {
+              p_invite_code: code.toUpperCase(),
+            });
+            if (!error && data?.valid) {
+              displayNameRef.current = data.name;
+              return true;
+            }
+            return false;
+          } catch {
+            return false;
+          }
+        },
+        { message: 'Invalid or already used invite code' }
+      ),
+    // Step 2: Contact Visibility
+    contact_visibility: z.enum(['hidden', 'connections-only', 'public']),
+    // Step 3: Display Name & Bio
+    display_name: z
+      .string()
+      .min(1, 'Display name is required')
+      .max(100, 'Display name must be less than 100 characters'),
+    about: z
+      .string()
+      .max(500, 'About must be less than 500 characters')
+      .optional(),
+  });
 
-type OnboardingFormData = z.infer<typeof onboardingSchema>;
+type OnboardingFormData = z.infer<ReturnType<typeof createOnboardingSchema>>;
 
 export default function OnboardingWizard() {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [isValidatingInvite, setIsValidatingInvite] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const submitButtonRef = React.useRef<HTMLButtonElement>(null);
+  const displayNameRef = React.useRef<string | null>(null);
 
   const handleSignOut = async () => {
     setIsSigningOut(true);
@@ -48,11 +72,11 @@ export default function OnboardingWizard() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValidating },
     watch,
     setValue,
   } = useForm<OnboardingFormData>({
-    resolver: zodResolver(onboardingSchema),
+    resolver: zodResolver(createOnboardingSchema(displayNameRef)),
     mode: 'onBlur',
     defaultValues: {
       contact_visibility: 'hidden',
@@ -60,6 +84,27 @@ export default function OnboardingWizard() {
   });
 
   const formValues = watch();
+
+  const handleNext = () => {
+    setError(null);
+
+    // Don't advance if there are validation errors
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
+    // If moving from step 1 (invite code), pre-fill display name from cached validation
+    if (step === 1 && displayNameRef.current) {
+      setValue('display_name', displayNameRef.current);
+    }
+
+    setStep(step + 1);
+  };
+
+  const handleBack = () => {
+    setError(null);
+    setStep(step - 1);
+  };
 
   const onSubmit = async (data: OnboardingFormData) => {
     setIsLoading(true);
@@ -109,63 +154,6 @@ export default function OnboardingWizard() {
     }
   };
 
-  const handleNext = async () => {
-    setError(null);
-
-    // Don't advance if there are validation errors
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
-
-    // If moving from step 1 (invite code), validate it first
-    if (step === 1) {
-      const inviteCode = formValues.invite_code?.toUpperCase();
-
-      setIsValidatingInvite(true);
-
-      try {
-        const supabase = createSupabaseBrowserClient();
-
-        // Validate the invite code using RPC (bypasses RLS for new users)
-        const { data, error: rpcError } = await supabase.rpc(
-          'validate_invite_code',
-          {
-            p_invite_code: inviteCode,
-          }
-        );
-
-        if (rpcError) {
-          console.error('RPC error:', rpcError);
-          setError('Failed to validate invite code. Please try again.');
-          return;
-        }
-
-        if (!data?.valid) {
-          setError(
-            data?.error || 'Invalid invite code. Please check and try again.'
-          );
-          return;
-        }
-
-        // Valid invite! Pre-fill display name with invitee name
-        setValue('display_name', data.name);
-      } catch (err) {
-        console.error('Invite validation error:', err);
-        setError('Failed to validate invite code. Please try again.');
-        return;
-      } finally {
-        setIsValidatingInvite(false);
-      }
-    }
-
-    setStep(step + 1);
-  };
-
-  const handleBack = () => {
-    setError(null);
-    setStep(step - 1);
-  };
-
   // Generate avatar preview URL
   const avatarUrl = formValues.display_name
     ? `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(formValues.display_name)}`
@@ -200,7 +188,7 @@ export default function OnboardingWizard() {
               <button
                 type="button"
                 onClick={handleSignOut}
-                disabled={isSigningOut || isValidatingInvite}
+                disabled={isSigningOut || isValidating}
                 className="text-neutral-400 hover:text-neutral-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSigningOut ? 'Signing out...' : 'Wrong account? Sign out'}
@@ -240,7 +228,7 @@ export default function OnboardingWizard() {
                   type="text"
                   maxLength={8}
                   {...register('invite_code')}
-                  disabled={isValidatingInvite}
+                  disabled={isValidating}
                   className="w-full px-4 py-3 bg-surface border border-surface-border rounded-lg text-neutral-50 placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all uppercase font-mono tracking-wider text-center text-xl disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="ABC12345"
                   style={{ textTransform: 'uppercase' }}
@@ -250,7 +238,7 @@ export default function OnboardingWizard() {
                     {errors.invite_code.message}
                   </p>
                 )}
-                {isValidatingInvite && (
+                {isValidating && (
                   <p className="mt-2 text-sm text-neutral-400">
                     Validating invite code... (this may take a few seconds)
                   </p>
@@ -466,18 +454,14 @@ export default function OnboardingWizard() {
               <Button
                 type="button"
                 onClick={handleNext}
-                disabled={isValidatingInvite || Object.keys(errors).length > 0}
+                disabled={isValidating || Object.keys(errors).length > 0}
                 className={step === 1 ? 'ml-auto' : ''}
               >
-                {isValidatingInvite ? 'Validating...' : 'Next Step →'}
+                {isValidating ? 'Validating...' : 'Next Step →'}
               </Button>
             )}
             {step === 4 && (
-              <Button
-                ref={submitButtonRef}
-                type="submit"
-                disabled={isLoading}
-              >
+              <Button ref={submitButtonRef} type="submit" disabled={isLoading}>
                 {isLoading ? 'Completing...' : 'Complete Signup'}
               </Button>
             )}
