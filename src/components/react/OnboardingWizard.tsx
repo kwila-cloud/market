@@ -69,61 +69,95 @@ export default function OnboardingWizard() {
   const formValues = watch();
 
 
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (step < 4) {
-      await handleNext();
-    } else if (step === 4) {
-      await handleComplete();
-    }
-  };
-
   const handleNext = async () => {
     setIsLoading(true);
     setError(null);
 
-    // Validate only current step's fields
-    const currentStepFields =
-      step === 1
-        ? ['invite_code']
-        : step === 2
-          ? ['contact_visibility']
-          : step == 3
-            ? ['display_name', 'about']
-            : [];
-
-    const isValid = await trigger(currentStepFields as never);
-
-    if (!isValid) {
-      return;
-    }
-
-    // Additional validation for step 1: check invite code validity
-    if (step === 1) {
-      const inviteCode = formValues.invite_code?.toUpperCase();
-
+    if (step === 4) {
       try {
         const supabase = createSupabaseBrowserClient();
-        const { data, error } = await supabase.rpc('validate_invite_code', {
-          p_invite_code: inviteCode,
-        });
 
-        if (error || !data?.valid) {
-          setError(data?.error || 'Invalid or already used invite code');
+        // Call the complete_signup RPC function
+        const { data: result, error: signupError } = await supabase.rpc(
+          'complete_signup',
+          {
+            p_invite_code: formValues.invite_code.toUpperCase(),
+            p_display_name: formValues.display_name,
+            p_about: formValues.about || '',
+            p_contact_visibility: formValues.contact_visibility,
+          }
+        );
+
+        if (signupError) {
+          console.error('Signup error:', signupError);
+          const errorMessage =
+            signupError.message || 'Failed to complete signup. Please try again.';
+          setError(errorMessage);
           return;
         }
 
-        // Pre-fill display name from the invite
-        setValue('display_name', data.name);
+        if (!result?.success) {
+          console.error('Signup failed - not successful:', result);
+          const errorMsg =
+            result?.error || 'Failed to complete signup. Please try again.';
+          setError(errorMsg);
+          return;
+        }
+
+        // Redirect to dashboard
+        window.location.href = '/dashboard';
       } catch (err) {
-        console.error('Invite validation error:', err);
-        setError('Failed to validate invite code. Please try again.');
+        console.error('Unexpected error during signup:', err);
+        const errorMessage =
+          err instanceof Error
+            ? err.message
+            : 'An unexpected error occurred. Please try again.';
+        setError(errorMessage);
+      }
+    } else {
+      // Validate only current step's fields
+      const currentStepFields =
+        step === 1
+          ? ['invite_code']
+          : step === 2
+            ? ['contact_visibility']
+            : step == 3
+              ? ['display_name', 'about']
+              : [];
+
+      const isValid = await trigger(currentStepFields as never);
+
+      if (!isValid) {
         return;
       }
+
+      // Additional validation for step 1: check invite code validity
+      if (step === 1) {
+        const inviteCode = formValues.invite_code?.toUpperCase();
+
+        try {
+          const supabase = createSupabaseBrowserClient();
+          const { data, error } = await supabase.rpc('validate_invite_code', {
+            p_invite_code: inviteCode,
+          });
+
+          if (error || !data?.valid) {
+            setError(data?.error || 'Invalid or already used invite code');
+            return;
+          }
+
+          // Pre-fill display name from the invite
+          setValue('display_name', data.name);
+        } catch (err) {
+          console.error('Invite validation error:', err);
+          setError('Failed to validate invite code. Please try again.');
+          return;
+        }
+      }
+      setStep(step + 1);
     }
 
-    setStep(step + 1);
+    setIsLoading(false);
   };
 
   const handleBack = () => {
@@ -134,49 +168,6 @@ export default function OnboardingWizard() {
   const handleComplete = async () => {
     setIsLoading(true);
     setError(null);
-
-    try {
-      const supabase = createSupabaseBrowserClient();
-
-      // Call the complete_signup RPC function
-      const { data: result, error: signupError } = await supabase.rpc(
-        'complete_signup',
-        {
-          p_invite_code: formValues.invite_code.toUpperCase(),
-          p_display_name: formValues.display_name,
-          p_about: formValues.about || '',
-          p_contact_visibility: formValues.contact_visibility,
-        }
-      );
-
-      if (signupError) {
-        console.error('Signup error:', signupError);
-        const errorMessage =
-          signupError.message || 'Failed to complete signup. Please try again.';
-        setError(errorMessage);
-        return;
-      }
-
-      if (!result?.success) {
-        console.error('Signup failed - not successful:', result);
-        const errorMsg =
-          result?.error || 'Failed to complete signup. Please try again.';
-        setError(errorMsg);
-        return;
-      }
-
-      // Redirect to dashboard
-      window.location.href = '/dashboard';
-    } catch (err) {
-      console.error('Unexpected error during signup:', err);
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : 'An unexpected error occurred. Please try again.';
-      setError(errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   // Generate avatar preview URL
@@ -188,7 +179,7 @@ export default function OnboardingWizard() {
     <div className="w-full max-w-2xl mx-auto">
       <Card title="Complete Your Profile">
         <form
-          onSubmit={handleFormSubmit}
+          onSubmit={handleNext}
           className="space-y-6"
           role="presentation"
         >
